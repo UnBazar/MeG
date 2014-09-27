@@ -4,6 +4,14 @@ public class Secao {
 	private int id;
 	private String nome;
 	
+	public Secao() {
+	
+	}
+	
+	public Secao(String nome){
+		this.nome = nome;
+	}
+	
 	public int getId() {
 		return id;
 	}

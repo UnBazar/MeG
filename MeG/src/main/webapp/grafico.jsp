@@ -7,21 +7,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Meg | Gráfico</title>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<c:set var="quadros" value="${quadros}"/>
 <script type="text/javascript">
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
-function drawChart() {
-  var valores = ${valores};
-  var data = google.visualization.arrayToDataTable([
-    ['Year', 'Sales'],
-    ['2004',  valores[1]],
-    ['2005',  valores[2]],
-    ['2006',  valores[3]],
-    ['2007',  valores[4]]
-  ]);
 
-  var options = {title: 'Company Performance'};
+var valores, anos, tamanho = 0;
+valores = ${valores};
+anos = ${anos};
+tamanho = ${tamanho};
+
+function listarValoresporAnos(){
+	var i = 1;
+	var lista = new Array();
+	lista[0] = ['Anos', 'Empresas e outras Organizações'];
+	for(i = 1; i <= tamanho; i++){
+		lista[i] = [anos[i],  valores[i]];
+	}
+	return lista;
+}
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable(listarValoresporAnos());
+  var options = {title: "Setor: ${titulo}"};
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
