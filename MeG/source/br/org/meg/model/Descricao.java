@@ -29,8 +29,6 @@ public class Descricao {
 			case 5:
 				this.setNome("Salário médio mensal (Salários mínimos)");
 				break;
-			default:
-				System.out.println("id: " + id + "problema na descricao");
 		}
 	}
 

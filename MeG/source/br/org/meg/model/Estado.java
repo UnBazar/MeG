@@ -129,8 +129,6 @@ public class Estado {
 				setSigla("TO");
 				setId(27);
 				break;
-			default:
-				System.out.println("nome: "+ nome + "problema no estado");
 		}
 	}
 
