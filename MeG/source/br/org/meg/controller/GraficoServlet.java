@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.org.meg.dao.QuadroDAO;
 import br.org.meg.model.Estado;
 import br.org.meg.model.Quadro;
 import br.org.meg.model.Secao;
@@ -93,6 +94,9 @@ public class GraficoServlet extends HttpServlet{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		int descricao_id = (int) request.getSession().getAttribute("descricao");
+		int setor_id = (int) request.getSession().getAttribute("setor");
+		int estado_id = (int) request.getSession().getAttribute("estado");
+		QuadroDAO dao = new QuadroDAO();
 	}
 }
