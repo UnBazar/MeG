@@ -4,6 +4,10 @@ public class Descricao {
 	private int id;
 	private String nome;
 
+	public Descricao(int id){
+		setId(id);
+	}
+
 	public int getId() {
 		return id;
 	}
