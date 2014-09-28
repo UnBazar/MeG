@@ -2,6 +2,7 @@ package br.org.meg.model;
 
 public class Quadro {
 	private int id;
+	private Descricao descricao;
 	private int ano;
 	private float valor;
 	private Estado estado;
@@ -46,4 +47,13 @@ public class Quadro {
 	public void setSecao(Secao secao) {
 		this.secao = secao;
 	}
+
+	public Descricao getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(Descricao titulo) {
+		this.descricao = titulo;
+	}
+	
 }

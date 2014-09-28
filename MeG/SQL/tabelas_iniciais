@@ -35,33 +35,32 @@ CREATE TABLE IF NOT EXISTS `MEG`.`Descricao` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `MEG`.`Quadro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `MEG`.`Quadro` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `valor` FLOAT NOT NULL,
   `ano` SMALLINT(6) NULL,
-  `Estado_id` INT NOT NULL,
-  `Secao_id` INT NOT NULL,
-  `Descricao_id` INT NOT NULL,
+  `estado_id` INT NOT NULL,
+  `secao_id` INT NOT NULL,
+  `descricao_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Quadro_Estado_idx` (`Estado_id` ASC),
-  INDEX `fk_Quadro_Secao1_idx` (`Secao_id` ASC),
-  INDEX `fk_Quadro_Descricao1_idx` (`Descricao_id` ASC),
+  INDEX `fk_Quadro_Estado_idx` (`estado_id` ASC),
+  INDEX `fk_Quadro_Secao_idx` (`secao_id` ASC),
+  INDEX `fk_Quadro_Descricao_idx` (`descricao_id` ASC),
   CONSTRAINT `fk_Quadro_Estado`
-    FOREIGN KEY (`Estado_id`)
+    FOREIGN KEY (`estado_id`)
     REFERENCES `MEG`.`Estado` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Quadro_Secao1`
-    FOREIGN KEY (`Secao_id`)
+  CONSTRAINT `fk_Quadro_Secao`
+    FOREIGN KEY (`secao_id`)
     REFERENCES `MEG`.`Secao` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Quadro_Descricao1`
-    FOREIGN KEY (`Descricao_id`)
+  CONSTRAINT `fk_Quadro_Descricao`
+    FOREIGN KEY (`descricao_id`)
     REFERENCES `MEG`.`Descricao` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
