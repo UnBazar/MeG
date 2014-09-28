@@ -23,112 +23,114 @@ public class Estado {
 		switch (nome) {
 			case "Acre":
 				setSigla("AC");
-				setId(0);
+				setId(1);
 				break;
 			case "Alagoas":
 				setSigla("AL");
-				setId(1);
+				setId(2);
 				break;
 			case "Amapá":
 				setSigla("AP");
-				setId(2);
+				setId(3);
 				break;
 			case "Amazonas":
 				setSigla("AM");
-				setId(3);
+				setId(4);
 				break;
 			case "Bahia":
 				setSigla("BA");
-				setId(4);
+				setId(5);
 				break;
 			case "Ceará":
 				setSigla("CE");
-				setId(5);
+				setId(6);
 				break;
 			case "Distrito Federal":
 				setSigla("DF");
-				setId(6);
+				setId(7);
 				break;
 			case "Espírito Santo":
 				setSigla("ES");
-				setId(7);
+				setId(8);
 				break;
 			case "Goiás":
 				setSigla("GO");
-				setId(8);
+				setId(9);
 				break;
 			case "Maranhão":
 				setSigla("MA");
-				setId(9);
+				setId(10);
 				break;
 			case "Mato Grosso":
 				setSigla("MT");
-				setId(10);
+				setId(11);
 				break;
 			case "Mato Grosso do Sul":
 				setSigla("MS");
-				setId(11);
+				setId(12);
 				break;
 			case "Minas Gerais":
 				setSigla("MG");
-				setId(12);
+				setId(13);
 				break;
 			case "Pará":
 				setSigla("PA");
-				setId(13);
+				setId(14);
 				break;
 			case "Paraíba":
 				setSigla("PB");
-				setId(14);
+				setId(15);
 				break;
 			case "Paraná":
 				setSigla("PR");
-				setId(15);
+				setId(16);
 				break;
 			case "Pernambuco":
 				setSigla("PE");
-				setId(16);
+				setId(17);
 				break;
 			case "Piauí":
 				setSigla("PI");
-				setId(17);
+				setId(18);
 				break;
 			case "Rio de Janeiro":
 				setSigla("RJ");
-				setId(18);
+				setId(19);
 				break;
 			case "Rio Grande do Norte":
 				setSigla("RN");
-				setId(19);
+				setId(20);
 				break;
 			case "Rio Grande do Sul":
 				setSigla("RS");
-				setId(20);
+				setId(21);
 				break;
 			case "Rondônia":
 				setSigla("RO");
-				setId(21);
+				setId(22);
 				break;
 			case "Roraima":
 				setSigla("RR");
-				setId(22);
+				setId(23);
 				break;
 			case "Santa Catarina":
 				setSigla("SC");
-				setId(23);
+				setId(24);
 				break;
 			case "São Paulo":
 				setSigla("SP");
-				setId(24);
+				setId(25);
 				break;
 			case "Sergipe":
 				setSigla("SE");
-				setId(25);
+				setId(26);
 				break;
 			case "Tocantins":
 				setSigla("TO");
-				setId(26);
+				setId(27);
 				break;
+			default:
+				System.out.println("nome: "+ nome + "problema no estado");
 		}
 	}
 

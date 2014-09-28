@@ -9,26 +9,28 @@ public class Descricao {
 	}
 
 	public void setId(int id) {
-		if (id > 4 || id < 0) {
+		if (id > 5 || id < 1) {
 			throw new IllegalArgumentException("ID da descrição inválido!");
 		}
 		this.id = id;
 		switch(id) {
-			case 0:
+			case 1:
 				this.setNome("Número de empresas e outras organizações (Unidades)");
 				break;
-			case 1:
+			case 2:
 				this.setNome("Pessoal ocupado total (Pessoas)");
 				break;
-			case 2:
+			case 3:
 				this.setNome("Pessoal ocupado assalariado (Pessoas)");
 				break;
-			case 3:
+			case 4:
 				this.setNome("Salários e outras remunerações (Mil Reais)");
 				break;
-			case 4:
+			case 5:
 				this.setNome("Salário médio mensal (Salários mínimos)");
-				break;	
+				break;
+			default:
+				System.out.println("id: " + id + "problema na descricao");
 		}
 	}
 
