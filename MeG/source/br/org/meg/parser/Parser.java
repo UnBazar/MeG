@@ -16,7 +16,7 @@ public class Parser {
 	
 	public Parser(String arquivo) {
 		try {	
-			scanner = new Scanner(new FileReader(arquivo)).useDelimiter(";");	
+			scanner = new Scanner(new FileReader(arquivo)).useDelimiter(";");
 		} catch(FileNotFoundException exception) {
 			System.err.println(exception);
 			throw new RuntimeException("Arquivo não encontrado!");
@@ -88,14 +88,14 @@ public class Parser {
 				estado = new Estado();
 				estado.setNome(corrigirNome(tokens[0]));
 				secao = new Secao();
-				secao.setNome(tokens[1].substring(1, tokens[1].length() - 1));
+				secao.setNome(tokens[1].substring(3, tokens[1].length() - 1));
 				for (int k = 0; k < 35; k++) {
 						quadros.add(new Quadro());
 						quadros.get(quadros.size() - 1).setEstado(estado);
 						quadros.get(quadros.size() - 1).setSecao(secao);
 						quadros.get(quadros.size() - 1).setAno(2006 + k%7);
 						Descricao descricao = new Descricao();
-						descricao.setId(k/7);
+						descricao.setId(1 + k/7);
 						quadros.get(quadros.size() - 1).setDescricao(descricao);
 						if (!tokens[2 + k].equals("-") && !tokens[2 + k].equals("X")) {
 							if (k < 28) quadros.get(quadros.size() - 1).setValor(Float.parseFloat(tokens[2 + k]));
