@@ -17,6 +17,12 @@ public class QuadroDAO {
 	public void adicionar(Quadro quadro) {
 		String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
 		try {
+			/*
+			 * System.out.printf("\nestado_nome: %s estado_id: %d secao_nome: %s secao_id: %d\n"
+			 *		+ "descricao_nome: %s descricao_id: %d valor: %.2f ano: %d", quadro.getEstado().getNome(), 
+			 *		quadro.getEstado().getId(), quadro.getSecao().getNome(), quadro.getSecao().getId(),
+			 *		quadro.getDescricao().getNome(), quadro.getDescricao().getId(), quadro.getValor(), quadro.getAno());
+			 */
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, quadro.getAno());
 			stmt.setFloat(2, quadro.getValor());
