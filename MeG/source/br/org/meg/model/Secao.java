@@ -95,7 +95,7 @@ public class Secao {
 	}
 	
 	public void setNome(String nome) {
-		if (nome.equals(null)) throw new IllegalArgumentException("Nome da seção inválido!");
+		if (nome == null) throw new IllegalArgumentException("Nome da seção inválido!");
 		this.nome = nome;
 		switch (nome) {
 			case "Agricultura, pecuária, produção florestal, pesca e aquicultura":

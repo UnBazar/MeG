@@ -23,4 +23,7 @@
   	<servlet-name>Grafico</servlet-name>
   	<url-pattern>/Grafico</url-pattern>
   </servlet-mapping>
+  <session-config>
+	<session-timeout>3</session-timeout>
+  </session-config>
 </web-app>

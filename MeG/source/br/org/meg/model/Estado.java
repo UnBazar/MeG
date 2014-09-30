@@ -129,7 +129,7 @@ public class Estado {
 	}
 
 	public void setNome(String nome) {
-		if (nome.equals(null)) throw new IllegalArgumentException("Nome do estado inválido!");
+		if (nome == null) throw new IllegalArgumentException("Nome do estado inválido!");
 		this.nome = nome;
 		switch (nome) {
 			case "Acre":
