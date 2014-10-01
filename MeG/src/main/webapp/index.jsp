@@ -7,7 +7,7 @@
 <title>Meg</title>
 </head>
 <body>
-	<form action="grafico">
+	<form action="grafico" method="POST">
 		<label>Tipo de pesquisa</label>
 		<select name="descricao">
 			<option value="1">Número de empresas e outras organizações (Unidades)</option>
@@ -74,24 +74,23 @@
 			<option value="27">TO</option>
 		</select>
 		<label>De</label>
-		<select>
-			<option>2006</option>
-			<option>2007</option>
-			<option>2008</option>
-			<option>2009</option>
-			<option>2010</option>
-			<option>2011</option>
-			<option>2012</option>
+		<select name="anoInicial">
+			<option value="2007" selected="selected">2007</option>
+			<option value="2008">2008</option>
+			<option value="2009">2009</option>
+			<option value="2010">2010</option>
+			<option value="2011">2011</option>
+			<option value="2012">2012</option>
 			
 		</select>
 		<label>até</label>
-		<select>
-			<option>2007</option>
-			<option>2008</option>
-			<option>2009</option>
-			<option>2010</option>
-			<option>2011</option>
-			<option>2012</option>
+		<select name="anoFinal">
+			<option value="2007">2007</option>
+			<option value="2008">2008</option>
+			<option value="2009">2009</option>
+			<option value="2010">2010</option>
+			<option value="2011">2011</option>
+			<option value="2012" selected="selected">2012</option>
 		</select>
 		<br/><br/>
 		<button type="submit">Montar Gráfico</button>
