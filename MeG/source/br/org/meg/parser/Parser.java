@@ -36,7 +36,7 @@ public class Parser {
 		ArrayList<Quadro> quadros = this.lerEstados();
 		QuadroDAO dao = new QuadroDAO();		
 		for (int j = 0; j < quadros.size(); j++) {
-			dao.adicionar(quadros.get(j));
+		dao.adicionar(quadros.get(j));
 		}
 		scanner.close();
 	}
@@ -68,11 +68,11 @@ public class Parser {
 							if (k < 28) quadros.get(quadros.size() - 1).setValor(Float.parseFloat(tokens[2 + k]));
 							else quadros.get(quadros.size() - 1).setValor(Float.parseFloat(corrigirVirgula(tokens[2 + k])));
 						} else quadros.get(quadros.size() - 1).setValor(-1.0f);
-						/*System.out.printf("Tipo: %s Estado: %s Secao: %s Ano: %d Valor: %.1f\n",
-						 *		quadros.get(quadros.size() - 1).getDescricao().getNome(), quadros.get(quadros.size() - 1).getEstado().getNome(), 
-						 *		quadros.get(quadros.size() - 1).getSecao().getNome(), 
-						 *		quadros.get(quadros.size() - 1).getAno(), quadros.get(quadros.size() - 1).getValor());
-						 */
+						System.out.printf("Tipo: %s Estado: %s Secao: %s Ano: %d Valor: %.1f\n",
+						 		quadros.get(quadros.size() - 1).getDescricao().getNome(), quadros.get(quadros.size() - 1).getEstado().getNome(), 
+						 		quadros.get(quadros.size() - 1).getSecao().getNome(), 
+						 		quadros.get(quadros.size() - 1).getAno(), quadros.get(quadros.size() - 1).getValor());
+						 
 				}
 			}
 		}

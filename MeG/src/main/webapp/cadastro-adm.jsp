@@ -3,12 +3,12 @@
 		<title>Cadastro</title>
 	</head>
 	<body>
-		<form action="ControllerServlet" method="POST">
+		<form action="sistema" method="POST">
 			<input type="hidden" name="logica" value="CadastroAdm">
 			Nome <br />
 			<input type="text" name="nome"> <br />
 			Nome de usuário <br />
-			<input type="text" name="nomeUsuario"> <br />
+			<input type="text" name="nomeDeUsuario"> <br />
 			Email <br />
 			<input type="text" name="email"> <br />
 			Senha <br />

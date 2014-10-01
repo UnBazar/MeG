@@ -17,7 +17,6 @@ public class ControllerServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String parametro = request.getParameter("logica");
 		String nomeDaClasse = "br.org.meg.controller." + parametro;
-		
 		try {
 			Class<?> classe = Class.forName(nomeDaClasse);
 			Logica logica = (Logica) classe.newInstance();
