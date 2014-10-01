@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import br.org.meg.dao.QuadroDAO;
 import br.org.meg.model.Estado;
 import br.org.meg.model.Quadro;
-import br.org.meg.model.Secao;
 
 /**
  * Servlet implementation class Login
@@ -29,37 +28,6 @@ public class GraficoServlet extends HttpServlet{
      */
     public GraficoServlet() {
         super();
-        gerarExemplos();
-    }
-
-	//Inserindo exemplos
-    public void gerarExemplos(){
-    	Quadro q1 = new Quadro();
-    	Quadro q2 = new Quadro();
-    	Quadro q3 = new Quadro();
-    	Quadro q4 = new Quadro();
-    	Quadro q5 = new Quadro();
-    	q1.setAno(2007);
-    	q2.setAno(2008);
-    	q3.setAno(2009);
-    	q4.setAno(2010);	
-    	q5.setAno(2011);
-    	q1.setSecao(new Secao("Agricultura, pecuária, produção florestal, pesca e aquicultura"));
-    	q2.setSecao(new Secao("Agricultura, pecuária, produção florestal, pesca e aquicultura"));
-    	q3.setSecao(new Secao("Agricultura, pecuária, produção florestal, pesca e aquicultura"));
-    	q4.setSecao(new Secao("Agricultura, pecuária, produção florestal, pesca e aquicultura"));
-    	q5.setSecao(new Secao("Agricultura, pecuária, produção florestal, pesca e aquicultura"));
-    	q1.setValor(36911);
-    	q2.setValor(51990);
-    	q3.setValor(84861);
-    	q4.setValor(97355);
-    	q5.setValor(100414);
-    	q1.setEstado(new Estado());
-    	quadros.add(q1);
-    	quadros.add(q2);
-    	quadros.add(q3);
-    	quadros.add(q4);
-    	quadros.add(q5);
     }
     
 	/**
