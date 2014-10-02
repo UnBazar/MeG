@@ -1,12 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 	<head>
 		<title>Home</title>
 	</head>
 	<body>
-		<h2>Bem vindo, ${ad}!</h2>
+		<h2>Bem vindo, ${ad} ${adm.nome}!</h2>
 		<p align="right"><a href="LogoutAdm">Logout</a></p><br />
-		<form enctype="multipart/form-data" method="post" action="UploadArquivo">
-		    
+		<form action="sistema" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="logica" value="UploadArquivo">
+		    <label>De </label>
 		    <select name="anoInicial">
 		    	<option>2006</option>
 		    	<option>2007</option>
@@ -15,16 +19,16 @@
 		    	<option>2010</option>
 		    	<option>2011</option>		    
 		    </select>
-		    
+		    <label>Até </label>
 		    <select name="anoFinal">
-		    	<option>2006</option>
 		    	<option>2007</option>
 		    	<option>2008</option>
 		    	<option>2009</option>
 		    	<option>2010</option>
 		    	<option>2011</option>
+		    	<option>2012</option>
 		    </select>
-		    
+		    <br />
 		    <input type="checkbox" name="secao" value="A">Agricultura, pecuária, produção florestal, pesca e aquicultura<br>
 			<input type="checkbox" name="secao" value="B">Indústrias extrativas <br>
 		    <input type="checkbox" name="secao" value="C">Indústrias de transformação <br>

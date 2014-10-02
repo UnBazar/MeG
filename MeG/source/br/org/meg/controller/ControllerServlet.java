@@ -18,12 +18,11 @@ public class ControllerServlet extends HttpServlet {
 		String parametro = request.getParameter("logica");
 		String nomeDaClasse = "br.org.meg.controller." + parametro;
 		try {
+			System.out.println(nomeDaClasse);
 			Class<?> classe = Class.forName(nomeDaClasse);
 			Logica logica = (Logica) classe.newInstance();
-			
 			String pagina = logica.executa(request, response);
 			request.getRequestDispatcher(pagina).forward(request, response);
-			
 		} catch (ClassNotFoundException exception) {
 			System.err.println(exception);
 			throw new RuntimeException("Classe não encontrada!");
@@ -35,5 +34,4 @@ public class ControllerServlet extends HttpServlet {
 			throw new RuntimeException("Erro ao instanciar a classe!");
 		}
 	}
-	
 }
