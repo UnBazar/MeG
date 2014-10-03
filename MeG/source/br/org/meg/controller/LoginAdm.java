@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import br.org.meg.dao.AdministradorDAO;
 import br.org.meg.model.Administrador;
 
-
 public class LoginAdm implements Logica {
 	
 	public String executa(HttpServletRequest request,
@@ -15,7 +14,7 @@ public class LoginAdm implements Logica {
 		AdministradorDAO dao = new AdministradorDAO();
 		Administrador adm = dao.validaLogin(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
 		if (adm != null) {
-			HttpSession sessao = request.getSession(false);
+			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("adm", adm);
 			return "home.jsp";
 		} else return "login-adm.jsp";

@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<h2>Bem vindo, ${adm.nome}!</h2>
-		<p align="right"><a href="LogoutAdm">Logout</a></p><br />
+		<p align="right"><a href="logout">Logout</a></p><br />
 		<form action="sistema" enctype="multipart/form-data" method="post">
 			<input type="hidden" name="logica" value="UploadArquivo">
 		    <label>De </label>
