@@ -1,5 +1,7 @@
 package br.org.meg.controller;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,15 +22,20 @@ public class UploadArquivo implements Logica {
 				DiskFileItemFactory factory = new DiskFileItemFactory();
 				factory.setSizeThreshold(100000);
 				ServletFileUpload upload = new ServletFileUpload(factory);
+				System.out.println("lala");
 				List<FileItem> items = (List<FileItem>) upload.parseRequest(request);
-				
+				System.out.println(items.get(0).getFieldName());
+				System.out.println(items.get(0).getName());
 				for (FileItem item : items) {
-					if (item.isFormField()) {
-						if (item.getName().equals("anoInicial"));
-							System.out.println("Chegou aqui!");
+					System.out.println(item.getName() + item.getFieldName());
+					if (!item.isFormField()) {
+						File uploadedFile = new File("/home/pedro/Teste_Upload/" + new Date().getTime() + 
+								"_" + item.getName());
+						item.write(uploadedFile);
 					}
 				}
 			} catch(Exception e) {
+				e.printStackTrace();
 				System.err.println(e);
 			}
 		}

@@ -6,7 +6,7 @@
 		<title>Home</title>
 	</head>
 	<body>
-		<h2>Bem vindo, ${ad} ${adm.nome}!</h2>
+		<h2>Bem vindo, ${adm.nome}!</h2>
 		<p align="right"><a href="LogoutAdm">Logout</a></p><br />
 		<form action="sistema" enctype="multipart/form-data" method="post">
 			<input type="hidden" name="logica" value="UploadArquivo">

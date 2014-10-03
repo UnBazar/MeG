@@ -17,6 +17,10 @@ public class ControllerServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String parametro = request.getParameter("logica");
 		String nomeDaClasse = "br.org.meg.controller." + parametro;
+		
+		if (nomeDaClasse.equals("br.org.meg.controller.null")) 
+			   nomeDaClasse = "br.org.meg.controller.UploadArquivo";
+		
 		try {
 			System.out.println(nomeDaClasse);
 			Class<?> classe = Class.forName(nomeDaClasse);
