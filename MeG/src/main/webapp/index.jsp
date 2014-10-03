@@ -4,11 +4,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Style geral -->
+<link rel="stylesheet" href="css/style.css">
 <title>Meg</title>
 </head>
 <body>
+	<div class="container">
+	<section id="cabecalho">
+		<h1><a href="">MeG - Mercado em gráfico</a></h1>
+		<ul id="menu">
+			<li><a href="#">Sobre</a></li>
+			<li><a href="#">Como usar</a></li>
+			<li><a href="#">Link</a></li>
+		</ul>
+	</section>
+	<br>
+	<section id="gerador">
+	<h2>Gerar gráfico</h2>
+	<br>
 	<form action="grafico" method="POST">
-		<label>Tipo de pesquisa</label>
+		<label>Tipo de pesquisa:</label>
 		<select name="descricao">
 			<option value="1">Número de empresas e outras organizações (Unidades)</option>
 			<option value="2">Pessoal ocupado total (Pessoas)</option>
@@ -16,7 +37,7 @@
 			<option value="4">Salários e outras remunerações (Mil Reais)</option>
 			<option value="5">Salário médio mensal (Salários mínimos)</option>
 		</select>
-		<label>Setor</label>
+		<label id="setor">Setor:</label>
 		<select name="setor">
 			<option value="1">Agricultura, pecuária, produção florestal, pesca e aquicultura</option>
 			<option value="2">Indústrias extrativas</option>
@@ -43,7 +64,7 @@
 		</select>
 		<br/>
 		<br/>
-		<label>Estado</label>
+		<label>Estado:</label>
 		<select name="estado">
 			<option value="1">AC</option>
 			<option value="2">AL</option>
@@ -73,7 +94,7 @@
 			<option value="26">SP</option>
 			<option value="27">TO</option>
 		</select>
-		<label>De</label>
+		<label id="anoInicial">De</label>
 		<select name="anoInicial">
 			<option value="2007" selected="selected">2007</option>
 			<option value="2008">2008</option>
@@ -83,7 +104,7 @@
 			<option value="2012">2012</option>
 			
 		</select>
-		<label>até</label>
+		<label id="anoFinal">até </label>
 		<select name="anoFinal">
 			<option value="2007">2007</option>
 			<option value="2008">2008</option>
@@ -93,7 +114,9 @@
 			<option value="2012" selected="selected">2012</option>
 		</select>
 		<br/><br/>
-		<button type="submit">Montar Gráfico</button>
+		<button type="submit" class="btn btn-primary" id="btn-submit">Montar Gráfico</button>
 	</form>
+	</section>
+	</div>
 </body>
 </html>
