@@ -4,6 +4,96 @@ public class Estado {
 	private int id;
 	private String nome;
 	private String sigla;
+	
+	public Estado() {
+	
+	}
+	
+	public Estado(int estado_id) {
+		switch (estado_id) {
+			case 1:
+				setNome("Acre");
+				break;
+			case 2:
+				setNome("Alagoas");
+				break;
+			case 3:
+				setNome("Amapá");
+				break;
+			case 4:
+				setNome("Amazonas");
+				break;
+			case 5:
+				setNome("Bahia");
+				break;
+			case 6:
+				setNome("Ceará");
+				break;
+			case 7:
+				setNome("Distrito Federal");
+				break;
+			case 8:
+				setNome("Espírito Santo");
+				break;
+			case 9:
+				setNome("Goiás");
+				break;
+			case 10:
+				setNome("Maranhão");
+				break;
+			case 11:
+				setNome("Mato Grosso");
+				break;
+			case 12:
+				setNome("Mato Grosso do Sul");
+				break;
+			case 13:
+				setNome("Minas Gerais");
+				break;
+			case 14:
+				setNome("Pará");
+				break;
+			case 15:
+				setNome("Paraíba");
+				break;
+			case 16:
+				setNome("Paraná");
+				break;
+			case 17:
+				setNome("Pernambuco");
+				break;
+			case 18:
+				setNome("Piauí");
+				break;
+			case 19:
+				setNome("Rio de Janeiro");
+				break;
+			case 20:
+				setNome("Rio Grande do Norte");
+				break;
+			case 21:
+				setNome("Rio Grande do Sul");
+				break;
+			case 22:
+				setNome("Rondônia");
+				break;
+			case 23:
+				setNome("Roraima");
+				break;
+			case 24:
+				setNome("Santa Catarina");
+				break;
+			case 25:
+				setNome("São Paulo");
+				break;
+			case 26:
+				setNome("Sergipe");
+				break;
+			case 27:
+				setNome("Tocantins");
+				break;
+			}
+	}
 
 	public int getId() {
 		return id;

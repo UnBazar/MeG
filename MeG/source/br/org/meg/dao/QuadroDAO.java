@@ -15,11 +15,18 @@ import br.org.meg.model.Secao;
 
 public class QuadroDAO {
 	private Connection connection;
-	
+	/**
+	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
+	 */
 	public QuadroDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
+	/**
+	 * Adiciona um quadro ao banco de dados
+	 * 
+	 * @param quadro	Objeto a ser adicionado ao banco
+	 */
 	public void adicionar(Quadro quadro) {
 		String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
 		try {
@@ -38,18 +45,30 @@ public class QuadroDAO {
 	}
 	
 	
+	/**
+	 * Obtem uma lista de objetos do tipo Quadro que tem atributos relativos 
+	 * aos parametros passados.
+	 * 
+	 * @param anoInicial	tempo o qual o grafico começa a contar
+	 * @param anoFinal	tempo que o grafico para de contar
+	 * @param estado	refere-se a unidade federativa que sera usado no grafico
+	 * @param secao	relativo ao setor da economia
+	 * @param descricao	titulo do quadro
+	 * @return	uma Lista contendo quadros referentes aos parametros passados
+	 */
 	public List<Quadro> obterLista(int anoInicial, int anoFinal, Estado estado, Secao secao, Descricao descricao) {
-		String sql = "SELECT *FROM Quadros "
-				+ "INNER JOIN Estado ON estado_id = ? AND "
-				+ "INNER JOIN Secao ON secao_id = ? AND "
-				+ "INNER JOIN Descricao ON descricao_id = ?  WHERE ano >= ? AND ano <= ?";
+		String sql = "SELECT * FROM Quadro "
+				+ "WHERE estado_id = ? "
+				+ "AND secao_id = ? "
+				+ "AND descricao_id = ? "
+				+ "AND ano >= ? AND ano <= ? ";
 		try {
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1, anoInicial);
-			ps.setInt(2, anoFinal);
-			ps.setInt(3, estado.getId());
-			ps.setInt(4, secao.getId());
-			ps.setInt(5, descricao.getId());
+			ps.setInt(1, estado.getId());
+			ps.setInt(2, secao.getId());
+			ps.setInt(3, descricao.getId());
+			ps.setInt(4, anoInicial);
+			ps.setInt(5, anoFinal);
 			ResultSet rs = ps.executeQuery();
 			List<Quadro> quadros = new ArrayList<Quadro>();
 			while(rs.next()){
@@ -61,6 +80,8 @@ public class QuadroDAO {
 				quadro.setValor(rs.getFloat("valor"));
 				quadros.add(quadro);				
 			}
+			if(quadros.isEmpty())
+				throw new NullPointerException();
 			return quadros;
 		}catch (SQLException e) {
 			e.printStackTrace();

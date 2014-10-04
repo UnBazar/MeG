@@ -15,11 +15,10 @@ var valores, anos, tamanho = 0;
 valores = ${valores};
 anos = ${anos};
 tamanho = ${tamanho};
-
 function listarValoresporAnos(){
 	var i = 1;
 	var lista = new Array();
-	lista[0] = ['Anos', 'Empresas e outras Organizações'];
+	lista[0] = ['Anos', '${titulo}'];
 	for(i = 1; i <= tamanho; i++){
 		lista[i] = [anos[i],  valores[i]];
 	}
@@ -28,7 +27,7 @@ function listarValoresporAnos(){
 
 function drawChart() {
   var data = google.visualization.arrayToDataTable(listarValoresporAnos());
-  var options = {title: "Setor: ${titulo}"};
+  var options = {title: "Setor: ${secao}"};
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
