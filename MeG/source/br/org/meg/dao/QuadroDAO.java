@@ -14,11 +14,18 @@ import br.org.meg.model.Secao;
 
 public class QuadroDAO {
 	private Connection connection;
-	
+	/**
+	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
+	 */
 	public QuadroDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
+	/**
+	 * Adiciona um quadro ao banco de dados
+	 * 
+	 * @param quadro	Objeto a ser adicionado ao banco
+	 */
 	public void adicionar(Quadro quadro) {
 		String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
 		try {
@@ -39,6 +46,7 @@ public class QuadroDAO {
 	public void remover(Quadro quadro) {
 		
 	}
+	
 	/**
 	 * Obtem uma lista de objetos do tipo Quadro que tem atributos relativos 
 	 * aos parametros passados.
