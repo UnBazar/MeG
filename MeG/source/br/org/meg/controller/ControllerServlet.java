@@ -22,20 +22,13 @@ public class ControllerServlet extends HttpServlet {
 			   nomeDaClasse = "br.org.meg.controller.UploadArquivo";
 		
 		try {
-			System.out.println(nomeDaClasse);
 			Class<?> classe = Class.forName(nomeDaClasse);
 			Logica logica = (Logica) classe.newInstance();
 			String pagina = logica.executa(request, response);
 			request.getRequestDispatcher(pagina).forward(request, response);
-		} catch (ClassNotFoundException exception) {
+		} catch (Exception exception) {
 			System.err.println(exception);
-			throw new RuntimeException("Classe não encontrada!");
-		} catch (IllegalAccessException exception) {
-			System.err.println(exception);
-			throw new RuntimeException("Classe não acessível!");
-		} catch (InstantiationException exception) {
-			System.err.println(exception);
-			throw new RuntimeException("Erro ao instanciar a classe!");
+			request.getRequestDispatcher("erro.jsp").forward(request, response);
 		}
 	}
 }

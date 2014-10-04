@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.org.meg.exception.DAOException;
 import br.org.meg.model.Quadro;
 
 public class QuadroDAO {
@@ -17,12 +18,6 @@ public class QuadroDAO {
 	public void adicionar(Quadro quadro) {
 		String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
 		try {
-			/*
-			 * System.out.printf("\nestado_nome: %s estado_id: %d secao_nome: %s secao_id: %d\n"
-			 *		+ "descricao_nome: %s descricao_id: %d valor: %.2f ano: %d", quadro.getEstado().getNome(), 
-			 *		quadro.getEstado().getId(), quadro.getSecao().getNome(), quadro.getSecao().getId(),
-			 *		quadro.getDescricao().getNome(), quadro.getDescricao().getId(), quadro.getValor(), quadro.getAno());
-			 */
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, quadro.getAno());
 			stmt.setFloat(2, quadro.getValor());
@@ -33,7 +28,7 @@ public class QuadroDAO {
 			stmt.close();
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
-			throw new RuntimeException("Erro ao acessar o banco de dados!");
+			throw new DAOException(sqlException);
 		}
 	}
 	

@@ -16,7 +16,7 @@ public class LoginAdm implements Logica {
 		if (adm != null) {
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("adm", adm);
-			return "home.jsp";
+			return "/WEB-INF/jsp/home.jsp";
 		} else return "login-adm.jsp";
 	}
 }
