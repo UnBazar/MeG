@@ -74,6 +74,8 @@ public class QuadroDAO {
 				quadro.setValor(rs.getFloat("valor"));
 				quadros.add(quadro);				
 			}
+			if(quadros.isEmpty())
+				throw new NullPointerException();
 			return quadros;
 		}catch (SQLException e) {
 			e.printStackTrace();

@@ -48,15 +48,11 @@ public class GraficoServlet extends HttpServlet{
 		int estado_id = 0;
 		int anoInicial = 0;
 		int anoFinal = 0;
-		try{
-			descricao_id = Integer.valueOf(request.getParameter("descricao"));
-			setor_id = Integer.valueOf(request.getParameter("setor"));
-			estado_id= Integer.valueOf(request.getParameter("estado"));
-			anoInicial = Integer.valueOf(request.getParameter("anoInicial"));
-			anoFinal = Integer.valueOf(request.getParameter("anoFinal"));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		descricao_id = Integer.valueOf(request.getParameter("descricao"));
+		setor_id = Integer.valueOf(request.getParameter("setor"));
+		estado_id= Integer.valueOf(request.getParameter("estado"));
+		anoInicial = Integer.valueOf(request.getParameter("anoInicial"));
+		anoFinal = Integer.valueOf(request.getParameter("anoFinal"));
 		QuadroDAO dao = new QuadroDAO();
 		Descricao descricao = new Descricao(descricao_id);
 		Secao secao = new Secao(setor_id);

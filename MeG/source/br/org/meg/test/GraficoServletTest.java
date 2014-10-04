@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import br.org.meg.controller.GraficoServlet;
 
