@@ -10,7 +10,118 @@ public class Estado {
 	}
 
 	public void setId(int id) {
+		if (id < 1 || id > 27) throw new IllegalArgumentException("ID do estado inválido!");
 		this.id = id;
+		switch (id) {
+			case 1:
+				setSigla("AC");
+				this.nome = "Acre";
+				break;
+			case 2:
+				setSigla("AL");
+				this.nome = "Alagoas";
+				break;
+			case 3:
+				setSigla("AP");
+				this.nome = "Amapá";
+				break;
+			case 4:
+				setSigla("AM");
+				this.nome = "Amazonas";
+				break;
+			case 5:
+				setSigla("BA");
+				this.nome = "Bahia";
+				break;
+			case 6:
+				setSigla("CE");
+				this.nome = "Ceará";
+				break;
+			case 7:
+				setSigla("DF");
+				this.nome = "Distrito Federal";
+				break;
+			case 8:
+				setSigla("ES");
+				this.nome = "Espírito Santo";
+				break;
+			case 9:
+				setSigla("GO");
+				this.nome = "Goiás";
+				break;
+			case 10:
+				setSigla("MA");
+				this.nome = "Maranhão";
+				break;
+			case 11:
+				setSigla("MT");
+				this.nome = "Mato Grosso";
+				break;
+			case 12:
+				setSigla("MS");
+				this.nome = "Mato Grosso do Sul";
+				break;
+			case 13:
+				setSigla("MG");
+				this.nome = "Minas Gerais";
+				break;
+			case 14:
+				setSigla("PA");
+				this.nome = "Pará";
+				break;
+			case 15:
+				setSigla("PB");
+				this.nome = "Paraíba";
+				break;
+			case 16:
+				setSigla("PR");
+				this.nome = "Paraná";
+				break;
+			case 17:
+				setSigla("PE");
+				this.nome = "Pernambuco";
+				break;
+			case 18:
+				setSigla("PI");
+				this.nome = "Piauí";
+				break;
+			case 19:
+				setSigla("RJ");
+				this.nome = "Rio de Janeiro";
+				break;
+			case 20:
+				setSigla("RN");
+				this.nome = "Rio Grande do Norte";
+				break;
+			case 21:
+				setSigla("RS");
+				this.nome = "Rio Grande do Sul";
+				break;
+			case 22:
+				setSigla("RO");
+				this.nome = "Rondônia";
+				break;
+			case 23:
+				setSigla("RR");
+				this.nome = "Roraima";
+				break;
+			case 24:
+				setSigla("SC");
+				this.nome = "Santa Catarina";
+				break;
+			case 25:
+				setSigla("SP");
+				this.nome = "São Paulo";
+				break;
+			case 26:
+				setSigla("SE");
+				this.nome = "Sergipe";
+				break;
+			case 27:
+				setSigla("TO");
+				this.nome = "Tocantins";
+				break;				
+		}
 	}
 
 	public String getNome() {
@@ -18,116 +129,116 @@ public class Estado {
 	}
 
 	public void setNome(String nome) {
-		if (nome.equals(null)) throw new IllegalArgumentException("Nome do estado invalido!");
+		if (nome == null) throw new IllegalArgumentException("Nome do estado inválido!");
 		this.nome = nome;
 		switch (nome) {
 			case "Acre":
 				setSigla("AC");
-				setId(1);
+				this.id = 1;
 				break;
 			case "Alagoas":
 				setSigla("AL");
-				setId(2);
+				this.id = 2;
 				break;
 			case "Amapá":
 				setSigla("AP");
-				setId(3);
+				this.id = 3;
 				break;
 			case "Amazonas":
 				setSigla("AM");
-				setId(4);
+				this.id = 4;
 				break;
 			case "Bahia":
 				setSigla("BA");
-				setId(5);
+				this.id = 5;
 				break;
 			case "Ceará":
 				setSigla("CE");
-				setId(6);
+				this.id = 6;
 				break;
 			case "Distrito Federal":
 				setSigla("DF");
-				setId(7);
+				this.id = 7;
 				break;
 			case "Espírito Santo":
 				setSigla("ES");
-				setId(8);
+				this.id = 8;
 				break;
 			case "Goiás":
 				setSigla("GO");
-				setId(9);
+				this.id = 9;
 				break;
 			case "Maranhão":
 				setSigla("MA");
-				setId(10);
+				this.id = 10;
 				break;
 			case "Mato Grosso":
 				setSigla("MT");
-				setId(11);
+				this.id = 11;
 				break;
 			case "Mato Grosso do Sul":
 				setSigla("MS");
-				setId(12);
+				this.id = 12;
 				break;
 			case "Minas Gerais":
 				setSigla("MG");
-				setId(13);
+				this.id = 13;
 				break;
 			case "Pará":
 				setSigla("PA");
-				setId(14);
+				this.id = 14;
 				break;
 			case "Paraíba":
 				setSigla("PB");
-				setId(15);
+				this.id = 15;
 				break;
 			case "Paraná":
 				setSigla("PR");
-				setId(16);
+				this.id = 16;
 				break;
 			case "Pernambuco":
 				setSigla("PE");
-				setId(17);
+				this.id = 17;
 				break;
 			case "Piauí":
 				setSigla("PI");
-				setId(18);
+				this.id = 18;
 				break;
 			case "Rio de Janeiro":
 				setSigla("RJ");
-				setId(19);
+				this.id = 19;
 				break;
 			case "Rio Grande do Norte":
 				setSigla("RN");
-				setId(20);
+				this.id = 20;
 				break;
 			case "Rio Grande do Sul":
 				setSigla("RS");
-				setId(21);
+				this.id = 21;
 				break;
 			case "Rondônia":
 				setSigla("RO");
-				setId(22);
+				this.id = 22;
 				break;
 			case "Roraima":
 				setSigla("RR");
-				setId(23);
+				this.id = 23;
 				break;
 			case "Santa Catarina":
 				setSigla("SC");
-				setId(24);
+				this.id = 24;
 				break;
 			case "São Paulo":
 				setSigla("SP");
-				setId(25);
+				this.id = 25;
 				break;
 			case "Sergipe":
 				setSigla("SE");
-				setId(26);
+				this.id = 26;
 				break;
 			case "Tocantins":
 				setSigla("TO");
-				setId(27);
+				this.id = 27;
 				break;
 		}
 	}

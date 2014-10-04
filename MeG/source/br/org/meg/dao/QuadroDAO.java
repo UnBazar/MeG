@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.org.meg.exception.DAOException;
 import br.org.meg.model.Descricao;
 import br.org.meg.model.Estado;
 import br.org.meg.model.Quadro;
@@ -32,13 +33,10 @@ public class QuadroDAO {
 			stmt.close();
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
-			throw new RuntimeException("Erro ao acessar o banco de dados!");
+			throw new DAOException(sqlException);
 		}
 	}
 	
-	public void remover(Quadro quadro) {
-		
-	}
 	
 	public List<Quadro> obterLista(int anoInicial, int anoFinal, Estado estado, Secao secao, Descricao descricao) {
 		String sql = "SELECT *FROM Quadros "
