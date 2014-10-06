@@ -5,6 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Style geral -->
+<link rel="stylesheet" href="css/style.css">
 <title>Meg | Gráfico</title>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -36,6 +44,16 @@ function drawChart() {
 </script>
 </head>
 <body>
-	<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<section class="container">
+	<section id="cabecalho">
+		<h1><a href="#">MeG - Mercado em gráfico</a></h1>
+		<ul id="menu">
+			<li><a href="#">Sobre</a></li>
+			<li><a href="#">Como usar</a></li>
+			<li><a href="#">Link</a></li>
+		</ul>
+	</section>
+	<section id="chart_div" style="width: 900px; height: 500px;"></section>
+</section>
 </body>
 </html>
