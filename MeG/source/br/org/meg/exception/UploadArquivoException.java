@@ -10,7 +10,7 @@ public class UploadArquivoException extends RuntimeException {
 	}
 	
 	public UploadArquivoException(String mensagem) {
-		this.mensagem = mensagem;
+		this.mensagem = "Falha ao realizar o upload do arquivo! " + mensagem;
 	}
 	
 	@Override

@@ -35,21 +35,45 @@ public class Parser {
 	}
 	
 	@SuppressWarnings("resource")
+	public void validarQuantidadeDeLinhas(int quantidadeDeSecoes) throws FileNotFoundException {
+		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
+		int i = 0;
+		this.lerCabecalho();
+		
+		do {
+			i++;
+			scanner.nextLine();
+		} while (scanner.hasNext());
+		
+		if ((27 * this.quantidadeSecoes + 6) != i) {
+			throw new UploadArquivoException("Dados de entrada incompatíveis com o arquivo! (Quantidade de linhas)");
+		}
+		
+		scanner.close();
+	}
+	
+	@SuppressWarnings("resource")
 	public void validarSecao(String secao) throws FileNotFoundException {
 		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
 		this.lerCabecalho();
 		boolean contemSecao = false;
-		String lalala;
+		String token;
+		
 		while (scanner.hasNext()) {
-			lalala = scanner.next();
-			lalala = lalala.substring(1, lalala.length() - 1);
-			if (lalala.equals(secao)) {
+			token = scanner.next();
+			if (token.length() > 2) {
+				token = token.substring(1, token.length() - 1);
+			}
+			if (token.equals(secao)) {
+				System.out.println(token);
 				contemSecao = true;
 				break;
 			}
 		}
 		
-		if (!contemSecao) throw new UploadArquivoException("Dados de entrada incompatíveis com o arquivo!");
+		if (!contemSecao) {
+			throw new UploadArquivoException("Dados de entrada incompatíveis com o arquivo! (Seções)");
+		}
 		
 		scanner.close();
 	}
@@ -59,17 +83,16 @@ public class Parser {
 		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
 		this.lerCabecalho();
 		String[] tokens = scanner.nextLine().split(";");
-		System.out.printf("length: %d ano final: %d ano inicial: %d quantidadeDeSecoes: %d\n", tokens.length, 
-				anoFinal, anoInicial, this.quantidadeSecoes);
+		
 		if (tokens.length != ((anoFinal - anoInicial + 1) * 5) + 2) {
-			throw new UploadArquivoException("Dados de entrada incompatíveis com o arquivo!");
+			throw new UploadArquivoException("Dados de entrada incompatíveis com o arquivo! (Ano)");
 		}
 
 		scanner.close();
 	}
 	
 	@SuppressWarnings("resource")
-	public void parse() throws FileNotFoundException {
+	public void persist() throws FileNotFoundException {
 		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
 		ArrayList<Quadro> quadros = this.lerEstados();
 		QuadroDAO dao = new QuadroDAO();		

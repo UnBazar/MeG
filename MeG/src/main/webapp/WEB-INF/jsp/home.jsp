@@ -2,9 +2,18 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-	<head>
-		<title>Home</title>
-	</head>
+<head>	
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Style geral -->
+<link rel="stylesheet" href="css/style.css">
+<title>Home</title>
+</head>
 	<body>
 		<h2>Bem vindo, ${adm.nome}!</h2>
 		<p align="right"><a href="logout">Logout</a></p><br />
