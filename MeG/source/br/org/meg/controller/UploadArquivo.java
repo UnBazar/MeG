@@ -39,10 +39,24 @@ public class UploadArquivo implements Logica {
 						
 						HttpSession sessao = request.getSession();
 						Administrador adm = (Administrador) sessao.getAttribute("adm");
-						File uploadedFile = new File("/home/pedro/workspace/MeG/MeG/util/dados/" + adm.getNome() 
-								+ "_" + item.getName());
-						item.write(uploadedFile);
+						char[] aux = new char[adm.getNome().length()];
 						
+						for (int i = 0; i < adm.getNome().length(); i++) {
+							if (adm.getNome().charAt(i) == ' ') {
+								aux[i] = '_';
+							} else {
+								aux[i] = adm.getNome().charAt(i);
+							}
+						}
+						
+						String nomeAdm = new String(aux);
+						
+						System.out.println(nomeAdm);
+						
+						File uploadedFile = new File("/home/pedro/workspace/MeG/MeG/util/dados/" + nomeAdm + 
+								"_" + item.getName());
+						
+						item.write(uploadedFile);						
 						
 						anoInicial = Integer.parseInt(items.get(1).getString());
 						anoFinal = Integer.parseInt(items.get(2).getString());
@@ -50,6 +64,7 @@ public class UploadArquivo implements Logica {
 						for (int i = 3; i < items.size() - 1; i++) {
 							if (items.get(i).getFieldName().equals("secao")) {
 								numeroDeSecoes++;
+								items.get(i).getString();
 							}
 						}
 						
@@ -63,7 +78,9 @@ public class UploadArquivo implements Logica {
 								parser.validarSecao(items.get(i).getString());
 							}
 						}
-						parser.parse();
+						
+						parser.validarQuantidadeDeLinhas(numeroDeSecoes);
+						parser.persist();
 					}
 				}
 			} catch(Exception e) {
