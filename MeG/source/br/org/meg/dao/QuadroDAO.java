@@ -28,19 +28,51 @@ public class QuadroDAO {
 	 * @param quadro	Objeto a ser adicionado ao banco
 	 */
 	public void adicionar(Quadro quadro) {
-		String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
+		if(!existeQuadro(quadro)){
+			String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
+			try {
+				PreparedStatement stmt = this.connection.prepareStatement(sql);
+				stmt.setInt(1, quadro.getAno());
+				stmt.setFloat(2, quadro.getValor());
+				stmt.setInt(3, quadro.getEstado().getId());
+				stmt.setInt(4, quadro.getSecao().getId());
+				stmt.setInt(5, quadro.getDescricao().getId());
+				stmt.execute();
+				stmt.close();
+			} catch (SQLException sqlException) {
+				System.err.println(sqlException);
+				throw new DAOException(sqlException);
+			}
+		}
+	}
+	
+	/**
+	 * Verifica se o quadro passado por parametro existe no banco de dados.
+	 * @param quadro	objeto a ser verificado no banco de dados
+	 * @return	true caso exista
+	 */
+	public boolean existeQuadro(Quadro quadro){
+		String sql = "SELECT * FROM Quadro "
+				+ "WHERE valor = ? "
+				+ "AND estado_id = ? "
+				+ "AND secao_id = ? "
+				+ "AND descricao_id = ? "
+				+ "AND ano = ? ";
 		try {
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, quadro.getAno());
-			stmt.setFloat(2, quadro.getValor());
-			stmt.setInt(3, quadro.getEstado().getId());
-			stmt.setInt(4, quadro.getSecao().getId());
-			stmt.setInt(5, quadro.getDescricao().getId());
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException sqlException) {
-			System.err.println(sqlException);
-			throw new DAOException(sqlException);
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setFloat(1, quadro.getValor());
+			ps.setInt(2, quadro.getEstado().getId());
+			ps.setInt(3, quadro.getSecao().getId());
+			ps.setInt(4, quadro.getDescricao().getId());
+			ps.setInt(5, quadro.getAno());
+			ResultSet rs = ps.executeQuery();
+			if(rs.first()){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(SQLException exception){
+			return false;
 		}
 	}
 	

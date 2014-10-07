@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.org.meg.dao.ConnectionFactory;
@@ -58,7 +57,23 @@ public class QuadroDAOTest {
 //	public void testParametroInvalidoObterLista(){
 //		Nao se achou casos em que se retorna essa Exception
 //	}
+	
+	@Test
+	public void testQuadroInexistente(){
+		assertFalse(dao.existeQuadro(quadro));
+	}
 
+	@Test
+	public void testeExisteQuadro(){
+		Quadro quadroExistente = new Quadro();
+		quadroExistente.setAno(2010);
+		quadroExistente.setDescricao(new Descricao(1));
+		quadroExistente.setEstado(new Estado(22));
+		quadroExistente.setSecao(new Secao(1));
+		quadroExistente.setValor(339);
+		assertTrue(dao.existeQuadro(quadroExistente));
+	}
+	
 	@After
 	public void excluirQuadro(){
 		createConnection();
