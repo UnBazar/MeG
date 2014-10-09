@@ -84,10 +84,10 @@ public class Estado {
 				setNome("Santa Catarina");
 				break;
 			case 25:
-				setNome("São Paulo");
+				setNome("Sergipe");
 				break;
 			case 26:
-				setNome("Sergipe");
+				setNome("São Paulo");
 				break;
 			case 27:
 				setNome("Tocantins");

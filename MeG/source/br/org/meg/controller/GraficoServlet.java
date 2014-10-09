@@ -40,6 +40,7 @@ public class GraficoServlet extends HttpServlet{
 	}
 	
 	/**
+	 * Metodo que realiza o busca de dados para plotar grafico
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
