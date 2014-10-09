@@ -17,60 +17,39 @@ import br.org.meg.model.Estado;
 import br.org.meg.model.Quadro;
 import br.org.meg.model.Secao;
 
-/**
- * Servlet implementation class Login
- */
-@WebServlet("/grafico")
-public class GraficoServlet extends HttpServlet{
+@WebServlet ("/compara")
+public class ComparaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private List<Quadro> quadros = new ArrayList<>();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GraficoServlet() {
-        super();
-    }
     
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+	public ComparaServlet(){
+		super();
 	}
 	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int descricao_id = 0;
-		int setor_id = 0;
-		int estado_id = 0;
-		int anoInicial = 0;
-		int anoFinal = 0;
-		descricao_id = Integer.valueOf(request.getParameter("descricao"));
-		setor_id = Integer.valueOf(request.getParameter("setor"));
-		estado_id= Integer.valueOf(request.getParameter("estado"));
-		anoInicial = Integer.valueOf(request.getParameter("anoInicial"));
-		anoFinal = Integer.valueOf(request.getParameter("anoFinal"));
+		Estado estado = new Estado();
+		Secao secao = new Secao((String)request.getSession().getAttribute("secao"));
+		Descricao descricao = new Descricao();
+		descricao.setNome((String)request.getSession().getAttribute("titulo"));
+		estado.setId( Integer.parseInt(request.getParameter("estado")));
+		List<String> listadeAnos = (List<String>)request.getSession().getAttribute("anos");
+		int anoInicial = Integer.parseInt(listadeAnos.get(0));
+		int anoFinal = Integer.parseInt(listadeAnos.get(listadeAnos.size()-1));
 		QuadroDAO dao = new QuadroDAO();
-		Descricao descricao = new Descricao(descricao_id);
-		Secao secao = new Secao(setor_id);
-		Estado estado = new Estado (estado_id);
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
-		request.getSession().setAttribute("valores", listarValores());
-		request.getSession().setAttribute("anos", listarAnos());
-		request.getSession().setAttribute("tamanho", quadros.size());
-		request.getSession().setAttribute("titulo", descricao.getNome());
-		request.getSession().setAttribute("secao", secao.getNome());
-		request.getSession().setAttribute("estado", estado.getNome());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
 		requestDispatcher.forward(request, response);
 	}
+	
 	/**
 	 * Lista os valores dos Quadros contidos na lista global 'quadros'
 	 * 
-	 * @return	uma lista de floats contendo os valores
+	 * @return	uma lista de Strings contendo os valores
 	 */
 	private List<Float> listarValores(){
 		List<Float> valores = new ArrayList<Float>();

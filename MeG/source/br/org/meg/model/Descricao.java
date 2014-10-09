@@ -1,5 +1,7 @@
 package br.org.meg.model;
 
+import java.text.BreakIterator;
+
 public class Descricao {
 	private int id;
 	private String nome;
@@ -39,6 +41,8 @@ public class Descricao {
 				break;
 		}
 	}
+	
+	
 
 	public String getNome() {
 		return nome;
@@ -46,6 +50,24 @@ public class Descricao {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+		
+		switch(nome){
+		case "Número de empresas e outras organizações (Unidades)":
+			this.id = 1;
+			break;
+		case "Pessoal ocupado total (Pessoas)":
+			this.id = 2;
+			break;
+		case "Pessoal ocupado assalariado (Pessoas)":
+			this.id = 3;
+			break;
+		case "Salários e outras remunerações (Mil Reais)":
+			this.id = 4;
+			break;
+		case "Salário médio mensal (Salários mínimos)":
+			this.id = 5;
+			break;
+		}
 		
 	}
 
