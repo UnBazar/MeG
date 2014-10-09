@@ -1,7 +1,5 @@
 package br.org.meg.model;
 
-import java.text.BreakIterator;
-
 public class Descricao {
 	private int id;
 	private String nome;
