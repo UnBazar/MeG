@@ -40,6 +40,7 @@ public class GraficoServlet extends HttpServlet{
 	}
 	
 	/**
+	 * Metodo que realiza o busca de dados para plotar grafico
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,19 +57,21 @@ public class GraficoServlet extends HttpServlet{
 		QuadroDAO dao = new QuadroDAO();
 		Descricao descricao = new Descricao(descricao_id);
 		Secao secao = new Secao(setor_id);
-		quadros = dao.obterLista(anoInicial, anoFinal, new Estado(estado_id), secao, descricao);
+		Estado estado = new Estado (estado_id);
+		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
 		request.getSession().setAttribute("valores", listarValores());
 		request.getSession().setAttribute("anos", listarAnos());
 		request.getSession().setAttribute("tamanho", quadros.size());
 		request.getSession().setAttribute("titulo", descricao.getNome());
 		request.getSession().setAttribute("secao", secao.getNome());
+		request.getSession().setAttribute("estado", estado.getNome());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
 		requestDispatcher.forward(request, response);
 	}
 	/**
 	 * Lista os valores dos Quadros contidos na lista global 'quadros'
 	 * 
-	 * @return	uma lista de Strings contendo os valores
+	 * @return	uma lista de floats contendo os valores
 	 */
 	private List<Float> listarValores(){
 		List<Float> valores = new ArrayList<Float>();
