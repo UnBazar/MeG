@@ -16,9 +16,17 @@ import br.org.meg.model.Administrador;
 import br.org.meg.parser.Parser;
 
 public class UploadArquivo implements Logica {
-
-	public String executa(HttpServletRequest request, 
-			HttpServletResponse response) {
+	
+	private String url;
+	
+	public UploadArquivo(){
+		this.url = UploadArquivo.class.getProtectionDomain().getCodeSource().getLocation()+
+				"util"+File.separator+"dados"+File.separator;
+		this.url = url.replaceAll("file:", "");
+		this.url = url.replaceAll("target/classes/", "");
+	}
+	
+	public String executa(HttpServletRequest request, HttpServletResponse response) {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (isMultipart) {
 			try {
@@ -53,8 +61,7 @@ public class UploadArquivo implements Logica {
 						
 						System.out.println(nomeAdm);
 						
-						File uploadedFile = new File("/home/pedro/workspace/MeG/MeG/util/dados/" + nomeAdm + 
-								"_" + item.getName());
+						File uploadedFile = new File(this.url + nomeAdm + "_" + item.getName());
 						
 						item.write(uploadedFile);						
 						
