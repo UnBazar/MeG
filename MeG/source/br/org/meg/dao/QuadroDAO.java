@@ -66,13 +66,13 @@ public class QuadroDAO {
 			ps.setInt(4, quadro.getDescricao().getId());
 			ps.setInt(5, quadro.getAno());
 			ResultSet rs = ps.executeQuery();
-			if(rs.first()){
-				return true;
-			}else{
-				return false;
-			}
+			boolean existeQuadro = rs.first();
+			rs.close();
+			ps.close();
+			return existeQuadro;
+			
 		}catch(SQLException exception){
-			return false;
+			throw new DAOException("Erro ao acessar o banco de dados!");
 		}
 	}
 	
@@ -112,8 +112,10 @@ public class QuadroDAO {
 				quadro.setValor(rs.getFloat("valor"));
 				quadros.add(quadro);				
 			}
+			rs.close();
+			ps.close();
 			if(quadros.isEmpty())
-				throw new NullPointerException();
+				throw new DAOException("Lista não existe!");
 			return quadros;
 		}catch (SQLException e) {
 			e.printStackTrace();

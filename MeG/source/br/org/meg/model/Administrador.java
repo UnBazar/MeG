@@ -32,12 +32,11 @@ public class Administrador {
 
 	public void setEmail(String email) {
 		if (email == null) throw new IllegalArgumentException("Email inválido!");
-		int numeroDeArrobas = 0, numeroDePontos = 0;
+		int numeroDeArrobas = 0;
 		for (int i = 0; i < email.length(); i++) {
 			if (email.charAt(i) == '@') numeroDeArrobas++;
-			if (email.charAt(i) == '.') numeroDePontos++;
 		}
-		if (numeroDeArrobas != 1 || numeroDePontos != 1) throw new IllegalArgumentException("Email inválido!");
+		if (numeroDeArrobas != 1) throw new IllegalArgumentException("Email inválido!");
 		this.email = email;
 	}
 

@@ -29,7 +29,6 @@ public class UploadArquivo implements Logica {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (isMultipart) {
 			try {
-				
 				DiskFileItemFactory factory = new DiskFileItemFactory();
 				factory.setSizeThreshold(100000);
 				

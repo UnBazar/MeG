@@ -37,12 +37,12 @@ public class AdministradorDAOTest {
 		dao.validaLogin("pedrodelyra", "senhainvalida");
 	}
 	
-	@Test
+	@Test(expected = DAOException.class)
 	public void testExisteNomeDeUsuario() {
 		dao.existeNomeDeUsuario("pedrodelyra");
 	}
 	
-	@Test(expected = DAOException.class)
+	@Test
 	public void testExisteNomeDeUsuarioShouldThrowException() {
 		dao.existeNomeDeUsuario("usuarioInexistente");
 	}

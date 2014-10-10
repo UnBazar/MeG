@@ -1,6 +1,5 @@
 package br.org.meg.test;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;

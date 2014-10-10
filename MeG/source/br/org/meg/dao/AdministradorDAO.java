@@ -28,7 +28,7 @@ public class AdministradorDAO {
 			stmt.close();
 		} catch(SQLException sqlException) {
 			System.err.println(sqlException);
-			throw new RuntimeException("Erro ao adicionar um administrador!");
+			throw new DAOException("Erro ao adicionar um administrador!");
 		}
 	}
 	
@@ -63,28 +63,24 @@ public class AdministradorDAO {
 			throw new DAOException("Login inválido!");
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
-			throw new IllegalArgumentException("Administrador não encontrado no banco!");
+			throw new DAOException("Administrador não encontrado no banco!");
 		}
 	}
 	
 	public boolean existeNomeDeUsuario(String nomeDeUsuario) {
-		String sql = "SELECT * FROM Administrador";
+		String sql = "SELECT * FROM Administrador WHERE nome_de_usuario = ?";
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, nomeDeUsuario);
 			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				if(nomeDeUsuario.equals(rs.getString("nome_de_usuario"))) {
-					rs.close();
-					stmt.close();
-					return true;
-				}
-			}
+			boolean existeNome = rs.first();
 			rs.close();
 			stmt.close();
-			throw new DAOException("Nome de usuário já existe!");
+			if (!existeNome) return false;
+			else throw new DAOException("Nome de usuário já existe!");
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
-			throw new IllegalArgumentException("Erro ao acessar o banco!");
+			throw new DAOException("Erro ao acessar o banco!");
 		}
 	}
 	

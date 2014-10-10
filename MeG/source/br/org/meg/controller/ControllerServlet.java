@@ -28,7 +28,6 @@ public class ControllerServlet extends HttpServlet {
 			request.getRequestDispatcher(pagina).forward(request, response);
 		} catch (Exception exception) {
 			System.err.println(exception);
-			request.getSession().invalidate();
 			request.getRequestDispatcher("erro.jsp").forward(request, response);
 		}
 	}

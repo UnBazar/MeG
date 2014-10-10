@@ -1,6 +1,7 @@
 package br.org.meg.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import org.junit.Test;
 
 import br.org.meg.dao.ConnectionFactory;
 import br.org.meg.dao.QuadroDAO;
+import br.org.meg.exception.DAOException;
 import br.org.meg.model.Descricao;
 import br.org.meg.model.Estado;
 import br.org.meg.model.Quadro;
@@ -43,7 +45,7 @@ public class QuadroDAOTest {
 		assertFalse(dao.obterLista(2008, 2012, new Estado(5), new Secao(3), new Descricao(3)).isEmpty());
 	}
 	
-	@Test(expected =  NullPointerException.class)
+	@Test(expected =  DAOException.class)
 	public void testObterListaExcecao(){
 		dao.obterLista(1998, 2005, new Estado(5), new Secao(3), new Descricao(3));
 	}
@@ -66,11 +68,12 @@ public class QuadroDAOTest {
 	@Test
 	public void testeExisteQuadro(){
 		Quadro quadroExistente = new Quadro();
-		quadroExistente.setAno(2010);
-		quadroExistente.setDescricao(new Descricao(1));
-		quadroExistente.setEstado(new Estado(22));
-		quadroExistente.setSecao(new Secao(1));
-		quadroExistente.setValor(339);
+		quadroExistente.setAno(2011);
+		quadroExistente.setDescricao(new Descricao(3));
+		quadroExistente.setEstado(new Estado(5));
+		quadroExistente.setSecao(new Secao(15));
+		quadroExistente.setValor(529532);
+		//assertEquals(true, dao.existeQuadro(quadroExistente));
 		assertTrue(dao.existeQuadro(quadroExistente));
 	}
 	

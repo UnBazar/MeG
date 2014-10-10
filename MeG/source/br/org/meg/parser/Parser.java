@@ -65,7 +65,6 @@ public class Parser {
 				token = token.substring(1, token.length() - 1);
 			}
 			if (token.equals(secao)) {
-//				System.out.println(token);
 				contemSecao = true;
 				break;
 			}
@@ -96,8 +95,8 @@ public class Parser {
 		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
 		ArrayList<Quadro> quadros = this.lerEstados();
 		QuadroDAO dao = new QuadroDAO();		
-		for (int j = 0; j < quadros.size(); j++) {
-			dao.adicionar(quadros.get(j));
+		for (Quadro quadro : quadros) {
+			dao.adicionar(quadro);
 		}
 		scanner.close();
 	}

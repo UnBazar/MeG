@@ -26,7 +26,7 @@ public class LoginAdmTest {
 
 	@Test
 	public void testExecuta() {
-		when(request.getParameter("nomeDeUsuario")).thenReturn("pwener");
+		when(request.getParameter("nomeDeUsuario")).thenReturn("pedrodelyra");
 		when(request.getParameter("senha")).thenReturn("mudar123");
 		LoginAdm servlet = new LoginAdm();
 		assertEquals("/WEB-INF/jsp/home.jsp", servlet.executa(request, response));
