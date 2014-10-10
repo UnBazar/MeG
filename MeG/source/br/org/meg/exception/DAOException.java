@@ -9,6 +9,10 @@ public class DAOException extends RuntimeException {
 		this.mensagem = "Falha ao acessar o banco de dados! " + e.getMessage();
 	}
 	
+	public DAOException(String mensagem) {
+		this.mensagem = mensagem;
+	}
+	
 	@Override
 	public String getMessage() {
 		return this.mensagem;

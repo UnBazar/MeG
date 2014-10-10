@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import br.org.meg.exception.DAOException;
 import br.org.meg.model.Administrador;
 
 public class AdministradorDAO {
@@ -40,24 +41,26 @@ public class AdministradorDAO {
 	 * 			Ou um administrador com seus dados
 	 */
 	public Administrador validaLogin(String nomeDeUsuario, String senha) {
-		String sql = "SELECT * FROM Administrador Where nome = ? AND senha = ?";
+		String sql = "SELECT * FROM Administrador where nome_de_usuario = ? AND senha = ?";
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nomeDeUsuario);
 			stmt.setString(2, senha);
 			stmt.setMaxRows(1);
 			ResultSet rs = stmt.executeQuery();
-			Administrador administrador = null;
 			if(rs.first()){
-				administrador = new Administrador();
+				Administrador administrador = new Administrador();
 				administrador.setNome(rs.getString("nome"));
 				administrador.setSenha(rs.getString("senha"));
 				administrador.setEmail(rs.getString("email"));
 				administrador.setNomeDeUsuario(rs.getString("nome_de_usuario"));
+				rs.close();
+				stmt.close();
+				return administrador;
 			}
 			rs.close();
 			stmt.close();
-			return administrador;
+			throw new DAOException("Login inválido!");
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
 			throw new IllegalArgumentException("Administrador não encontrado no banco!");
@@ -71,12 +74,14 @@ public class AdministradorDAO {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				if(nomeDeUsuario.equals(rs.getString("nome_de_usuario"))) {
+					rs.close();
+					stmt.close();
 					return true;
 				}
 			}
 			rs.close();
 			stmt.close();
-			return false;
+			throw new DAOException("Nome de usuário já existe!");
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
 			throw new IllegalArgumentException("Erro ao acessar o banco!");
