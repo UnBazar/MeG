@@ -10,6 +10,7 @@ a:HOVER{
 #cabecalho{
 	width: 100%;
 	height: 80px;
+	border-bottom: 1px solid #DCDCDC;
 }
 
 #cabecalho h1{
