@@ -65,7 +65,7 @@ public class Parser {
 				token = token.substring(1, token.length() - 1);
 			}
 			if (token.equals(secao)) {
-				System.out.println(token);
+//				System.out.println(token);
 				contemSecao = true;
 				break;
 			}
@@ -129,10 +129,10 @@ public class Parser {
 							if (k < 28) quadros.get(quadros.size() - 1).setValor(Float.parseFloat(tokens[2 + k]));
 							else quadros.get(quadros.size() - 1).setValor(Float.parseFloat(corrigirVirgula(tokens[2 + k])));
 						} else quadros.get(quadros.size() - 1).setValor(-1.0f);
-						System.out.printf("Tipo: %s Estado: %s Secao: %s Ano: %d Valor: %.1f\n",
-						 		quadros.get(quadros.size() - 1).getDescricao().getNome(), quadros.get(quadros.size() - 1).getEstado().getNome(), 
-						 		quadros.get(quadros.size() - 1).getSecao().getNome(), 
-						 		quadros.get(quadros.size() - 1).getAno(), quadros.get(quadros.size() - 1).getValor());
+//						System.out.printf("Tipo: %s Estado: %s Secao: %s Ano: %d Valor: %.1f\n",
+//						 		quadros.get(quadros.size() - 1).getDescricao().getNome(), quadros.get(quadros.size() - 1).getEstado().getNome(), 
+//						 		quadros.get(quadros.size() - 1).getSecao().getNome(), 
+//						 		quadros.get(quadros.size() - 1).getAno(), quadros.get(quadros.size() - 1).getValor());
 						 
 				}
 			}

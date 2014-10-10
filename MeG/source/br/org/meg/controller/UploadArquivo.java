@@ -20,10 +20,9 @@ public class UploadArquivo implements Logica {
 	private String url;
 	
 	public UploadArquivo(){
-		this.url = UploadArquivo.class.getProtectionDomain().getCodeSource().getLocation()+
-				"util"+File.separator+"dados"+File.separator;
+		this.url = UploadArquivo.class.getProtectionDomain().getCodeSource().getLocation()+"";
 		this.url = url.replaceAll("file:", "");
-		this.url = url.replaceAll("target/classes/", "");
+		this.url = url.replaceAll("WEB-INF/classes/br/org/meg/controller/UploadArquivo.class", "");
 	}
 	
 	public String executa(HttpServletRequest request, HttpServletResponse response) {
@@ -59,10 +58,7 @@ public class UploadArquivo implements Logica {
 						
 						String nomeAdm = new String(aux);
 						
-						System.out.println(nomeAdm);
-						
 						File uploadedFile = new File(this.url + nomeAdm + "_" + item.getName());
-						
 						item.write(uploadedFile);						
 						
 						anoInicial = Integer.parseInt(items.get(1).getString());

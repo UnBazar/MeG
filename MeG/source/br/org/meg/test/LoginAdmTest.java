@@ -21,7 +21,7 @@ public class LoginAdmTest {
 	public void setUp() throws Exception {
 		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
-		when(request.getSession()).thenReturn(mock(HttpSession.class));
+		when(request.getSession(true)).thenReturn(mock(HttpSession.class));
 	}
 
 	@Test
@@ -29,7 +29,7 @@ public class LoginAdmTest {
 		when(request.getParameter("nomeDeUsuario")).thenReturn("pwener");
 		when(request.getParameter("senha")).thenReturn("mudar123");
 		LoginAdm servlet = new LoginAdm();
-		assertEquals("login-adm.jsp", servlet.executa(request, response));
+		assertEquals("/WEB-INF/jsp/home.jsp", servlet.executa(request, response));
 	}
 
 }
