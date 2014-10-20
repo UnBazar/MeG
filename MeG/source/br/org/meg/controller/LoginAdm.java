@@ -12,7 +12,8 @@ public class LoginAdm implements Logica {
 	public String executa(HttpServletRequest request,
 			HttpServletResponse response) {
 		AdministradorDAO dao = new AdministradorDAO();
-		Administrador adm = dao.validaLogin(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
+		dao.validaLogin(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
+		Administrador adm = dao.getAdministrador();
 		if (adm != null) {
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("adm", adm);
