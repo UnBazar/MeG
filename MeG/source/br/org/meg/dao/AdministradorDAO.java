@@ -11,6 +11,7 @@ import br.org.meg.model.Administrador;
 public class AdministradorDAO {
 	private Connection connection;
 	Administrador administrador = new Administrador();
+	
 	public AdministradorDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
@@ -35,6 +36,7 @@ public class AdministradorDAO {
 	public Administrador getAdministrador(){
 		return administrador;
 	}
+	
 	/**
 	 *	Metodo que realiza verificacao de usuario no banco, caso o nomeDeUsuario e a senha
 	 *	Estejam corretos o usuario é valido 
@@ -44,8 +46,8 @@ public class AdministradorDAO {
 	 * 			Ou um administrador com seus dados
 	 */
 	public Administrador buscaAdm(String nomeDeUsuario, String senha){
+		administrador = null;
 		String sql = "SELECT * FROM Administrador where nome_de_usuario = ? AND senha = ?";
-		
 		try{
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nomeDeUsuario);
@@ -53,11 +55,10 @@ public class AdministradorDAO {
 			stmt.setMaxRows(1);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.first()){
-				
 				administrador.setNome(rs.getString("nome"));
 				administrador.setSenha(rs.getString("senha"));
 				administrador.setEmail(rs.getString("email"));
-				administrador.setNomeDeUsuario(rs.getString("nome_de_usuario"));
+				administrador.setNomeDeUsuario(rs.getString("nome_de_usuario"));				
 				rs.close();
 				stmt.close();
 			}
@@ -66,14 +67,14 @@ public class AdministradorDAO {
 			throw new DAOException("Administrador não encontrado no banco!");
 		}
 		return administrador;
-		
 	}
+	
 	public boolean validaLogin(String nomeDeUsuario, String senha) {
-		if(buscaAdm(nomeDeUsuario, senha) != null)
+		buscaAdm(nomeDeUsuario, senha);
+		if(administrador != null) 
 			return true;
-		else
+		else 
 			return false;
-		
 	}
 	
 	public boolean existeNomeDeUsuario(String nomeDeUsuario) {

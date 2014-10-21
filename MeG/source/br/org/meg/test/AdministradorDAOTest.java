@@ -1,5 +1,7 @@
 package br.org.meg.test;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,14 +29,20 @@ public class AdministradorDAOTest {
 		dao.adicionar(adm);
 	}
 	
-	@Test
+	@Test 
 	public void testValidaLoginTrue() {
-		dao.validaLogin("pedrodelyra", "mudar123");
+		AdministradorDAO dao = new AdministradorDAO();
+		boolean expResult = true;
+		boolean result = dao.validaLogin("pedrodelyra", "mudar123");
+		assertEquals(expResult, result);
 	}
 	
 	@Test
 	public void testValidaLoginFalse(){
-		dao.validaLogin("pedrodelyra", "senhaErrada");
+		AdministradorDAO dao = new AdministradorDAO();
+		boolean expResult = false;
+		boolean result = dao.validaLogin("Nome Inválido", "Senha Inválida");
+		assertEquals(expResult, result);
 	}
 	
 	@Test
