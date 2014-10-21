@@ -135,15 +135,21 @@ public class QuadroDAO {
 			stmt.setInt(2, descricao.getId());
 			stmt.setInt(3, ano);
 			ResultSet rs = stmt.executeQuery();
+			List<Quadro> lista = new ArrayList<>();
 			while(rs.next()){
-				System.out.println(rs.getString(descricao.getNome()));
-				System.out.println(rs.getString("estado"));
-				System.out.println(rs.getInt("ano"));
-				System.out.println(rs.getFloat("valor"));
-				System.out.println();
+				Quadro quadro = new Quadro();
+				quadro.setAno(ano);
+				Estado estado = new Estado();
+				estado.setId(rs.getInt("estado_id"));
+				quadro.setEstado(estado);
+				quadro.setSecao(secao);
+				quadro.setDescricao(descricao);
+				quadro.setValor(rs.getFloat("valor"));
+				lista.add(quadro);
 			}
-			return null;
-			
+			rs.close();
+			stmt.close();
+			return lista;
 		}catch(SQLException exception){
 			System.err.println(exception);
 			throw new DAOException(exception);
