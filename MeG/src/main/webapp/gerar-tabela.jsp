@@ -9,11 +9,8 @@ pageEncoding="UTF-8"%>
 	</head>
 
 	<body>
-
 		<form action="sistema" method="post">
-
-			<input type="hidden" name="logica" value="TabelaServlet" />
-
+			<input type="hidden" name="logica" value="Tabela" />
 			<label id="ano">Ano:</label>			
 			<select name="ano">
 				<option value="2007" selected="selected">2007</option>
@@ -22,8 +19,7 @@ pageEncoding="UTF-8"%>
 				<option value="2010">2010</option>
 				<option value="2011">2011</option>
 				<option value="2012">2012</option>			
-			</select>			
-			<br>
+			</select><br>
 			<label id="setor">Setor:</label>
 			<select name="setor">
 				<option value="1">Agricultura, pecuária, produção florestal, pesca e aquicultura</option>
@@ -47,8 +43,7 @@ pageEncoding="UTF-8"%>
 				<option value="19">Outras atividades de serviços</option>
 				<option value="20">Serviços domésticos</option>
 				<option value="21">Organismos internacionais e outras instituições extraterritoriais</option>
-			</select>
-			<br>
+			</select><br>
 			<input type="submit" value="Gerar Tabela" />
 		</form>
 	</body>
