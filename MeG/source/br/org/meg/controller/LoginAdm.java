@@ -9,12 +9,15 @@ import br.org.meg.model.Administrador;
 
 public class LoginAdm implements Logica {
 	
+	/**
+	 * Executa o login de um administrador
+	 */
 	public String executa(HttpServletRequest request,
 			HttpServletResponse response) {
 		AdministradorDAO dao = new AdministradorDAO();
 		dao.validaLogin(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
 		Administrador adm = dao.getAdministrador();
-		if (adm != null) {
+		if (adm.getNomeDeUsuario() != null) {
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("adm", adm);
 			return "/WEB-INF/jsp/home.jsp";
