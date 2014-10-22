@@ -20,8 +20,6 @@ import br.org.meg.model.Secao;
 @WebServlet ("/compara")
 public class ComparaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private List<Quadro> quadros = new ArrayList<>();
-    
 	
 	public ComparaServlet(){
 		super();
@@ -30,6 +28,7 @@ public class ComparaServlet extends HttpServlet {
 	 * Método que faz comparacao de dados entre dois estados
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Quadro> quadros = new ArrayList<>();
 		Estado estado = new Estado();
 		Secao secao = new Secao((String)request.getSession().getAttribute("secao"));
 		Descricao descricao = new Descricao();
@@ -40,7 +39,7 @@ public class ComparaServlet extends HttpServlet {
 		int anoFinal = Integer.parseInt(listadeAnos.get(listadeAnos.size()-1));
 		QuadroDAO dao = new QuadroDAO();
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
-		request.getSession().setAttribute("valores2", listarValores());
+		request.getSession().setAttribute("valores2", listarValores(quadros));
 		request.getSession().setAttribute("estado2", estado.getNome());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("compara.jsp");
 		requestDispatcher.forward(request, response);
@@ -51,7 +50,7 @@ public class ComparaServlet extends HttpServlet {
 	 * 
 	 * @return	uma lista de Strings contendo os valores
 	 */
-	private List<Float> listarValores(){
+	private List<Float> listarValores(List<Quadro> quadros){
 		List<Float> valores = new ArrayList<Float>();
 		for( Quadro q: quadros){
 			valores.add(q.getValor());
