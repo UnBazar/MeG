@@ -29,20 +29,6 @@ public class AdministradorDAOTest {
 		dao.adicionar(adm);
 	}
 	
-	@Test 
-	public void testValidaLoginTrue() {
-		boolean expResult = true;
-		boolean result = dao.validaLogin("pedrodelyra10", "mudar123");
-		assertEquals(expResult, result);
-	}
-	
-	@Test
-	public void testValidaLoginFalse(){
-		boolean expResult = false;
-		boolean result = dao.validaLogin("Nome Inválido", "Senha Inválida");
-		assertEquals(expResult, result);
-	}
-	
 	@Test
 	public void testExisteNomeDeUsuario() {
 		dao.existeNomeDeUsuario("Novousuario");
@@ -55,11 +41,11 @@ public class AdministradorDAOTest {
 	
 	@Test
 	public void testBuscaAdministrador(){
-		dao.buscaAdm("pedrodelyra10", "mudar123");
+		dao.buscaAdministrador("pedrodelyra10", "mudar123");
 	}
 	@Test(expected = DAOException.class)
 	public void testBuscaAdministradorShouldThrowException(){
-		dao.buscaAdm("pedrodelyra10", "senhainvalida");
+		dao.buscaAdministrador("pedrodelyra10", "senhaInválida");
 	}
 
 }

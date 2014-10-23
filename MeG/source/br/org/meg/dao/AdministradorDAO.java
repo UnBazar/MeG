@@ -10,8 +10,7 @@ import br.org.meg.model.Administrador;
 
 public class AdministradorDAO {
 	private Connection connection;
-	Administrador administrador = new Administrador();
-	
+		
 	/**
 	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
 	 */
@@ -41,10 +40,6 @@ public class AdministradorDAO {
 		}
 	}
 	
-	public Administrador getAdministrador(){
-		return administrador;
-	}
-	
 	/**
 	 *	Metodo que realiza busca de administrador no banco, caso o nomeDeUsuario e a senha
 	 *	Estejam corretos o usuario é valido 
@@ -53,43 +48,29 @@ public class AdministradorDAO {
 	 * @return	nulo caso nome ou senha estejam errados. 
 	 * 			Ou um administrador com seus dados
 	 */
-	public Administrador buscaAdm(String nomeDeUsuario, String senha){
+	public Administrador buscaAdministrador(String nomeDeUsuario, String senha){
 		String sql = "SELECT * FROM Administrador where nome_de_usuario = ? AND senha = ?";
+		Administrador administrador = null;
 		try{
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nomeDeUsuario);
 			stmt.setString(2, senha);
 			stmt.setMaxRows(1);
 			ResultSet rs = stmt.executeQuery();
-			if(rs.first()){
+			if(rs.first()) {
+				administrador = new Administrador();
 				administrador.setNome(rs.getString("nome"));
 				administrador.setSenha(rs.getString("senha"));
 				administrador.setEmail(rs.getString("email"));
-				administrador.setNomeDeUsuario(rs.getString("nome_de_usuario"));
-				rs.close();
-				stmt.close();
-				
+				administrador.setNomeDeUsuario(rs.getString("nome_de_usuario"));	
 			}
+			rs.close();
+			stmt.close();
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
 			throw new DAOException("Administrador não encontrado no banco!");
 		}
-		if (administrador.getNomeDeUsuario() != null)
-			return administrador;
-		else
-			return null;
-	}
-	/**
-	 * Valida login
-	 * @param nomeDeUsuario
-	 * @param senha
-	 * @return booleano para validação de login
-	 */
-	public boolean validaLogin(String nomeDeUsuario, String senha) {
-		if(buscaAdm(nomeDeUsuario, senha) != null) 
-			return true;
-		else 
-			return false;
+		return administrador;
 	}
 	
 	/**

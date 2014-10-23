@@ -15,11 +15,10 @@ public class LoginAdm implements Logica {
 	public String executa(HttpServletRequest request,
 			HttpServletResponse response) {
 		AdministradorDAO dao = new AdministradorDAO();
-		dao.validaLogin(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
-		Administrador adm = dao.getAdministrador();
-		if (adm.getNomeDeUsuario() != null) {
+		Administrador administrador = dao.buscaAdministrador(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
+		if (administrador != null) {
 			HttpSession sessao = request.getSession(true);
-			sessao.setAttribute("adm", adm);
+			sessao.setAttribute("adm", administrador);
 			return "/WEB-INF/jsp/home.jsp";
 		} else return "login-adm.jsp";
 	}
