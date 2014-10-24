@@ -20,6 +20,8 @@ public class LoginAdm implements Logica {
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("adm", administrador);
 			return "/WEB-INF/jsp/home.jsp";
-		} else return "login-adm.jsp";
+		} else{
+			return "login-adm.jsp";
+		}
 	}
 }

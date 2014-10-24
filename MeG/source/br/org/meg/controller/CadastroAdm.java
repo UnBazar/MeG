@@ -11,11 +11,13 @@ public class CadastroAdm implements Logica {
 	public String executa(HttpServletRequest request, 
 			HttpServletResponse response) {
 
-		if (!validarSenha(request.getParameter("senha"), request.getParameter("confirmacao")))
-				throw new IllegalArgumentException("Senha inválida!");
-		
-		if (!validarNomeDeUsuario(request.getParameter("nomeDeUsuario")))
-				throw new IllegalArgumentException("Nome de usuário inválido!");
+		if (!validarSenha(request.getParameter("senha"), request.getParameter("confirmacao"))){
+			throw new IllegalArgumentException("Senha inválida!");
+		}
+				
+		if (!validarNomeDeUsuario(request.getParameter("nomeDeUsuario"))){
+			throw new IllegalArgumentException("Nome de usuário inválido!");
+		}
 		
 		Administrador adm = new Administrador();
 		adm.setNome(request.getParameter("nome"));

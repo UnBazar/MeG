@@ -44,20 +44,20 @@ public class GraficoServlet extends HttpServlet{
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Quadro> quadros = new ArrayList<>();
-		int descricao_id = 0;
-		int setor_id = 0;
-		int estado_id = 0;
+		int idDescricao = 0;
+		int idSetor = 0;
+		int idEstado = 0;
 		int anoInicial = 0;
 		int anoFinal = 0;
-		descricao_id = Integer.valueOf(request.getParameter("descricao"));
-		setor_id = Integer.valueOf(request.getParameter("setor"));
-		estado_id= Integer.valueOf(request.getParameter("estado"));
+		idDescricao = Integer.valueOf(request.getParameter("descricao"));
+		idSetor = Integer.valueOf(request.getParameter("setor"));
+		idEstado= Integer.valueOf(request.getParameter("estado"));
 		anoInicial = Integer.valueOf(request.getParameter("anoInicial"));
 		anoFinal = Integer.valueOf(request.getParameter("anoFinal"));
 		QuadroDAO dao = new QuadroDAO();
-		Descricao descricao = new Descricao(descricao_id);
-		Secao secao = new Secao(setor_id);
-		Estado estado = new Estado (estado_id);
+		Descricao descricao = new Descricao(idDescricao);
+		Secao secao = new Secao(idSetor);
+		Estado estado = new Estado (idEstado);
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
 		request.getSession().setAttribute("valores", listarValores(quadros));
 		request.getSession().setAttribute("anos", listarAnos(quadros));

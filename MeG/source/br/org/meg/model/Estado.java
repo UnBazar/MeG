@@ -9,8 +9,8 @@ public class Estado {
 	
 	}
 	
-	public Estado(int estado_id) {
-		switch (estado_id) {
+	public Estado(int idEstado) {
+		switch (idEstado) {
 			case 1:
 				setNome("Acre");
 				break;
@@ -100,7 +100,9 @@ public class Estado {
 	}
 
 	public void setId(int id) {
-		if (id < 1 || id > 27) throw new IllegalArgumentException("ID do estado inválido!");
+		if (id < 1 || id > 27){
+			throw new IllegalArgumentException("ID do estado inválido!");
+		}
 		this.id = id;
 		switch (id) {
 			case 1:
@@ -219,7 +221,9 @@ public class Estado {
 	}
 
 	public void setNome(String nome) {
-		if (nome == null) throw new IllegalArgumentException("Nome do estado inválido!");
+		if (nome == null) {
+			throw new IllegalArgumentException("Nome do estado inválido!");
+		}
 		this.nome = nome;
 		switch (nome) {
 			case "Acre":

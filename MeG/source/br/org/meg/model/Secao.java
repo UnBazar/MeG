@@ -21,7 +21,9 @@ public class Secao {
 	}
 	
 	public void setId(int id) {
-		if (id < 1 || id > 21) throw new IllegalArgumentException("ID da seção inválido!");
+		if (id < 1 || id > 21){
+			throw new IllegalArgumentException("ID da seção inválido!");
+		}
 		this.id = id;
 		switch (id){
 			case 1:
@@ -95,7 +97,9 @@ public class Secao {
 	}
 	
 	public void setNome(String nome) {
-		if (nome == null) throw new IllegalArgumentException("Nome da seção inválido!");
+		if (nome == null){
+			throw new IllegalArgumentException("Nome da seção inválido!");
+		}
 		this.nome = nome;
 		switch (nome) {
 			case "Agricultura, pecuária, produção florestal, pesca e aquicultura":

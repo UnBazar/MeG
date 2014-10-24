@@ -55,11 +55,6 @@ public class QuadroDAOTest {
 		dao.adicionar(quadro);
 	}
 	
-//	@Test(expected = SQLException.class)
-//	public void testParametroInvalidoObterLista(){
-//		Nao se achou casos em que se retorna essa Exception
-//	}
-	
 	@Test
 	public void testQuadroInexistente(){
 		assertFalse(dao.existeQuadro(quadro));
@@ -73,7 +68,6 @@ public class QuadroDAOTest {
 		quadroExistente.setEstado(new Estado(5));
 		quadroExistente.setSecao(new Secao(15));
 		quadroExistente.setValor(529532);
-		//assertEquals(true, dao.existeQuadro(quadroExistente));
 		assertTrue(dao.existeQuadro(quadroExistente));
 	}
 	

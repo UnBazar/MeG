@@ -28,14 +28,13 @@ public class UploadArquivo implements Logica {
 				List<FileItem> items = (List<FileItem>) upload.parseRequest(request);
 				for (FileItem item : items) {
 					if (!item.isFormField()) {
-						String url = null;
+						String url = criaCaminhoDoArquivo();
 						int anoInicial = Integer.parseInt(items.get(1).getString());
 						int anoFinal = Integer.parseInt(items.get(2).getString());;
 						int numeroDeSecoes = 0;
 						HttpSession sessao = request.getSession();
 						Administrador administrador = (Administrador) sessao.getAttribute("administrador");
 						String nomeAdm = new String(formatarNomeUsuario(administrador));
-						criaCaminhoDoArquivo(url);
 						File uploadedFile = new File(url + nomeAdm + "_" + item.getName());
 						item.write(uploadedFile);						
 						numeroDeSecoes = getNumeroDeSecoes(items);
@@ -56,7 +55,7 @@ public class UploadArquivo implements Logica {
 	 * @param administrador
 	 * @return vetor de caracteres que contêm o nome do administrador formatado 
 	 */
-	public char[] formatarNomeUsuario(Administrador administrador) {
+	private char[] formatarNomeUsuario(Administrador administrador) {
 		char[] aux = new char[administrador.getNome().length()];
 		
 		for (int i = 0; i < administrador.getNome().length(); i++) {
@@ -74,7 +73,7 @@ public class UploadArquivo implements Logica {
 	 * @param items
 	 * @return o número de campos do tipo seção lidos no formulário
 	 */
-	public int getNumeroDeSecoes(List<FileItem> items) {
+	private int getNumeroDeSecoes(List<FileItem> items) {
 		int numeroDeSecoes = 0;
 		for (int i = 3; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
@@ -93,7 +92,7 @@ public class UploadArquivo implements Logica {
 	 * @param numeroDeSecoes 
 	 * @throws FileNotFoundException
 	 */
-	public void validaArquivo(List<FileItem> items, Parser parser, int anoInicial, 
+	private void validaArquivo(List<FileItem> items, Parser parser, int anoInicial, 
 			int anoFinal, int numeroDeSecoes) throws FileNotFoundException {
 		parser.validarAno(anoInicial, anoFinal);
 		for (int i = 3; i < items.size() - 1; i++) {
@@ -108,9 +107,11 @@ public class UploadArquivo implements Logica {
 	 * Este método cria o caminho onde o arquivo será salvo a partir da url do arquivo UploadArquivo.class
 	 * @param url
 	 */
-	public void criaCaminhoDoArquivo(String url) {
+	private String criaCaminhoDoArquivo() {
+		String url;
 		url = UploadArquivo.class.getProtectionDomain().getCodeSource().getLocation()+"";
 		url = url.replaceAll("file:", "");
-		url = url.replaceAll("WEB-INF/classes/br/org/meg/controller/UploadArquivo.class", "");		
+		url = url.replaceAll("WEB-INF/classes/br/org/meg/controller/UploadArquivo.class", "");
+		return url;
 	}
 }
