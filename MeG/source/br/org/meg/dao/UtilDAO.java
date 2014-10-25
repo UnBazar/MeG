@@ -2,6 +2,7 @@ package br.org.meg.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import br.org.meg.exception.DAOException;
@@ -18,13 +19,19 @@ public class UtilDAO {
 	 */
 	public String getNomeEstado(int id) {
 		try{
-			String sql = "SELECT nome FROM ESTADO WHERE id = ?";
+			String sql = "SELECT nome FROM Estado WHERE id = ?";
+			String nomeDoEstado = null;
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, id);
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				nomeDoEstado = rs.getString("nome");
+			}
+			rs.close();
 			stmt.close();
-			return stmt.executeQuery().getString("nome");
+			return nomeDoEstado;
 		}catch(SQLException sqlException){
+			System.err.println(sqlException);
 			System.err.println("Erro ao buscar o nome no banco de dados");
 			throw new DAOException(sqlException);
 		}
@@ -56,7 +63,7 @@ public class UtilDAO {
 	 */
 	public int getIdEstado(String nome){
 		try{
-			String sql = "SELECT id FROM WHERE nome = ?";
+			String sql = "SELECT id FROM Estado WHERE nome = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nome);
 			stmt.execute();
