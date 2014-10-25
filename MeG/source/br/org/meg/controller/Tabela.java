@@ -1,5 +1,6 @@
 package br.org.meg.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class Tabela implements Logica {
 		this.alterarSalario(lista);
 		request.setAttribute("lista", lista);
 		request.setAttribute("ano", ano);
+		request.setAttribute("setor", secao.getNome());
 		return "tabela.jsp";
 	}
 	
@@ -53,9 +55,24 @@ public class Tabela implements Logica {
 		int tamanho = lista.size();
 		float valor;
 		for (int i = 0; i < tamanho; i++) {
-			valor = lista.get(i).getValor();
-			lista.get(i).setValor(823.0f * valor);
+			valor = (float) 723.00f * lista.get(i).getValor();
+			//lista.get(i).setValor((float) converterFormatoReal(valor));
+			lista.get(i).setValor(converterFormatoReal(valor));
 		}
+	}
+	
+	private float converterFormatoReal(float numero) {
+		double buffer = numero;
+		DecimalFormat df = new DecimalFormat("#####.00");
+		numero = Float.parseFloat(df.format(buffer));
+		return numero;		
+		/*char[] aux = new char[buffer.length() + 1];
+		int indice = 0;
+		while (buffer.charAt(indice) != '.' && indice < buffer.length())
+			indice++;
+		System.out.printf("String: %s Tamanho da string: %d Tamanho do vetor auxiliar: %d indice: %d\n", 
+				buffer, buffer.length(), buffer.length() + 1, indice);
+		*/
 	}
 }
 
