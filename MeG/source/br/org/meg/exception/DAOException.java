@@ -1,17 +1,25 @@
 package br.org.meg.exception;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
+
+import br.org.meg.dao.UtilDAO;
+import br.org.meg.model.Erro;
 
 public class DAOException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	private String mensagem;
+	private String nomeDaClasse;
 	
 	public DAOException() {
 		this.mensagem = "DAOException executada! Alguma operação de banco falhou";
 	}
 	
+	public DAOException(String mensagem, String nomeDaClasse) {
+		this.mensagem = mensagem;
+		this.nomeDaClasse = nomeDaClasse;
+	}
+
 	public DAOException(String mensagem) {
 		this.mensagem = mensagem;
 	}
@@ -23,10 +31,12 @@ public class DAOException extends RuntimeException {
 	
 	@Override
 	public void printStackTrace() {
-		Date data = new Date(System.currentTimeMillis());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 'T' HH:mm");
-		this.mensagem += " na data " + sdf.format(data);
-		System.out.println(this.mensagem);
+		Erro erro = new Erro();
+		erro.setData(new Date(System.currentTimeMillis()));
+		erro.setNomeDaClasseReferente(nomeDaClasse);
+		erro.setDescricao(mensagem);
+		erro.setStatus(0);
+		UtilDAO dao = new UtilDAO();
+		dao.registraErro(erro);
 	}
-	
 }
