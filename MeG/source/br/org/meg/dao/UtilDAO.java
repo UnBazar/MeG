@@ -31,8 +31,7 @@ public class UtilDAO {
 			stmt.close();
 			return nomeDoEstado;
 		}catch(SQLException sqlException){
-			System.err.println(sqlException);
-			System.err.println("Erro ao buscar o nome no banco de dados");
+			System.err.println("Erro ao buscar o nome do estado no banco de dados");
 			throw new DAOException(sqlException);
 		}
 	}
@@ -44,12 +43,17 @@ public class UtilDAO {
 	public String getSiglaEstado(int id){
 		try{
 			String sql = "SELECT sigla FROM Estado WHERE id = ?";
+			String siglaDoEstado = null;
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, id);
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				siglaDoEstado = rs.getString("sigla");
+			}
 			stmt.close();
+			rs.close();
 			
-			return stmt.executeQuery().getString("sigla");
+			return siglaDoEstado;
 			
 		}catch(SQLException sqlException){
 			System.err.println("Erro ao buscar a sigla do estado no banco de dados");
@@ -64,11 +68,16 @@ public class UtilDAO {
 	public int getIdEstado(String nome){
 		try{
 			String sql = "SELECT id FROM Estado WHERE nome = ?";
+			int idEstado = 0;
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nome);
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				idEstado = rs.getInt("id");
+			}
 			stmt.close();
-			return stmt.executeQuery().getInt("id");
+			rs.close();
+			return idEstado;
 		}catch(SQLException sqlException){
 			System.err.println("Erro ao buscar a id do estado no banco de dados");
 			throw new DAOException(sqlException);
@@ -82,11 +91,16 @@ public class UtilDAO {
 	public String getNomeSecao(int id){
 		try{
 			String sql = "SELECT nome FROM Secao WHERE id = ?";
+			String nomeSecao = null;
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, id);
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				nomeSecao = rs.getString("nome");
+			}
 			stmt.close();
-			return stmt.executeQuery().getString("nome");
+			rs.close();
+			return nomeSecao;
 		}catch(SQLException sqlException){
 			System.err.println("Erro ao buscar o nome da secao no banco de dados");
 			throw new DAOException(sqlException);
@@ -100,11 +114,16 @@ public class UtilDAO {
 	public int getIdSecao(String nome){
 		try{
 			String sql = "SELECT id FROM Secao WHERE nome = ?";
+			int idSecao = 0;
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nome);
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				idSecao = rs.getInt("id");
+			}
 			stmt.close();
-			return stmt.executeQuery().getInt("id");
+			rs.close();
+			return idSecao;
 		}catch(SQLException sqlException){
 			System.err.println("Erro ao buscar o id da secao no banco de dados");
 			throw new DAOException(sqlException);
@@ -119,11 +138,16 @@ public class UtilDAO {
 	public String getNomeDescricao(int id){
 		try{
 			String sql = "SELECT nome FROM Descricao WHERE id = ?";
+			String nomeDescricao = null;
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, id);
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				nomeDescricao = rs.getString("nome");
+			}
 			stmt.close();
-			return stmt.executeQuery().getString("nome");
+			rs.close();
+			return nomeDescricao;
 		}catch(SQLException sqlException){
 			System.err.println("Erro ao buscar o nome da descricao no banco de dados");
 			throw new DAOException(sqlException);
@@ -137,15 +161,20 @@ public class UtilDAO {
 	public int getIdDescricao(String nome){
 		try{
 			String sql = "SELECT id FROM Descricao WHERE nome = ?";
+			int idDescricao = 0;
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nome);
-			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				idDescricao = rs.getInt("id");
+			}
 			stmt.close();
-			return stmt.executeQuery().getInt("id");
+			rs.close();
+			return idDescricao;
 		}catch(SQLException sqlException){
 			System.err.println("Erro ao buscar o id da descricao no banco de dados");
 			throw new DAOException(sqlException);
 		}
 	}
-			
+
 }
