@@ -1,6 +1,5 @@
 package br.org.meg.controller;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +23,17 @@ public class Tabela implements Logica {
 		descricao.setNome("Salário médio mensal (Salários mínimos)");
 		List<Quadro> lista = dao.obterLista(ano, secao, descricao);
 		this.selectionSort(lista);
-		this.alterarSalario(lista);
+		this.alterarSalario(lista, ano);
 		request.setAttribute("lista", lista);
 		request.setAttribute("ano", ano);
 		request.setAttribute("setor", secao.getNome());
 		return "tabela.jsp";
 	}
 	
+	/**
+	 * Método responsável por ordenar a lista de salário médio em ordem crescente
+	 * @param lista de salários médios
+	 */
 	private void selectionSort(List<Quadro> lista) {
 		int tamanho = lista.size();
 		int maiorElemento;
@@ -41,38 +44,69 @@ public class Tabela implements Logica {
 					maiorElemento = j;
 				}
 			}
-			troca(lista, i, maiorElemento);
+			swap(lista, i, maiorElemento);
 		}
 	}
 	
-	private void troca(List<Quadro> lista, int index1, int index2) {
+	/**
+	 * Realiza um swap entre dois elementos da lista
+	 * @param lista que possui os elementos que serão trocados
+	 * @param index1 índice do primeiro elemento 
+	 * @param index2 índice do segundo elemento
+	 */
+	private void swap(List<Quadro> lista, int index1, int index2) {
 		Quadro buffer = lista.get(index1);
 		lista.set(index1, lista.get(index2));
 		lista.set(index2, buffer);
 	}
 	
-	private void alterarSalario(List<Quadro> lista) {
+	/**
+	 * Converte os salários médios da lista de número de salários mínimos para reais
+	 * @param lista de salários médios
+	 * @param ano
+	 */
+	private void alterarSalario(List<Quadro> lista, int ano) {
 		int tamanho = lista.size();
-		float valor;
+		float numeroDeSalarios;
+		float salarioMinimo = getSalarioMinimo(ano);
 		for (int i = 0; i < tamanho; i++) {
-			valor = (float) 723.00f * lista.get(i).getValor();
-			//lista.get(i).setValor((float) converterFormatoReal(valor));
-			lista.get(i).setValor(converterFormatoReal(valor));
+			numeroDeSalarios = lista.get(i).getValor();
+			lista.get(i).setValor(salarioMinimo * numeroDeSalarios);
 		}
 	}
 	
-	private float converterFormatoReal(float numero) {
-		double buffer = numero;
-		DecimalFormat df = new DecimalFormat("#####.00");
-		numero = Float.parseFloat(df.format(buffer));
-		return numero;		
-		/*char[] aux = new char[buffer.length() + 1];
-		int indice = 0;
-		while (buffer.charAt(indice) != '.' && indice < buffer.length())
-			indice++;
-		System.out.printf("String: %s Tamanho da string: %d Tamanho do vetor auxiliar: %d indice: %d\n", 
-				buffer, buffer.length(), buffer.length() + 1, indice);
-		*/
+	/**
+	 * Seleciona o valor do salário mínimo de acordo com o ano especificado
+	 * @param ano
+	 * @return o valor do salário mínimo no ano especificado
+	 */
+	private float getSalarioMinimo(int ano) {
+		float salarioMinimo;
+		switch (ano) {
+			case 2006:
+				salarioMinimo = 350.00f;
+				break;
+			case 2007:
+				salarioMinimo = 380.00f;
+				break;
+			case 2008:
+				salarioMinimo = 415.00f;
+				break;
+			case 2009:
+				salarioMinimo = 465.00f;
+				break;
+			case 2010:
+				salarioMinimo = 510.00f;
+				break;
+			case 2011:
+				salarioMinimo = 540.00f;
+				break;
+			case 2012:
+				salarioMinimo = 545.00f;
+				break;
+			default:
+				salarioMinimo = 300.00f;
+		}
+		return salarioMinimo;
 	}
 }
-

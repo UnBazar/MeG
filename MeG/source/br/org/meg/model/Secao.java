@@ -43,7 +43,7 @@ public class Secao {
 				this.nome = "Construção";
 				break;
 			case 7:
-				this.nome = "Comércio; reparação de veículos automotores e motocicletas";
+				this.nome = "Comércio, reparação de veículos automotores e motocicletas";
 				break;
 			case 8:
 				this.nome = "Transporte, armazenagem e correio";

@@ -14,7 +14,7 @@ public class AdministradorDAO {
 	public AdministradorDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
-
+	
 	public void adicionar(Administrador adm) {
 		String sql = "INSERT INTO Administrador(nome, nome_de_usuario, email, senha)"
 				+ "values(?,?,?,?)";

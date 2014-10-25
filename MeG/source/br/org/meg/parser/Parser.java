@@ -19,6 +19,7 @@ public class Parser {
 	private int quantidadeEstados;
 	private int quantidadeSecoes;
 	private String arquivo;
+
 	
 	public Parser(String arquivo, int quantidadeEstados, int quantidadeSecoes, 
 			int anoInicial, int anoFinal) {
@@ -69,12 +70,10 @@ public class Parser {
 				break;
 			}
 		}
-		
+		this.scanner.close();
 		if (!contemSecao) {
 			throw new UploadArquivoException("Dados de entrada incompatíveis com o arquivo! (Seções)");
 		}
-		
-		scanner.close();
 	}
 	
 	@SuppressWarnings("resource")
@@ -127,12 +126,7 @@ public class Parser {
 						if (!tokens[2 + k].equals("-") && !tokens[2 + k].equals("X")) {
 							if (k < 28) quadros.get(quadros.size() - 1).setValor(Float.parseFloat(tokens[2 + k]));
 							else quadros.get(quadros.size() - 1).setValor(Float.parseFloat(corrigirVirgula(tokens[2 + k])));
-						} else quadros.get(quadros.size() - 1).setValor(-1.0f);
-//						System.out.printf("Tipo: %s Estado: %s Secao: %s Ano: %d Valor: %.1f\n",
-//						 		quadros.get(quadros.size() - 1).getDescricao().getNome(), quadros.get(quadros.size() - 1).getEstado().getNome(), 
-//						 		quadros.get(quadros.size() - 1).getSecao().getNome(), 
-//						 		quadros.get(quadros.size() - 1).getAno(), quadros.get(quadros.size() - 1).getValor());
-						 
+						} else quadros.get(quadros.size() - 1).setValor(-1.0f);						 
 				}
 			}
 		}

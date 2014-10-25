@@ -11,12 +11,12 @@ pageEncoding="UTF-8"%>
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 		<!-- Latest compiled and minified JavaScript -->
-		<script src="js/bootstrap.min.js"></script>
+		<script src="js/tabela.js" type="text/javascript"></script>
 		<!-- Style geral -->
 		<link rel="stylesheet" href="css/style.css">
 		<title>Ranking</title>
 	</head>
-	<body>
+	<body onload="ajustarSalario()">
 		<div class="container">
 		<section id="cabecalho">
 			<h1><a href="">MeG - Mercado em gráfico</a></h1>
@@ -36,9 +36,9 @@ pageEncoding="UTF-8"%>
 			</tr>
 			<c:forEach var="quadro" items="${lista}" varStatus="id">
 				<tr>
-					<td>&nbsp ${id.count}º</td>
-					<td>&nbsp ${quadro.estado.nome}</td>
-					<td>&nbsp R$${quadro.valor}</td>	
+					<td>${id.count}º</td>
+					<td>${quadro.estado.nome}</td>
+					<td class="salarioMedio">${quadro.valor}</td>	
 				</tr>
 			</c:forEach>
 		</table>
