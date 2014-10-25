@@ -17,7 +17,7 @@ public class AdministradorDAO {
 
 	public void adicionar(Administrador adm) {
 		String sql = "INSERT INTO Administrador(nome, nome_de_usuario, email, senha)"
-				+ "values(?,?,?,?)";
+				+ " values(?,?,?,?)";
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, adm.getNome());

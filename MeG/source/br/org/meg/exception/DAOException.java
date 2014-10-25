@@ -1,12 +1,15 @@
 package br.org.meg.exception;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 public class DAOException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	String mensagem;
+	private String mensagem;
 	
-	public DAOException(Exception e) {
-		this.mensagem = "Falha ao acessar o banco de dados! " + e.getMessage();
+	public DAOException() {
+		this.mensagem = "DAOException executada! Alguma operação de banco falhou";
 	}
 	
 	public DAOException(String mensagem) {
@@ -17,4 +20,13 @@ public class DAOException extends RuntimeException {
 	public String getMessage() {
 		return this.mensagem;
 	}
+	
+	@Override
+	public void printStackTrace() {
+		Date data = new Date(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 'T' HH:mm");
+		this.mensagem += " na data " + sdf.format(data);
+		System.out.println(this.mensagem);
+	}
+	
 }

@@ -41,7 +41,7 @@ public class QuadroDAO {
 				stmt.close();
 			} catch (SQLException sqlException) {
 				System.err.println(sqlException);
-				throw new DAOException(sqlException);
+				throw new DAOException(this.getClass().getName() + " lancou uma excecao no metodo adicionar");
 			}
 		}
 	}

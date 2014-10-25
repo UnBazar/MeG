@@ -86,7 +86,7 @@ public class UploadArquivo implements Logica {
 					}
 				}
 			} catch(Exception e) {
-				throw new UploadArquivoException(e);
+				throw new UploadArquivoException(this.getClass().getName() + " lancou uma excecao no metodo executa");
 			} 
 		}
 		return "index.jsp";
