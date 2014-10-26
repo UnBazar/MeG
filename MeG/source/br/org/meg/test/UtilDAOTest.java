@@ -18,7 +18,7 @@ public class UtilDAOTest {
 	@Test
 	public void getNomeEstadoTest() {
 		String nome = "Acre";
-		assertEquals(dao.getNomeEstado(480), nome);
+		assertEquals(dao.getNomeEstado(1), nome);
 	}
 
 	@Test
@@ -35,25 +35,25 @@ public class UtilDAOTest {
 	
 	@Test
 	public void getNomeSecaoTest(){
-		String nome = "Número de empresas e outras organizações (Unidades)";
+		String nome = "Agricultura, pecuária, produção florestal, pesca e aquicultura";
 		assertEquals(dao.getNomeSecao(1), nome);
 	}
 	
 	@Test
 	public void getIdSecaoTest(){
 		int id = 1;
-		assertEquals(dao.getIdSecao("Número de empresas e outras organizações (Unidades)"), id);
+		assertEquals(dao.getIdSecao("Agricultura, pecuária, produção florestal, pesca e aquicultura"), id);
 	}
 	
 	@Test
 	public void getNomeDescricaoTest(){
-		String nome = "Agricultura, pecuária, produção florestal, pesca e aquicultura";
+		String nome = "Número de empresas e outras organizações (Unidades)";
 		assertEquals(dao.getNomeDescricao(1), nome);
 	}
 	
 	@Test
 	public void getIdDescricaoTest(){
 		int id = 1;
-		assertEquals(dao.getIdDescricao("Agricultura, pecuária, produção florestal, pesca e aquicultura"), id);
+		assertEquals(dao.getIdDescricao("Número de empresas e outras organizações (Unidades)"), id);
 	}
 }

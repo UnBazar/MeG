@@ -114,8 +114,9 @@ public class QuadroDAO {
 			}
 			rs.close();
 			ps.close();
-			if(quadros.isEmpty())
+			if(quadros.isEmpty()){
 				throw new DAOException("Lista não existe!");
+			}
 			return quadros;
 		}catch (SQLException e) {
 			e.printStackTrace();
