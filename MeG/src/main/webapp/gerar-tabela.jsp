@@ -30,8 +30,7 @@ pageEncoding="UTF-8"%>
 		<br>		
 		<section id="gerador">
 			<h2>Gerar ranking</h2><br>
-			<form action="sistema" method="post">
-				<input type="hidden" name="logica" value="Tabela" />
+			<form action="ranking-salario-medio" method="post">
 				<label id="ano">Ano:</label>			
 				<select name="ano">
 					<option value="2007" selected="selected">2007</option>

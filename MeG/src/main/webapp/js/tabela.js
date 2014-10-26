@@ -1,7 +1,7 @@
 function ajustarSalario() {
 	var numeros = document.getElementsByClassName("salarioMedio");
 	for (var i = 0; i < numeros.length; i++) {
-		numeros[i].innerHTML = ajustarCasasDecimais(numeros[i].innerHTML);
+		numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
 	}
 }
 
