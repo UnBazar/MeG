@@ -12,8 +12,7 @@ public class Estado {
 	}
 
 	public Estado(int idEstado) {
-		UtilDAO dao = new UtilDAO();
-		nome = dao.getNomeEstado(idEstado);
+		setId(idEstado);
 	}
 
 	public int getId() {
