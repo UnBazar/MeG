@@ -18,8 +18,9 @@ public class ControllerServlet extends HttpServlet {
 		String parametro = request.getParameter("logica");
 		String nomeDaClasse = "br.org.meg.controller." + parametro;
 		
-		if (nomeDaClasse.equals("br.org.meg.controller.null")) 
-			   nomeDaClasse = "br.org.meg.controller.UploadArquivo";
+		if (nomeDaClasse.equals("br.org.meg.controller.null")) {
+			nomeDaClasse = "br.org.meg.controller.UploadArquivo";
+		}
 		
 		try {
 			Class<?> classe = Class.forName(nomeDaClasse);

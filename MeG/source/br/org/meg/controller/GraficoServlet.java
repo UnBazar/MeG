@@ -23,7 +23,6 @@ import br.org.meg.model.Secao;
 @WebServlet("/grafico")
 public class GraficoServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	private List<Quadro> quadros = new ArrayList<>();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -44,23 +43,24 @@ public class GraficoServlet extends HttpServlet{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int descricao_id = 0;
-		int setor_id = 0;
-		int estado_id = 0;
+		List<Quadro> quadros = new ArrayList<>();
+		int idDescricao = 0;
+		int idSetor = 0;
+		int idEstado = 0;
 		int anoInicial = 0;
 		int anoFinal = 0;
-		descricao_id = Integer.valueOf(request.getParameter("descricao"));
-		setor_id = Integer.valueOf(request.getParameter("setor"));
-		estado_id= Integer.valueOf(request.getParameter("estado"));
+		idDescricao = Integer.valueOf(request.getParameter("descricao"));
+		idSetor = Integer.valueOf(request.getParameter("setor"));
+		idEstado= Integer.valueOf(request.getParameter("estado"));
 		anoInicial = Integer.valueOf(request.getParameter("anoInicial"));
 		anoFinal = Integer.valueOf(request.getParameter("anoFinal"));
 		QuadroDAO dao = new QuadroDAO();
-		Descricao descricao = new Descricao(descricao_id);
-		Secao secao = new Secao(setor_id);
-		Estado estado = new Estado (estado_id);
+		Descricao descricao = new Descricao(idDescricao);
+		Secao secao = new Secao(idSetor);
+		Estado estado = new Estado (idEstado);
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
-		request.getSession().setAttribute("valores", listarValores());
-		request.getSession().setAttribute("anos", listarAnos());
+		request.getSession().setAttribute("valores", listarValores(quadros));
+		request.getSession().setAttribute("anos", listarAnos(quadros));
 		request.getSession().setAttribute("tamanho", quadros.size());
 		request.getSession().setAttribute("titulo", descricao.getNome());
 		request.getSession().setAttribute("secao", secao.getNome());
@@ -73,7 +73,7 @@ public class GraficoServlet extends HttpServlet{
 	 * 
 	 * @return	uma lista de floats contendo os valores
 	 */
-	private List<Float> listarValores(){
+	private List<Float> listarValores(List<Quadro> quadros){
 		List<Float> valores = new ArrayList<Float>();
 		for( Quadro q: quadros){
 			valores.add(q.getValor());
@@ -86,7 +86,7 @@ public class GraficoServlet extends HttpServlet{
 	 * 
 	 * @return uma lista de Strings contendo os anos
 	 */
-	private List<String> listarAnos(){
+	private List<String> listarAnos(List<Quadro> quadros){
 		List<String> anos = new ArrayList<String>();
 		for( Quadro q: quadros){
 			anos.add(String.valueOf(q.getAno()));

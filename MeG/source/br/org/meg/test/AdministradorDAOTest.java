@@ -28,23 +28,22 @@ public class AdministradorDAOTest {
 	}
 	
 	@Test
-	public void testValidaLogin() {
-		dao.validaLogin("pedrodelyra", "mudar123");
-	}
-	
-	@Test(expected = DAOException.class)
-	public void testValidaLoginShouldThrowException() {
-		dao.validaLogin("pedrodelyra", "senhainvalida");
-	}
-	
-	@Test(expected = DAOException.class)
 	public void testExisteNomeDeUsuario() {
-		dao.existeNomeDeUsuario("pedrodelyra");
+		dao.existeNomeDeUsuario("Novousuario");
+	}
+	
+	@Test(expected = DAOException.class)
+	public void testExisteNomeDeUsuarioShouldThrowException() {
+		dao.existeNomeDeUsuario("usuarioInexistente");
 	}
 	
 	@Test
-	public void testExisteNomeDeUsuarioShouldThrowException() {
-		dao.existeNomeDeUsuario("usuarioInexistente");
+	public void testBuscaAdministrador(){
+		dao.buscaAdministrador("pedrodelyra10", "mudar123");
+	}
+	@Test(expected = DAOException.class)
+	public void testBuscaAdministradorShouldThrowException(){
+		dao.buscaAdministrador("pedrodelyra10", "senhaInválida");
 	}
 
 }

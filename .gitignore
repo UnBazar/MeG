@@ -45,7 +45,6 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
-
 # Maven
 target/
 pom.xml.tag
