@@ -123,4 +123,38 @@ public class QuadroDAO {
 		}
 		return null;
 	}
+	
+	public List<Quadro> obterLista(int ano, Secao secao, Descricao descricao) {
+		String sql = "SELECT * FROM Quadro "
+				+ "WHERE secao_id = ? "
+				+ "AND descricao_id = ? "
+				+ "AND ano = ?";
+		
+		try{
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, secao.getId());
+			stmt.setInt(2, descricao.getId());
+			stmt.setInt(3, ano);
+			ResultSet rs = stmt.executeQuery();
+			List<Quadro> lista = new ArrayList<>();
+			while(rs.next()){
+				Quadro quadro = new Quadro();
+				quadro.setAno(ano);
+				Estado estado = new Estado();
+				estado.setId(rs.getInt("estado_id"));
+				quadro.setEstado(estado);
+				quadro.setSecao(secao);
+				quadro.setDescricao(descricao);
+				quadro.setValor(rs.getFloat("valor"));
+				lista.add(quadro);
+			}
+			rs.close();
+			stmt.close();
+			return lista;
+		}catch(SQLException exception){
+			System.err.println(exception);
+			throw new DAOException(exception);
+		}
+		
+	}
 }

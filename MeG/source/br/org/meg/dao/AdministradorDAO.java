@@ -17,7 +17,7 @@ public class AdministradorDAO {
 	public AdministradorDAO() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
-
+	
 	/**
 	 * Adiciona um administrador no banco de dados.
 	 * 

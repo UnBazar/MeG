@@ -15,6 +15,12 @@
   	<description></description>
   	<servlet-class>br.org.meg.controller.Grafico</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>TabelaServlet</servlet-name>
+  	<display-name>TabelaServlet</display-name>
+  	<description></description>
+  	<servlet-class>br.org.meg.controller.TabelaServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>GraficoServlet</servlet-name>
   	<url-pattern>/GraficoServlet</url-pattern>
@@ -22,5 +28,9 @@
   <servlet-mapping>
   	<servlet-name>Grafico</servlet-name>
   	<url-pattern>/Grafico</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>TabelaServlet</servlet-name>
+  	<url-pattern>/TabelaServlet</url-pattern>
   </servlet-mapping>
 </web-app>

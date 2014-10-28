@@ -72,13 +72,11 @@ public class Parser {
 				break;
 			}
 		}
-
+		this.scanner.close();
 		if (!contemSecao) {
 			throw new UploadArquivoException(
 					"Dados de entrada incompatíveis com o arquivo! (Seções)");
 		}
-
-		scanner.close();
 	}
 
 	@SuppressWarnings("resource")
@@ -133,20 +131,15 @@ public class Parser {
 					quadros.get(quadros.size() - 1).setDescricao(descricao);
 					if (!tokens[2 + k].equals("-")
 							&& !tokens[2 + k].equals("X")) {
-						if (k < 28){
+						if (k < 28)
 							quadros.get(quadros.size() - 1).setValor(
 									Float.parseFloat(tokens[2 + k]));
-							}
-						else{
+						else
 							quadros.get(quadros.size() - 1)
-							.setValor(
-									Float.parseFloat(corrigirVirgula(tokens[2 + k])));
-						}
-							
-					} else{
+									.setValor(
+											Float.parseFloat(corrigirVirgula(tokens[2 + k])));
+					} else
 						quadros.get(quadros.size() - 1).setValor(-1.0f);
-					}
-
 				}
 			}
 		}
