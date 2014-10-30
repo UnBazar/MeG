@@ -16,10 +16,10 @@ public class ControllerServlet extends HttpServlet {
 	protected void service(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String parametro = request.getParameter("logica");
-		String nomeDaClasse = "br.org.meg.controller." + parametro;
+		String nomeDaClasse = "org.meg.controller." + parametro;
 		
-		if (nomeDaClasse.equals("br.org.meg.controller.null")) {
-			nomeDaClasse = "br.org.meg.controller.UploadArquivo";
+		if (nomeDaClasse.equals("org.meg.controller.null")) {
+			nomeDaClasse = "org.meg.controller.UploadArquivo";
 		}
 		
 		try {

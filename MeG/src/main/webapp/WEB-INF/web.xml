@@ -7,19 +7,19 @@
   	<servlet-name>GraficoServlet</servlet-name>
   	<display-name>GraficoServlet</display-name>
   	<description></description>
-  	<servlet-class>br.org.meg.controller.GraficoServlet</servlet-class>
+  	<servlet-class>org.meg.controller.GraficoServlet</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>Grafico</servlet-name>
   	<display-name>Grafico</display-name>
   	<description></description>
-  	<servlet-class>br.org.meg.controller.Grafico</servlet-class>
+  	<servlet-class>org.meg.controller.Grafico</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>TabelaServlet</servlet-name>
   	<display-name>TabelaServlet</display-name>
   	<description></description>
-  	<servlet-class>br.org.meg.controller.TabelaServlet</servlet-class>
+  	<servlet-class>org.meg.controller.TabelaServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>GraficoServlet</servlet-name>
