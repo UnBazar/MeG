@@ -1,35 +1,35 @@
 package org.meg.test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-import javax.servlet.RequestDispatcher;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.meg.controller.UploadArquivoServlet;
 
-import org.meg.controller.LogoutAdministradorServlet;
-
-public class LogoutAdmTest {
+public class UploadArquivoServletTest {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private UploadArquivoServlet uploadArquivo;
 
 	@Before
 	public void setUp() throws Exception {
+		uploadArquivo = new UploadArquivoServlet();
 		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
 		when(request.getSession()).thenReturn(mock(HttpSession.class));
+		
 	}
 
 	@Test
-	public void testService() {
-		when(request.getRequestDispatcher("login-adm.jsp")).thenReturn(
-				mock(RequestDispatcher.class));
-		LogoutAdministradorServlet servlet = new LogoutAdministradorServlet();
-		servlet.service(request, response);
+	public void testExecuta() throws ServletException, IOException {
+		uploadArquivo.doPost(request, response);
 	}
 
 }

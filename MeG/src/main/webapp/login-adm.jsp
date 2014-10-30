@@ -19,8 +19,7 @@ pageEncoding="UTF-8"%>
 		<div class="page-header">
 			<h1>Login</h1><small>somente para administradores</small>
 		</div>
-		<form action="sistema" method="POST" id="toLogin">
-			<input type="hidden" name="logica" value="LoginAdm" />
+		<form action="login" method="POST" id="toLogin">
 			<input type="text" name="nomeDeUsuario" placeholder="Login" /><br>
 			<input type="password" name="senha" placeholder="Senha" /><br>
 			<button type="submit" class="btn btn-primary" id="button-login">Entrar</button><br>

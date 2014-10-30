@@ -17,8 +17,7 @@
 	<body>
 		<h2>Bem vindo, ${adm.nome}!</h2>
 		<p align="right"><a href="logout">Logout</a></p><br />
-		<form action="sistema" enctype="multipart/form-data" method="post">
-			<input type="hidden" name="logica" value="UploadArquivo">
+		<form action="upload" enctype="multipart/form-data" method="post">
 		    <label>De </label>
 		    <select name="anoInicial">
 		    	<option>2006</option>
