@@ -141,7 +141,6 @@ public class QuadroDAO {
 				Quadro quadro = new Quadro();
 				quadro.setAno(ano);
 				Estado estado = new Estado();
-				estado.setId(rs.getInt("estado_id"));
 				quadro.setEstado(estado);
 				quadro.setSecao(secao);
 				quadro.setDescricao(descricao);
