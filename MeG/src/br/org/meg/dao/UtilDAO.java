@@ -176,5 +176,28 @@ public class UtilDAO {
 			throw new DAOException(sqlException);
 		}
 	}
+	/**
+	 * Método que pega o salario minimo do banco de dados
+	 * @param ano
+	 * @return float com o salario minimo
+	 */
+	public float getSalarioMinimo(int ano){
+		try{
+			float salarioMinimo = 0;
+			String sql = "SELECT valor FROM SalarioMinimo WHERE ano = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, ano);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()){
+				salarioMinimo = rs.getFloat("valor");
+			}
+			stmt.close();
+			rs.close();
+			return salarioMinimo;
+		}catch(SQLException sqlException){
+			System.err.println("Erro ao buscar o ano no banco de dados");
+			throw new DAOException(sqlException);
+		}
+	}
 
 }

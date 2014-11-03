@@ -27,6 +27,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `MEG`.`SalarioMinimo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `MEG`.`SalarioMinimo`(
+	`ano` INT NOT NULL,
+	`valor` FLOAT NOT NULL,
+	PRIMARY KEY (`ano`))
+ENGINE = InnoDB;
+-- -----------------------------------------------------
 -- Table `MEG`.`Descricao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `MEG`.`Descricao` (

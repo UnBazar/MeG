@@ -56,4 +56,9 @@ public class UtilDAOTest {
 		int id = 1;
 		assertEquals(dao.getIdDescricao("Número de empresas e outras organizações (Unidades)"), id);
 	}
+	@Test
+	public void getSalarioMinimoTest(){
+		int ano = 2008;
+		assertEquals(dao.getSalarioMinimo(ano), 415.00 , 0.001);
+	}
 }
