@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	public Connection getConnection() {
-		String url = "jdbc:mysql://localhost/MEG";
+		String url = "jdbc:mysql://localhost/MEG?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8";
 		try {
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			return DriverManager.getConnection(url, "root", "root");

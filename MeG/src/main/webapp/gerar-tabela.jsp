@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%>
 		<br>		
 		<section id="gerador">
 			<h2>Gerar ranking</h2><br>
-			<form action="ranking-salario-medio" method="post">
+			<form action="ranking" method="post">
 				<label id="ano">Ano:</label>			
 				<select name="ano">
 					<option value="2007" selected="selected">2007</option>
@@ -39,6 +39,14 @@ pageEncoding="UTF-8"%>
 					<option value="2010">2010</option>
 					<option value="2011">2011</option>
 					<option value="2012">2012</option>			
+				</select>
+				<label> Descricao</label>
+				<select name="descricao">
+					<option value="1" >Número de empresas e outras organizações (Unidades)</option>
+					<option value="2">Pessoal ocupado total (Pessoas)</option>
+					<option value="3">Pessoal ocupado assalariado (Pessoas)</option>
+					<option value="4">Salários e outras remunerações (Mil Reais)</option>
+					<option value="5">Salário médio mensal (Salários mínimos)</option>
 				</select>
 				<label id="setor">Setor:</label>
 				<select name="setor">

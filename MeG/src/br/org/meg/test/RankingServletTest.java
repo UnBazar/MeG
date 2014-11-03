@@ -31,15 +31,10 @@ public class RankingServletTest {
 	public void doPostTest() throws ServletException, IOException {
 			when(request.getParameter("ano")).thenReturn("2012");
 			when(request.getParameter("setor")).thenReturn("3");
-			when(request.getParameter("descricao")).thenReturn("1");
+			when(request.getParameter("descricao")).thenReturn("5");
 			when(request.getRequestDispatcher("tabela.jsp")).thenReturn(
 					mock(RequestDispatcher.class));
 			RankingServlet servlet = new RankingServlet();
 			servlet.doPost(request, response);
-	}
-
-	@Test
-	public void alterarSalarioTest(List<Quadro> lista, int ano){
-		
 	}
 }

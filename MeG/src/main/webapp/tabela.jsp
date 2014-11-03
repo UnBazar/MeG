@@ -15,6 +15,28 @@ pageEncoding="UTF-8"%>
 		<!-- Style geral -->
 		<link rel="stylesheet" href="css/style.css">
 		<title>Ranking</title>
+		<script>
+			function ajustarSalario() {
+				var numeros = document.getElementsByClassName("dado");
+				var descricao = ${descricao};
+				alert(descricao.nome);
+				for (var i = 0; i < numeros.length; i++) {
+					if (descricao.nome == "Salário médio mensal (Salários mínimos)") 
+						numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
+					else numeros[i].innerHTML = parseFloat(numeros[i].innerHTML).toFixed(0);
+				}
+			}
+	
+			function ajustarCasasDecimais(string) {
+				var num = string.indexOf('.') + 2;
+				if(num <= (string.length - 1)) {
+					return string.substring(0, num + 1);
+				}
+				else {
+					return string.substring(0, string.indexOf('.') + 2) + "0";
+				}
+			}
+		</script>
 	</head>
 	<body onload="ajustarSalario()">
 		<div class="container">
@@ -27,18 +49,18 @@ pageEncoding="UTF-8"%>
 			</ul>
 		</section>
 		<br>
-		<h1 style="color: #000000">Ranking de salário médio na área de ${setor} - ${ano} </h1>
+		<h1 style="color: #000000">Ranking de ${descricao} na área de ${setor} - ${ano} </h1>
 		<table border="1" style="width:30%; border: 2px solid #3366FF">
 			<tr>
 				<th style="text-align:center">Ranking</th>
 				<th style="text-align:center">Estado</th>
-				<th style="text-align:center">Salario médio</th>
+				<th style="text-align:center">${descricao}</th>
 			</tr>
 			<c:forEach var="quadro" items="${lista}" varStatus="id">
 				<tr>
 					<td>${id.count}º</td>
 					<td>${quadro.estado.nome}</td>
-					<td class="salarioMedio">${quadro.valor}</td>	
+					<td class="dado">${quadro.valor}</td>	
 				</tr>
 			</c:forEach>
 		</table>
