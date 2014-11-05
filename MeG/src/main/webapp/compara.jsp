@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ page isELIgnored="false" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,15 +21,17 @@
 		<title>Meg | Gráfico</title>
 		<link rel="stylesheet" href="css/style.css">
 		
-		<!-- Import JavaScripts -->
+		<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="js/jsapi.js"></script>
 		<script type="text/javascript" src="js/jspdf.js"></script>
-		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="js/jspdf.plugin.standard_fonts_metrics.js"></script>
-	    <script type="text/javascript" src="js/jspdf.plugin.split_text_to_size.js"></script>
-	    <script type="text/javascript" src="js/jspdf.plugin.from_html.js"></script>
+		<script type="text/javascript" src="js/FileSaver.js"></script>
+		<script type="text/javascript" src="js/FileSaver.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		
 		<script type="text/javascript">
+	
 			google.load("visualization", "1", {packages:["corechart"]});
 			google.setOnLoadCallback(drawChart);
 			
@@ -57,29 +61,28 @@
 			  // Wait for the chart to finish drawing before calling the getImageURI() method
 			  google.visualization.events.addListener(chart, 'ready', function(){
 				  chart_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
-				  chartImage = chart_div.innerHTML;
-			  });
-			  
+				  chartImage = chart.getImageURI();
+				  });
 			  chart.draw(data, options);
-			};
+			}
 			
 			function generatePDF() {
-				var imageData = chartImage;
 				var doc = new jsPDF();
 				
 				doc.setFontSize(30);
-				doc.text(35,25,"Gráfico");
-				doc.addImage(imageData,'JPEG',15,40,180,160);
-				doc.output('dataurl');
+				doc.text(35,25,"Grafico");
+				doc.addImage(chartImage, 'JPEG', 15, 140, 180, 280)
 				doc.save('file.pdf');
-			};
-			
+			}
 		</script>
 	</head>
 	<body>
+		<!-- Import JavaScripts -->
 		<div class="container">
 			<section id="cabecalho">
-				<h1><a href=''>MeG - Mercado em gráfico</a></h1>
+				<h1>
+					<a href=''>MeG - Mercado em gráfico</a>
+				</h1>
 				<ul id="menu">
 					<li><a href="#">Sobre</a></li>
 					<li><a href="#">Como usar</a></li>
@@ -87,7 +90,7 @@
 				</ul>
 			</section>
 			<div id="chart_div" style="width: 900px; height: 500px;"></div>
-			<button onclick="generatePDF()">Export PDF</button>
+			<button onclick="javascript:generatePDF()">Export PDF</button>
 		</div>
 	</body>
 </html>
