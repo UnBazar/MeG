@@ -85,7 +85,7 @@ function drawChart() {
 			<option value="26">SP</option>
 			<option value="27">TO</option>
 		</select>
-		<button type="submit">Comparar Gráfico</button>
+		<button type="submit" class="btn btn-primary" id="btn-submit">Comparar Gráfico</button>
 		</form>
 </div>
 </body>

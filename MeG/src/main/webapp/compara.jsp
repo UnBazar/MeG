@@ -29,7 +29,10 @@
 		<script type="text/javascript" src="js/FileSaver.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		
+		<script type="text/javascript" src="js/jspdf.plugin.addimage.js"></script>
+		<script type="text/javascript" src="js/jspdf.plugin.png_support.js"></script>
+		<script type="text/javascript" src="js/libs/png_support/png.js"></script>
+		<script type="text/javascript" src="js/libs/png_support/zlib.js"></script>
 		<script type="text/javascript">
 	
 			google.load("visualization", "1", {packages:["corechart"]});
@@ -71,7 +74,7 @@
 				
 				doc.setFontSize(30);
 				doc.text(35,25,"Grafico");
-				doc.addImage(chartImage, 'JPEG', 15, 140, 180, 280)
+				doc.addImage(chartImage, 'PNG', 15, 140, 180, 250);
 				doc.save('file.pdf');
 			}
 		</script>
@@ -90,7 +93,7 @@
 				</ul>
 			</section>
 			<div id="chart_div" style="width: 900px; height: 500px;"></div>
-			<button onclick="javascript:generatePDF()">Export PDF</button>
+			<button onclick="javascript:generatePDF()" class="btn btn-primary" id="btn-submit">Export PDF</button>
 		</div>
 	</body>
 </html>
