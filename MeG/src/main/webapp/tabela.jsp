@@ -16,16 +16,16 @@ pageEncoding="UTF-8"%>
 		<link rel="stylesheet" href="css/style.css">
 		<title>Ranking</title>
 		<script>
-			function ajustarSalario() {
-				var numeros = document.getElementsByClassName("dado");
-				var descricao = ${descricao};
-				alert(descricao.nome);
-				for (var i = 0; i < numeros.length; i++) {
-					if (descricao.nome == "Salário médio mensal (Salários mínimos)") 
-						numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
-					else numeros[i].innerHTML = parseFloat(numeros[i].innerHTML).toFixed(0);
-				}
-			}
+		//	function ajustarSalario() {
+		//		var numeros = document.getElementsByClassName("dado");
+		//		var descricao = ${descricao};
+		//		alert(descricao.nome);
+		//		for (var i = 0; i < numeros.length; i++) {
+		//			if (descricao.nome == "Salário médio mensal (Salários mínimos)") 
+		//				numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
+		//			else numeros[i].innerHTML = parseFloat(numeros[i].innerHTML).toFixed(0);
+		//		}
+		//	}
 	
 			function ajustarCasasDecimais(string) {
 				var num = string.indexOf('.') + 2;
@@ -49,18 +49,25 @@ pageEncoding="UTF-8"%>
 			</ul>
 		</section>
 		<br>
-		<h1 style="color: #000000">Ranking de ${descricao} na área de ${setor} - ${ano} </h1>
+		<h1 style="color: #000000">Ranking de ${descricao.nome} na área de ${setor} - ${ano} </h1>
 		<table border="1" style="width:30%; border: 2px solid #3366FF">
 			<tr>
 				<th style="text-align:center">Ranking</th>
 				<th style="text-align:center">Estado</th>
-				<th style="text-align:center">${descricao}</th>
+				<th style="text-align:center">${descricao.nome}</th>
 			</tr>
 			<c:forEach var="quadro" items="${lista}" varStatus="id">
 				<tr>
 					<td>${id.count}º</td>
 					<td>${quadro.estado.nome}</td>
-					<td class="dado">${quadro.valor}</td>	
+					<td class="dado">
+						<c:if test="${descricao.id == 4 || descricao.id == 5}">	
+							R$ ${quadro.valor} 
+						</c:if>
+						<c:if test="${descricao.id != 4 || descricao.id != 5}">
+							${quadro.valor}
+						</c:if>
+					</td>	
 				</tr>
 			</c:forEach>
 		</table>

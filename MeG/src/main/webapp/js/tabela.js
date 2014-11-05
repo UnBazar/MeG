@@ -1,11 +1,7 @@
 function ajustarSalario() {
-	var numeros = document.getElementsByClassName("dado");
-	var descricao = ${descricao};
-	alert(descricao.nome);
+	var numeros = document.getElementsByClassName("salarioMedio");
 	for (var i = 0; i < numeros.length; i++) {
-		if (descricao.nome == "Salário médio mensal (Salários mínimos)") 
-			numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
-		else numeros[i].innerHTML = parseFloat(numeros[i].innerHTML).toFixed(0);
+		numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
 	}
 }
 

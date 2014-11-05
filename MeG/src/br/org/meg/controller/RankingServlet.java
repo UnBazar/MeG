@@ -38,7 +38,7 @@ public class RankingServlet extends HttpServlet {
 		request.setAttribute("lista", lista);
 		request.setAttribute("ano", ano);
 		request.setAttribute("setor", secao.getNome());
-		request.setAttribute("descricao", descricao.getNome());
+		request.setAttribute("descricao", descricao);
 		request.getRequestDispatcher("tabela.jsp").forward(request, response);
 	}
 	
@@ -94,7 +94,7 @@ public class RankingServlet extends HttpServlet {
 	 */
 	private float getSalarioMinimo(int ano) {
 		UtilDAO dao = new UtilDAO();
-		float salarioMinimo = salarioMinimo = dao.getSalarioMinimo(ano);
+		float salarioMinimo = dao.getSalarioMinimo(ano);
 		return salarioMinimo;
 	}
 }
