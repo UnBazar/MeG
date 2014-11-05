@@ -33,6 +33,7 @@
 		<script type="text/javascript" src="js/jspdf.plugin.png_support.js"></script>
 		<script type="text/javascript" src="js/libs/png_support/png.js"></script>
 		<script type="text/javascript" src="js/libs/png_support/zlib.js"></script>
+		
 		<script type="text/javascript">
 	
 			google.load("visualization", "1", {packages:["corechart"]});
