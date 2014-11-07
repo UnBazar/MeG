@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false" %>
 
 <html>
 	<head>
+	<%@include file='shared/head.html'%>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -16,17 +15,6 @@ pageEncoding="UTF-8"%>
 		<link rel="stylesheet" href="css/style.css">
 		<title>Ranking</title>
 		<script>
-		//	function ajustarSalario() {
-		//		var numeros = document.getElementsByClassName("dado");
-		//		var descricao = ${descricao};
-		//		alert(descricao.nome);
-		//		for (var i = 0; i < numeros.length; i++) {
-		//			if (descricao.nome == "Salário médio mensal (Salários mínimos)") 
-		//				numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
-		//			else numeros[i].innerHTML = parseFloat(numeros[i].innerHTML).toFixed(0);
-		//		}
-		//	}
-	
 			function ajustarCasasDecimais(string) {
 				var num = string.indexOf('.') + 2;
 				if(num <= (string.length - 1)) {
@@ -39,17 +27,9 @@ pageEncoding="UTF-8"%>
 		</script>
 	</head>
 	<body onload="ajustarSalario()">
+	<%@include file='shared/navbar.html'%>
 		<div class="container">
-		<section id="cabecalho">
-			<h1><a href="">MeG - Mercado em gráfico</a></h1>
-				<ul id="menu">
-					<li><a href="#">Sobre</a></li>
-					<li><a href="#">Como usar</a></li>
-					<li><a href="#">Link</a></li>
-			</ul>
-		</section>
-		<br>
-		<h1 style="color: #000000">Ranking de ${descricao.nome} na área de ${setor} - ${ano} </h1>
+		<h1 style="color: #000000">Ranking de ${descricao.nome} na �rea de ${setor} - ${ano} </h1>
 		<table border="1" style="width:30%; border: 2px solid #3366FF">
 			<tr>
 				<th style="text-align:center">Ranking</th>
@@ -58,7 +38,7 @@ pageEncoding="UTF-8"%>
 			</tr>
 			<c:forEach var="quadro" items="${lista}" varStatus="id">
 				<tr>
-					<td>${id.count}º</td>
+					<td>${id.count}�</td>
 					<td>${quadro.estado.nome}</td>
 					<td class="dado">
 						<c:if test="${descricao.id == 4 || descricao.id == 5}">	
@@ -73,4 +53,5 @@ pageEncoding="UTF-8"%>
 		</table>
 		</div>
 	</body>
+		<%@include file='shared/footer.html'%>
 </html>
