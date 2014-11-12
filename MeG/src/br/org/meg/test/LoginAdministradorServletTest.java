@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +27,21 @@ public class LoginAdministradorServletTest {
 	}
 
 	@Test
-	public void testExecuta() throws ServletException, IOException {
+	public void testExecutaSuccess() throws ServletException, IOException {
 		when(request.getParameter("nomeDeUsuario")).thenReturn("pedrodelyra10");
 		when(request.getParameter("senha")).thenReturn("mudar123");
+		when(request.getRequestDispatcher("WEB-INF/jsp/home.jsp")).thenReturn(
+				mock(RequestDispatcher.class));
+		LoginAdministradorServlet servlet = new LoginAdministradorServlet();
+		servlet.doPost(request, response);
+	}
+	
+	@Test
+	public void testExecutaFail() throws ServletException, IOException {
+		when(request.getParameter("nomeDeUsuario")).thenReturn("usuarioInexistente");
+		when(request.getParameter("senha")).thenReturn("mudar123");
+		when(request.getRequestDispatcher("login-adm.jsp")).thenReturn(
+				mock(RequestDispatcher.class));
 		LoginAdministradorServlet servlet = new LoginAdministradorServlet();
 		servlet.doPost(request, response);
 	}

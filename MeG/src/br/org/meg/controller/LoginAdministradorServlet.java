@@ -29,8 +29,8 @@ public class LoginAdministradorServlet extends HttpServlet {
 		Administrador administrador = dao.buscaAdministrador(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
 		if (administrador != null) {
 			HttpSession sessao = request.getSession(true);
-			sessao.setAttribute("adm", administrador);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("home.jsp");
+			sessao.setAttribute("administrador", administrador);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/home.jsp");
 			requestDispatcher.forward(request, response);
 		} else{
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("login-adm.jsp");

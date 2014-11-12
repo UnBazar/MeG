@@ -33,11 +33,13 @@ public class UploadArquivoServlet extends HttpServlet {
 				factory.setSizeThreshold(100000);
 				ServletFileUpload upload = new ServletFileUpload(factory);
 				List<FileItem> items = (List<FileItem>) upload.parseRequest(request);
+				boolean contemArquivo = false;
 				for (FileItem item : items) {
 					if (!item.isFormField()) {
+						contemArquivo = true;
 						String url = criaCaminhoDoArquivo();
-						int anoInicial = Integer.parseInt(items.get(1).getString());
-						int anoFinal = Integer.parseInt(items.get(2).getString());;
+						int anoInicial = Integer.parseInt(items.get(0).getString());
+						int anoFinal = Integer.parseInt(items.get(1).getString());;
 						int numeroDeSecoes = 0;
 						HttpSession sessao = request.getSession();
 						Administrador administrador = (Administrador) sessao.getAttribute("administrador");
@@ -49,13 +51,17 @@ public class UploadArquivoServlet extends HttpServlet {
 								anoInicial, anoFinal);
 						validaArquivo(items, parser, anoInicial, anoFinal, numeroDeSecoes);
 						parser.persist();
+						request.setAttribute("erro", false);
 					}
 				}
+				if (contemArquivo) {
+					throw new UploadArquivoException("Nenhum arquivo foi enviado!");
+				}
 			} catch(Exception e) {
-				throw new UploadArquivoException(e);
+				request.setAttribute("erro", true);
 			} 
 		}
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("home.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
 		requestDispatcher.forward(request, response);
 	}		
 	/**
@@ -83,7 +89,7 @@ public class UploadArquivoServlet extends HttpServlet {
 	 */
 	private int getNumeroDeSecoes(List<FileItem> items) {
 		int numeroDeSecoes = 0;
-		for (int i = 3; i < items.size() - 1; i++) {
+		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
 				numeroDeSecoes++;
 			}
@@ -103,7 +109,7 @@ public class UploadArquivoServlet extends HttpServlet {
 	private void validaArquivo(List<FileItem> items, Parser parser, int anoInicial, 
 			int anoFinal, int numeroDeSecoes) throws FileNotFoundException {
 		parser.validarAno(anoInicial, anoFinal);
-		for (int i = 3; i < items.size() - 1; i++) {
+		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
 				parser.validarSecao(items.get(i).getString());
 			}

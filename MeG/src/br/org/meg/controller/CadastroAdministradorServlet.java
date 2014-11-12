@@ -30,13 +30,13 @@ public class CadastroAdministradorServlet extends HttpServlet {
 			if (!validarNomeDeUsuario(request.getParameter("nomeDeUsuario"))){
 				throw new IllegalArgumentException("Nome de usuário inválido!");
 			}
-			Administrador adm = new Administrador();
-			adm.setNome(request.getParameter("nome"));
-			adm.setNomeDeUsuario(request.getParameter("nomeDeUsuario"));
-			adm.setSenha(request.getParameter("senha"));
-			adm.setEmail(request.getParameter("email"));
+			Administrador administrador = new Administrador();
+			administrador.setNome(request.getParameter("nome"));
+			administrador.setNomeDeUsuario(request.getParameter("nomeDeUsuario"));
+			administrador.setSenha(request.getParameter("senha"));
+			administrador.setEmail(request.getParameter("email"));
 			AdministradorDAO dao = new AdministradorDAO();
-			dao.adicionar(adm);
+			dao.adicionar(administrador);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("login-adm.jsp");
 			requestDispatcher.forward(request, response);
 		} catch (IllegalArgumentException exception) {

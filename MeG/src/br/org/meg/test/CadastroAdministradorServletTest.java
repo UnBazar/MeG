@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,9 +32,9 @@ public class CadastroAdministradorServletTest {
 	}
 	
 	public void createConnection(){
-		this.connection = new ConnectionFactory().getConnection();
+		this.connection = ConnectionFactory.getConnection();
 	}
-
+		
 	@Test
 	public void testExecuta() throws ServletException, IOException {
 		when(request.getParameter("senha")).thenReturn("mudar123");
@@ -41,6 +42,8 @@ public class CadastroAdministradorServletTest {
 		when(request.getParameter("nomeDeUsuario")).thenReturn("guilhermedelyra2014");
 		when(request.getParameter("nome")).thenReturn("Guilherme de Lyra");
 		when(request.getParameter("email")).thenReturn("guilhermedelyra@gmail.com");
+		when(request.getRequestDispatcher("login-adm.jsp")).thenReturn(
+				mock(RequestDispatcher.class));
 		new CadastroAdministradorServlet().doPost(request, response);
 	}
 	
@@ -53,10 +56,9 @@ public class CadastroAdministradorServletTest {
 			ps.setString(1, "guilhermedelyra2014");
 			ps.execute();
 			ps.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 }

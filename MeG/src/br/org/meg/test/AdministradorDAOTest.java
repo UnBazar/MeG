@@ -1,10 +1,10 @@
 package org.meg.test;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
-
 import org.meg.dao.AdministradorDAO;
-import org.meg.exception.DAOException;
 import org.meg.model.Administrador;
 
 public class AdministradorDAOTest {
@@ -32,18 +32,19 @@ public class AdministradorDAOTest {
 		dao.existeNomeDeUsuario("Novousuario");
 	}
 	
-	@Test(expected = DAOException.class)
+	@Test
 	public void testExisteNomeDeUsuarioShouldThrowException() {
-		dao.existeNomeDeUsuario("usuarioInexistente");
+		assertFalse(dao.existeNomeDeUsuario("usuarioInexistente"));
 	}
 	
 	@Test
 	public void testBuscaAdministrador(){
 		dao.buscaAdministrador("pedrodelyra10", "mudar123");
 	}
-	@Test(expected = DAOException.class)
+	
+	@Test
 	public void testBuscaAdministradorShouldThrowException(){
-		dao.buscaAdministrador("pedrodelyra10", "senhaInválida");
+		assertNull(dao.buscaAdministrador("pedrodelyra10", "senhaInválida"));
 	}
 
 }
