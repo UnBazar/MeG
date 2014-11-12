@@ -2,8 +2,13 @@ package org.meg.controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,14 +16,16 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
 import org.meg.exception.UploadArquivoException;
 import org.meg.model.Administrador;
 import org.meg.parser.Parser;
 
-public class UploadArquivo implements Logica {
-	
-	public String executa(HttpServletRequest request, HttpServletResponse response) {
+@WebServlet("/upload")
+public class UploadArquivoServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (isMultipart) {
 			try {
@@ -26,11 +33,13 @@ public class UploadArquivo implements Logica {
 				factory.setSizeThreshold(100000);
 				ServletFileUpload upload = new ServletFileUpload(factory);
 				List<FileItem> items = (List<FileItem>) upload.parseRequest(request);
+				boolean contemArquivo = false;
 				for (FileItem item : items) {
 					if (!item.isFormField()) {
+						contemArquivo = true;
 						String url = criaCaminhoDoArquivo();
-						int anoInicial = Integer.parseInt(items.get(1).getString());
-						int anoFinal = Integer.parseInt(items.get(2).getString());;
+						int anoInicial = Integer.parseInt(items.get(0).getString());
+						int anoFinal = Integer.parseInt(items.get(1).getString());;
 						int numeroDeSecoes = 0;
 						HttpSession sessao = request.getSession();
 						Administrador administrador = (Administrador) sessao.getAttribute("administrador");
@@ -42,13 +51,18 @@ public class UploadArquivo implements Logica {
 								anoInicial, anoFinal);
 						validaArquivo(items, parser, anoInicial, anoFinal, numeroDeSecoes);
 						parser.persist();
+						request.setAttribute("erro", false);
 					}
 				}
+				if (contemArquivo) {
+					throw new UploadArquivoException("Nenhum arquivo foi enviado!");
+				}
 			} catch(Exception e) {
-				throw new UploadArquivoException(e);
+				request.setAttribute("erro", true);
 			} 
 		}
-		return "index.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
+		requestDispatcher.forward(request, response);
 	}		
 	/**
 	 * O método substitui os espaços em branco do nome de usuário por underlines
@@ -75,7 +89,7 @@ public class UploadArquivo implements Logica {
 	 */
 	private int getNumeroDeSecoes(List<FileItem> items) {
 		int numeroDeSecoes = 0;
-		for (int i = 3; i < items.size() - 1; i++) {
+		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
 				numeroDeSecoes++;
 			}
@@ -95,7 +109,7 @@ public class UploadArquivo implements Logica {
 	private void validaArquivo(List<FileItem> items, Parser parser, int anoInicial, 
 			int anoFinal, int numeroDeSecoes) throws FileNotFoundException {
 		parser.validarAno(anoInicial, anoFinal);
-		for (int i = 3; i < items.size() - 1; i++) {
+		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
 				parser.validarSecao(items.get(i).getString());
 			}
@@ -109,7 +123,7 @@ public class UploadArquivo implements Logica {
 	 */
 	private String criaCaminhoDoArquivo() {
 		String url;
-		url = UploadArquivo.class.getProtectionDomain().getCodeSource().getLocation()+"";
+		url = UploadArquivoServlet.class.getProtectionDomain().getCodeSource().getLocation()+"";
 		url = url.replaceAll("file:", "");
 		url = url.replaceAll("WEB-INF/classes/br/org/meg/controller/UploadArquivo.class", "");
 		return url;

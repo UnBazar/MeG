@@ -36,7 +36,7 @@ public class QuadroDAOTest {
 	}
 	
 	public void createConnection(){
-		this.connection = new ConnectionFactory().getConnection();
+		this.connection = ConnectionFactory.getConnection();
 	}
 	
 	
@@ -80,7 +80,6 @@ public class QuadroDAOTest {
 			ps.setInt(1, this.quadro.getAno());
 			ps.execute();
 			ps.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

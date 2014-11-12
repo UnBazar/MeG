@@ -10,7 +10,7 @@ import org.meg.exception.DAOException;
 public class UtilDAO {
 	private Connection connection;
 	public UtilDAO(){
-		this.connection = new ConnectionFactory().getConnection();
+		this.connection = ConnectionFactory.getConnection();
 	}
 	/**
 	 * Método que pega o nome de um estado pela id no banco de dados

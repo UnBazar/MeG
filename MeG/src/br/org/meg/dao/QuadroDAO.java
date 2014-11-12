@@ -19,7 +19,7 @@ public class QuadroDAO {
 	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
 	 */
 	public QuadroDAO() {
-		this.connection = new ConnectionFactory().getConnection();
+		this.connection = ConnectionFactory.getConnection();
 	}
 	
 	/**
@@ -141,7 +141,6 @@ public class QuadroDAO {
 				Quadro quadro = new Quadro();
 				quadro.setAno(ano);
 				Estado estado = new Estado();
-				estado.setId(rs.getInt("estado_id"));
 				quadro.setEstado(estado);
 				quadro.setSecao(secao);
 				quadro.setDescricao(descricao);

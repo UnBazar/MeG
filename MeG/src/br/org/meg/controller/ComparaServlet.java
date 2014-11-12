@@ -27,6 +27,7 @@ public class ComparaServlet extends HttpServlet {
 	/**
 	 * Método que faz comparacao de dados entre dois estados
 	 */
+	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Quadro> quadros = new ArrayList<>();
 		Estado estado = new Estado();

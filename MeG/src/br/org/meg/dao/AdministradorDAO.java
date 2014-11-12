@@ -15,7 +15,7 @@ public class AdministradorDAO {
 	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
 	 */
 	public AdministradorDAO() {
-		this.connection = new ConnectionFactory().getConnection();
+		this.connection = ConnectionFactory.getConnection();
 	}
 	
 	/**
@@ -87,12 +87,7 @@ public class AdministradorDAO {
 			boolean existeNome = rs.first();
 			rs.close();
 			stmt.close();
-			if (!existeNome) {
-				return false;
-			}
-			else {
-				throw new DAOException("Nome de usuário já existe!");
-			}
+			return existeNome;
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
 			throw new DAOException("Erro ao acessar o banco!");

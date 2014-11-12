@@ -3,8 +3,7 @@
 		<title>Cadastro</title>
 	</head>
 	<body>
-		<form action="sistema" method="POST">
-			<input type="hidden" name="logica" value="CadastroAdm">
+		<form action="cadastro" method="POST">
 			Nome <br />
 			<input type="text" name="nome"> <br />
 			Nome de usuário <br />
