@@ -76,7 +76,7 @@
 				doc.setFontSize(30);
 				doc.text(35,25,"Grafico");
 				doc.addImage(chartImage, 'PNG', 15, 40, 180, 0);
-				doc.save('gráfico.pdf');
+				doc.save('grafico.pdf');
 			}
 		</script>
 	</head>

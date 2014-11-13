@@ -16,25 +16,45 @@ pageEncoding="UTF-8"%>
 		<link rel="stylesheet" href="css/style.css">
 		<title>Ranking</title>
 		
+		<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="js/jsapi.js"></script>
+		<script type="text/javascript" src="js/jspdf.js"></script>
+		<script type="text/javascript" src="js/FileSaver.js"></script>
+		<script type="text/javascript" src="js/FileSaver.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/jspdf.plugin.addimage.js"></script>
+		<script type="text/javascript" src="js/jspdf.plugin.png_support.js"></script>
+		<script type="text/javascript" src="js/libs/png_support/png.js"></script>
+		<script type="text/javascript" src="js/libs/png_support/zlib.js"></script>
+		<script type="text/javascript" src="js/canvas2image.js"></script>
+		<script type="text/javascript" src="js/html2canvas.js"></script>	
+		<script type="text/javascript" src="js/base64.js"></script>		
+				
 		<script type="text/javascript">
-
-		    function gerarRankingPDF() {
-		        $(function () {
-		            var specialElementHandlers = {
-		                '#editor': function (element,renderer) {
-		                    return true;
-		                }
-		            };
-		         $('#cmd').click(function () {
-		                var doc = new jsPDF();
-		                doc.fromHTML($('#container').html(), 15, 15, {
-		                    'width': 170,'elementHandlers': specialElementHandlers
-		                });
-		                doc.save('ranking.pdf');
-		            });  
-		        }); 
-		    }
-		</script>
+		
+		$(function() { 
+		    $("#btnSave").click(function() { 
+		        html2canvas($('#imprimir'), {
+		            onrendered: function(canvas) {
+		                theCanvas = canvas;
+		                
+		                // Convert and download as image 
+		          //      Canvas2Image.saveAsPNG(canvas); 
+		          //      $("#img-out").append(canvas);
+		                // Clean up 
+		                //document.body.removeChild(canvas);
+		                
+		                var doc = new jsPDF();	    
+						doc.addImage(canvas, 'PNG', 20, 30, 150, 0);
+						doc.save('ranking.pdf');
+		            }
+		        });
+		    });
+		}); 
+		
+		   	</script>
 		
 	</head>
 	
@@ -49,22 +69,28 @@ pageEncoding="UTF-8"%>
 				</ul>
 			</section>
 			<br>
+			<div id="imprimir">
 			<h1 style="color: #000000">Ranking de salário médio na área de ${setor} - ${ano} </h1>
-			<table border="1" style="width:30%; border: 2px solid #3366FF">
-				<tr>
-					<th style="text-align:center">Ranking</th>
-					<th style="text-align:center">Estado</th>
-					<th style="text-align:center">Salario médio</th>
-				</tr>
-				<c:forEach var="quadro" items="${lista}" varStatus="id">
+				<table border="1" style="width:30%; border: 2px solid #3366FF">
 					<tr>
-						<td>${id.count}º</td>
-						<td>${quadro.estado.nome}</td>
-						<td class="salarioMedio">${quadro.valor}</td>	
+						<th style="text-align:center">Ranking</th>
+						<th style="text-align:center">Estado</th>
+						<th style="text-align:center">Salario médio</th>
 					</tr>
-				</c:forEach>
-			</table>
-			<button onclick="javascript:gerarRankingPDF()"></button>
+					<c:forEach var="quadro" items="${lista}" varStatus="id">
+						<tr>
+							<td>${id.count}º</td>
+							<td>${quadro.estado.nome}</td>
+							<td class="salarioMedio">${quadro.valor}</td>	
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
+			<br>
+			<button class="btn btn-primary" id="btnSave">Salvar em PDF</button>
+			<br>
 		</div>
+		
+		<br>
 	</body>
 </html>
