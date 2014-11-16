@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
+<%@include file='shared/head.html'%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <!-- Latest compiled and minified CSS -->
@@ -40,22 +39,10 @@
 	});
 	google.setOnLoadCallback(drawChart);
 
-	var valores = $
-	{
-		valores
-	};
-	var valores2 = $
-	{
-		valores2
-	};
-	var anos = $
-	{
-		anos
-	};
-	var tamanho = $
-	{
-		tamanho
-	};
+	var valores = ${valores};
+	var valores2 = ${valores2};
+	var anos = ${anos};
+	var tamanho = ${tamanho};
 	var chartImage;
 
 	function listarValoresporAnos() {
