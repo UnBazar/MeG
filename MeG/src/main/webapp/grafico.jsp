@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
+<%@include file='shared/head.html'%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -44,15 +44,8 @@ function drawChart() {
 </script>
 </head>
 <body>
+<%@include file='shared/navbar.html'%>
 <div class="container">
-	<section id="cabecalho">
-		<h1><a href="">MeG - Mercado em gráfico</a></h1>
-		<ul id="menu">
-			<li><a href="#">Sobre</a></li>
-			<li><a href="#">Como usar</a></li>
-			<li><a href="#">Link</a></li>
-		</ul>
-	</section>
 	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 	<form action="compara" method="post">
 	<label>Estado</label>
@@ -88,5 +81,6 @@ function drawChart() {
 		<button type="submit" class="btn btn-primary" id="btn-submit">Comparar Gráfico</button>
 		</form>
 </div>
+	<%@include file='shared/footer.html'%>
 </body>
 </html>

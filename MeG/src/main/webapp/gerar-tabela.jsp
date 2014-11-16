@@ -1,10 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false" %>
 
 <html>
 	<head>
+	<%@include file='shared/head.html'%>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -18,16 +17,8 @@ pageEncoding="UTF-8"%>
 	</head>
 
 	<body>
+	<%@include file='shared/navbar.html'%>
 		<div class="container">
-		<section id="cabecalho">
-			<h1><a href="">MeG - Mercado em grÃ¡fico</a></h1>
-				<ul id="menu">
-					<li><a href="#">Sobre</a></li>
-					<li><a href="#">Como usar</a></li>
-					<li><a href="#">Link</a></li>
-			</ul>
-		</section>
-		<br>		
 		<section id="gerador">
 			<h2>Gerar ranking</h2><br>
 			<form action="ranking" method="post">
@@ -42,40 +33,41 @@ pageEncoding="UTF-8"%>
 				</select>
 				<label> Descricao</label>
 				<select name="descricao">
-					<option value="1" >NÃºmero de empresas e outras organizaÃ§Ãµes (Unidades)</option>
+					<option value="1" >Número de empresas e outras organizações (Unidades)</option>
 					<option value="2">Pessoal ocupado total (Pessoas)</option>
 					<option value="3">Pessoal ocupado assalariado (Pessoas)</option>
-					<option value="4">SalÃ¡rios e outras remuneraÃ§Ãµes (Mil Reais)</option>
-					<option value="5">SalÃ¡rio mÃ©dio mensal (SalÃ¡rios mÃ­nimos)</option>
+					<option value="4">Salários e outras remunerações (Mil Reais)</option>
+					<option value="5">Salário médio mensal (Salários mínimos)</option>
 				</select>
 				<label id="setor">Setor:</label>
 				<select name="setor">
-					<option value="1">Agricultura, pecuÃ¡ria, produÃ§Ã£o florestal, pesca e aquicultura</option>
-					<option value="2">IndÃºstrias extrativas</option>
-					<option value="3">IndÃºstrias de transformaÃ§Ã£o</option>
-					<option value="4">Eletricidade e gÃ¡s</option>
-					<option value="5">Ãgua, esgoto, atividades de gestÃ£o de resÃ­duos e descontaminaÃ§Ã£o</option>
-					<option value="6">ConstruÃ§Ã£o</option>
-					<option value="7">ComÃ©rcio, reparaÃ§Ã£o de veÃ­culos automotores e motocicletas</option>
+					<option value="1">Agricultura, pecuária, produção florestal, pesca e aquicultura</option>
+					<option value="2">Indústrias extrativas</option>
+					<option value="3">Indústrias de transformação</option>
+					<option value="4">Eletricidade e gás</option>
+					<option value="5">Água, esgoto, atividades de gestão de resíduos e descontaminação</option>
+					<option value="6">Construção</option>
+					<option value="7">Comércio, reparação de veículos automotores e motocicletas</option>
 					<option value="8">Transporte, armazenagem e correio</option>
-					<option value="9">Alojamento e alimentaÃ§Ã£o</option>
-					<option value="10">InformaÃ§Ã£o e comunicaÃ§Ã£o</option>
-					<option value="11">Atividades financeiras, de seguros e serviÃ§os relacionados</option>
-					<option value="12">Atividades imobiliÃ¡rias</option>
-					<option value="13">Atividades profissionais, cientÃ­ficas e tÃ©cnicas</option>
-					<option value="14">Atividades administrativas e serviÃ§os complementares</option>
-					<option value="15">AdministraÃ§Ã£o pÃºblica, defesa e seguridade social</option>
-					<option value="16">EducaÃ§Ã£o</option>
-					<option value="17">SaÃºde humana e serviÃ§os sociais</option>
-					<option value="18">Artes, cultura, esporte e recreaÃ§Ã£o</option>
-					<option value="19">Outras atividades de serviÃ§os</option>
-					<option value="20">ServiÃ§os domÃ©sticos</option>
-					<option value="21">Organismos internacionais e outras instituiÃ§Ãµes extraterritoriais</option>
+					<option value="9">Alojamento e alimentação</option>
+					<option value="10">Informação e comunicação</option>
+					<option value="11">Atividades financeiras, de seguros e serviços relacionados</option>
+					<option value="12">Atividades imobiliárias</option>
+					<option value="13">Atividades profissionais, científicas e técnicas</option>
+					<option value="14">Atividades administrativas e serviços complementares</option>
+					<option value="15">Administração pública, defesa e seguridade social</option>
+					<option value="16">Educação</option>
+					<option value="17">Saúde humana e serviços sociais</option>
+					<option value="18">Artes, cultura, esporte e recreação</option>
+					<option value="19">Outras atividades de serviços</option>
+					<option value="20">Serviços domésticos</option>
+					<option value="21">Organismos internacionais e outras instituições extraterritoriais</option>
 				</select>
 				<br><br>
 				<button type="submit" class="btn btn-primary" id="btn-submit">Gerar Tabela</button>
 			</form>
 		</section>
 		</div>
+			<%@include file='shared/footer.html'%>
 	</body>
 </html>
