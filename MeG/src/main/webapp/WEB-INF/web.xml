@@ -3,6 +3,16 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <filter>
+  	<filter-name>HistoricoFiltro</filter-name>
+  	<display-name>HistoricoFiltro</display-name>
+  	<description></description>
+  	<filter-class>org.meg.controller.HistoricoFiltro</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>HistoricoFiltro</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   <servlet>
   	<servlet-name>GraficoServlet</servlet-name>
   	<display-name>GraficoServlet</display-name>
