@@ -58,8 +58,8 @@
 						<option value="4">Salários e outras remunerações (Mil Reais)</option>
 						<option value="5">Salário médio mensal (Salários mínimos)</option>
 					</select><br>
-					<label id="secao">Secao:</label>
-					<select name="secao">
+					<label id="secao">Setor:</label>
+					<select name="setor">
 						<option value="1">Agricultura, pecuária, produção florestal, pesca e aquicultura</option>
 						<option value="2">Indústrias extrativas</option>
 						<option value="3">Indústrias de transformação</option>

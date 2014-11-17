@@ -14,15 +14,38 @@ pageEncoding="UTF-8"%>
 		<script src="js/tabela.js" type="text/javascript"></script>
 		<!-- Style geral -->
 		<link rel="stylesheet" href="css/style.css">
-		<title>Ranking de crescimento</title>
+		<title>Ranking Crescimento</title>
+		<script>
+		//	function ajustarSalario() {
+		//		var numeros = document.getElementsByClassName("dado");
+		//		var descricao = ${descricao};
+		//		alert(descricao.nome);
+		//		for (var i = 0; i < numeros.length; i++) {
+		//			if (descricao.nome == "Salário médio mensal (Salários mínimos)") 
+		//				numeros[i].innerHTML = "R$" + ajustarCasasDecimais(numeros[i].innerHTML);
+		//			else numeros[i].innerHTML = parseFloat(numeros[i].innerHTML).toFixed(0);
+		//		}
+		//	}
+	
+			function ajustarCasasDecimais(string) {
+				var num = string.indexOf('.') + 2;
+				if(num <= (string.length - 1)) {
+					return string.substring(0, num + 1);
+				}
+				else {
+					return string.substring(0, string.indexOf('.') + 2) + "0";
+				}
+			}
+		</script>
 	</head>
+	<body onload="ajustarSalario()">
 	<div class="container">
 		<section id="cabecalho">
 			<h1><a href="">MeG - Mercado em gráfico</a></h1>
-				<ul id="menu">
-					<li><a href="#">Sobre</a></li>
-					<li><a href="#">Como usar</a></li>
-					<li><a href="#">Link</a></li>
+			<ul id="menu">
+				<li><a href="#">Sobre</a></li>
+				<li><a href="#">Como usar</a></li>
+				<li><a href="#">Link</a></li>
 			</ul>
 		</section><br>
 		<h1 style="color: #000000">Ranking de ${descricao.nome} na área de ${setor} - ${anoInicial} - ${anoFinal} </h1>
@@ -37,7 +60,7 @@ pageEncoding="UTF-8"%>
 					<td>${id.count}º</td>
 					<td>${quadro.estado.nome}</td>
 					<td class="dado">
-						${quadro.valor}
+						${quadro.valor}%
 					</td>	
 				</tr>
 			</c:forEach>

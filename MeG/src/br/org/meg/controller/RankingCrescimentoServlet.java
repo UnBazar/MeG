@@ -24,12 +24,12 @@ public class RankingCrescimentoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		int anoInicial = Integer.parseInt(request.getParameter("anoInicial"));
 		int anoFinal = Integer.parseInt(request.getParameter("anoFinal"));
-		int secao_id = Integer.parseInt(request.getParameter("secao"));
+		int setor_id = Integer.parseInt(request.getParameter("setor"));
 		int descricao_id = Integer.parseInt(request.getParameter("descricao"));
 		QuadroDAO dao = new QuadroDAO();
 		Secao secao = new Secao();
 		Descricao descricao = new Descricao();
-		secao.setId(secao_id);
+		secao.setId(setor_id);
 		descricao.setId(descricao_id);
 		List<Quadro> listaInicial = dao.obterLista(anoInicial, secao, descricao);
 		List<Quadro> listaFinal = dao.obterLista(anoFinal, secao, descricao);
@@ -42,7 +42,7 @@ public class RankingCrescimentoServlet extends HttpServlet {
 		request.setAttribute("listaCrescimento", listaCrescimento);
 		request.setAttribute("anoInicial", anoInicial);
 		request.setAttribute("anoFinal", anoFinal);
-		request.setAttribute("descricao", descricao.getNome());
+		request.setAttribute("descricao", descricao);
 		request.setAttribute("setor", secao.getNome());
 		request.getRequestDispatcher("tabela-crescimento.jsp").forward(request, response);
 	}
