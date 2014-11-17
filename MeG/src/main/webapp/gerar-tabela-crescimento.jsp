@@ -44,7 +44,8 @@
 					</select>
 					<label id="anoFinal">Ano Final:</label>
 					<select name="anoFinal">
-						<option value="2008" selected="selected">2008</option>
+						<option value="2007" selected="selected">2007</option>
+						<option value="2008">2008</option>
 						<option value="2009">2009</option>
 						<option value="2010">2010</option>
 						<option value="2011">2011</option>

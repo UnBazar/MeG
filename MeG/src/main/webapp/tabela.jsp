@@ -64,7 +64,7 @@ pageEncoding="UTF-8"%>
 						<c:if test="${descricao.id == 4 || descricao.id == 5}">	
 							R$ ${quadro.valor} 
 						</c:if>
-						<c:if test="${descricao.id != 4 || descricao.id != 5}">
+						<c:if test="${descricao.id != 4 && descricao.id != 5}">
 							${quadro.valor}
 						</c:if>
 					</td>	

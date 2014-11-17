@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.meg.dao.QuadroDAO;
-import org.meg.dao.UtilDAO;
 import org.meg.model.Descricao;
 import org.meg.model.Quadro;
 import org.meg.model.Secao;
@@ -35,10 +34,6 @@ public class RankingCrescimentoServlet extends HttpServlet {
 		List<Quadro> listaFinal = dao.obterLista(anoFinal, secao, descricao);
 		List<Quadro> listaCrescimento = obterListaCrescimento(listaInicial,listaFinal);
 		this.ordenacaoCrescente(listaCrescimento);
-		if(descricao.getId() == 5){
-			this.alterarSalario(listaInicial, anoInicial);
-			this.alterarSalario(listaFinal, anoFinal);
-		}
 		request.setAttribute("listaCrescimento", listaCrescimento);
 		request.setAttribute("anoInicial", anoInicial);
 		request.setAttribute("anoFinal", anoFinal);
@@ -73,7 +68,7 @@ public class RankingCrescimentoServlet extends HttpServlet {
 	 */
 	private float calculaCrescimento(float valorFinal, float valorInicial){
 		float resultado = 0;
-		resultado = (valorInicial / valorFinal) * 100;
+		resultado = ((valorFinal / valorInicial)-1) * 100;
 		return resultado;
 	}
 	/**
@@ -104,25 +99,5 @@ public class RankingCrescimentoServlet extends HttpServlet {
 		Quadro buffer = lista.get(index1);
 		lista.set(index1, lista.get(index2));
 		lista.set(index2, buffer);
-	}
-	private void alterarSalario(List<Quadro> lista, int ano) {
-		int tamanho = lista.size();
-		float numeroDeSalarios;
-		float salarioMinimo = getSalarioMinimo(ano);
-		for (int i = 0; i < tamanho; i++) {
-			numeroDeSalarios = lista.get(i).getValor();
-			lista.get(i).setValor(salarioMinimo * numeroDeSalarios);
-		}
-	}
-	
-	/**
-	 * Seleciona o valor do salário mínimo de acordo com o ano especificado
-	 * @param ano
-	 * @return o valor do salário mínimo no ano especificado
-	 */
-	private float getSalarioMinimo(int ano) {
-		UtilDAO dao = new UtilDAO();
-		float salarioMinimo = dao.getSalarioMinimo(ano);
-		return salarioMinimo;
 	}
 }
