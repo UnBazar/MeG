@@ -31,6 +31,9 @@ public class RankingServlet extends HttpServlet {
 		descricao.setId(descricao_id);
 		secao.setId(setor_id);
 		List<Quadro> lista = dao.obterLista(ano, secao, descricao);
+		for(int i = 0; i < lista.size(); i++){
+			System.out.println(lista.get(i).getEstado().getNome());
+		}
 		this.ordenacaoCrescente(lista);
 		if(descricao.getId() == 5){
 			this.alterarSalario(lista, ano);

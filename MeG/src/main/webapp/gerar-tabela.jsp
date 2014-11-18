@@ -1,73 +1,81 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page isELIgnored="false" %>
+<%@ page isELIgnored="false"%>
 
 <html>
-	<head>
-	<%@include file='shared/head.html'%>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Style geral -->
-	<link rel="stylesheet" href="css/style.css">
-		<title>Tabela</title>
-	</head>
+<head>
+<%@include file='shared/head.html'%>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Style geral -->
+<link rel="stylesheet" href="css/style.css">
+<title>Tabela</title>
 
-	<body>
+</head>
+
+<body>
 	<%@include file='shared/navbar.html'%>
-		<div class="container">
+	<div class="container">
 		<section id="gerador">
-			<h2>Gerar ranking</h2><br>
+			<h2>Gerar ranking</h2>
+			<br>
 			<form action="ranking" method="post">
-				<label id="ano">Ano:</label>			
-				<select name="ano">
+				<label id="ano">Ano:</label> <select name="ano">
 					<option value="2007" selected="selected">2007</option>
 					<option value="2008">2008</option>
 					<option value="2009">2009</option>
 					<option value="2010">2010</option>
 					<option value="2011">2011</option>
-					<option value="2012">2012</option>			
-				</select>
-				<label> Descricao</label>
-				<select name="descricao">
-					<option value="1" >Número de empresas e outras organizações (Unidades)</option>
+					<option value="2012">2012</option>
+				</select> <label> Descricao</label> <select name="descricao">
+					<option value="1">Nï¿½mero de empresas e outras
+						organizaï¿½ï¿½es (Unidades)</option>
 					<option value="2">Pessoal ocupado total (Pessoas)</option>
 					<option value="3">Pessoal ocupado assalariado (Pessoas)</option>
-					<option value="4">Salários e outras remunerações (Mil Reais)</option>
-					<option value="5">Salário médio mensal (Salários mínimos)</option>
-				</select>
-				<label id="setor">Setor:</label>
-				<select name="setor">
-					<option value="1">Agricultura, pecuária, produção florestal, pesca e aquicultura</option>
-					<option value="2">Indústrias extrativas</option>
-					<option value="3">Indústrias de transformação</option>
-					<option value="4">Eletricidade e gás</option>
-					<option value="5">Água, esgoto, atividades de gestão de resíduos e descontaminação</option>
-					<option value="6">Construção</option>
-					<option value="7">Comércio, reparação de veículos automotores e motocicletas</option>
+					<option value="4">Salï¿½rios e outras remuneraï¿½ï¿½es (Mil
+						Reais)</option>
+					<option value="5">Salï¿½rio mï¿½dio mensal (Salï¿½rios mï¿½nimos)</option>
+				</select> <label id="setor">Setor:</label> <select name="setor">
+					<option value="1">Agricultura, pecuï¿½ria, produï¿½ï¿½o
+						florestal, pesca e aquicultura</option>
+					<option value="2">Indï¿½strias extrativas</option>
+					<option value="3">Indï¿½strias de transformaï¿½ï¿½o</option>
+					<option value="4">Eletricidade e gï¿½s</option>
+					<option value="5">ï¿½gua, esgoto, atividades de gestï¿½o de
+						resï¿½duos e descontaminaï¿½ï¿½o</option>
+					<option value="6">Construï¿½ï¿½o</option>
+					<option value="7">Comï¿½rcio, reparaï¿½ï¿½o de veï¿½culos
+						automotores e motocicletas</option>
 					<option value="8">Transporte, armazenagem e correio</option>
-					<option value="9">Alojamento e alimentação</option>
-					<option value="10">Informação e comunicação</option>
-					<option value="11">Atividades financeiras, de seguros e serviços relacionados</option>
-					<option value="12">Atividades imobiliárias</option>
-					<option value="13">Atividades profissionais, científicas e técnicas</option>
-					<option value="14">Atividades administrativas e serviços complementares</option>
-					<option value="15">Administração pública, defesa e seguridade social</option>
-					<option value="16">Educação</option>
-					<option value="17">Saúde humana e serviços sociais</option>
-					<option value="18">Artes, cultura, esporte e recreação</option>
-					<option value="19">Outras atividades de serviços</option>
-					<option value="20">Serviços domésticos</option>
-					<option value="21">Organismos internacionais e outras instituições extraterritoriais</option>
-				</select>
-				<br><br>
-				<button type="submit" class="btn btn-primary" id="btn-submit">Gerar Tabela</button>
+					<option value="9">Alojamento e alimentaï¿½ï¿½o</option>
+					<option value="10">Informaï¿½ï¿½o e comunicaï¿½ï¿½o</option>
+					<option value="11">Atividades financeiras, de seguros e
+						serviï¿½os relacionados</option>
+					<option value="12">Atividades imobiliï¿½rias</option>
+					<option value="13">Atividades profissionais, cientï¿½ficas e
+						tï¿½cnicas</option>
+					<option value="14">Atividades administrativas e serviï¿½os
+						complementares</option>
+					<option value="15">Administraï¿½ï¿½o pï¿½blica, defesa e
+						seguridade social</option>
+					<option value="16">Educaï¿½ï¿½o</option>
+					<option value="17">Saï¿½de humana e serviï¿½os sociais</option>
+					<option value="18">Artes, cultura, esporte e recreaï¿½ï¿½o</option>
+					<option value="19">Outras atividades de serviï¿½os</option>
+					<option value="20">Serviï¿½os domï¿½sticos</option>
+					<option value="21">Organismos internacionais e outras
+						instituiï¿½ï¿½es extraterritoriais</option>
+				</select> <br>
+				<br>
+				<button type="submit" class="btn btn-primary" id="btn-submit">Gerar
+					Tabela</button>
 			</form>
 		</section>
-		</div>
-			<%@include file='shared/footer.html'%>
-	</body>
+	</div>
+	<%@include file='shared/footer.html'%>
+</body>
 </html>

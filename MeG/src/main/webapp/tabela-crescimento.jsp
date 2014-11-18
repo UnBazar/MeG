@@ -15,7 +15,7 @@
 <script src="js/tabela.js" type="text/javascript"></script>
 <!-- Style geral -->
 <link rel="stylesheet" href="css/style.css">
-<title>Ranking</title>
+<title>Ranking Crescimento</title>
 <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="js/jsapi.js"></script>
@@ -33,64 +33,47 @@
 <script type="text/javascript" src="js/base64.js"></script>
 
 <script type="text/javascript">
-	$(function() {
-		$("#btnSave").click(function() {
-			html2canvas($('#imprimir'), {
-				onrendered : function(canvas) {
-					theCanvas = canvas;
-					var doc = new jsPDF();
-					doc.addImage(canvas, 'PNG', 20, 30, 150, 0);
-					doc.save('ranking.pdf');
-				}
-			});
-		});
-	});
+	function ajustarCasasDecimais(string) {
+		var num = string.indexOf('.') + 2;
+		if (num <= (string.length - 1)) {
+			return string.substring(0, num + 1);
+		} else {
+			return string.substring(0, string.indexOf('.') + 2) + "0";
+		}
+	}
 </script>
 </head>
-
 <body onload="ajustarSalario()">
 	<%@include file='shared/navbar.html'%>
 	<div class="container">
-		<div id="imprimir">
-			<br>
-			<h1 style="color: #000000">Ranking de ${descricao.nome} na área
-				de ${setor} - ${ano}</h1>
-			<table border="1" style="width: 30%; border: 2px solid #3366FF">
+		<section id="cabecalho">
+			<h1>
+				<a href="">MeG - Mercado em gráfico</a>
+			</h1>
+			<ul id="menu">
+				<li><a href="#">Sobre</a></li>
+				<li><a href="#">Como usar</a></li>
+				<li><a href="#">Link</a></li>
+			</ul>
+		</section>
+		<br>
+		<h1 style="color: #000000">Ranking de ${descricao.nome} na área
+			de ${setor} - ${anoInicial} - ${anoFinal}</h1>
+		<table border="1" style="width: 30%; border: 2px solid #3366FF">
+			<tr>
+				<th style="text-align: center">Ranking</th>
+				<th style="text-align: center">Estado</th>
+				<th style="text-align: center">${descricao.nome}</th>
+			</tr>
+			<c:forEach var="quadro" items="${listaCrescimento}" varStatus="id">
 				<tr>
-					<!-- 
-					<th style="text-align: center">Ranking</th>
-					<th style="text-align: center">Estado</th>
-					<th style="text-align: center">${descricao.nome}</th>
-					 -->
-
 					<td>${id.count}º</td>
 					<td>${quadro.estado.nome}</td>
-					<td class="dado"><c:if
-							test="${descricao.id == 4 || descricao.id == 5}">	
-							R$ ${quadro.valor} 
-						</c:if> <c:if test="${descricao.id != 4 && descricao.id != 5}">
-							${quadro.valor}
-						</c:if></td>
+					<td class="dado">${quadro.valor}%</td>
 				</tr>
-				<c:forEach var="quadro" items="${lista}" varStatus="id">
-					<tr>
-						<td>${id.count}º</td>
-						<td>${quadro.estado.nome}</td>
-						<td class="dado"><c:if
-								test="${descricao.id == 4 || descricao.id == 5}">	
-									R$ ${quadro.valor} 
-								</c:if> <c:if test="${descricao.id != 4 || descricao.id != 5}">
-									${quadro.valor}
-								</c:if></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
-		<br>
-		<button class="btn btn-primary" id="btnSave">Salvar em PDF</button>
-		<br>
+			</c:forEach>
+		</table>
 	</div>
-	<br>
 </body>
 <%@include file='shared/footer.html'%>
 </html>

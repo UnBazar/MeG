@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.RankingServlet;
+import org.meg.controller.RankingCrescimentoServlet;
 
-public class RankingServletTest {
+public class RankingCrescimentoServletTest {
 
 	private HttpServletRequest request;
 	private HttpServletResponse response;
@@ -27,12 +27,14 @@ public class RankingServletTest {
 
 	@Test
 	public void doPostTest() throws ServletException, IOException {
-			when(request.getParameter("ano")).thenReturn("2012");
-			when(request.getParameter("setor")).thenReturn("3");
-			when(request.getParameter("descricao")).thenReturn("5");
-			when(request.getRequestDispatcher("tabela.jsp")).thenReturn(
-					mock(RequestDispatcher.class));
-			RankingServlet servlet = new RankingServlet();
-			servlet.doPost(request, response);
+		when(request.getParameter("anoInicial")).thenReturn("2008");
+		when(request.getParameter("anoFinal")).thenReturn("2012");
+		when(request.getParameter("setor")).thenReturn("3");
+		when(request.getParameter("descricao")).thenReturn("5");
+		when(request.getRequestDispatcher("tabela-crescimento.jsp"))
+				.thenReturn(mock(RequestDispatcher.class));
+		RankingCrescimentoServlet servlet = new RankingCrescimentoServlet();
+		servlet.doPost(request, response);
 	}
+
 }
