@@ -20,13 +20,6 @@ public class HistoricoFiltro implements Filter {
 	UtilDAO dao = new UtilDAO();
 
 	/**
-	 * Default constructor.
-	 */
-	public HistoricoFiltro() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
@@ -39,22 +32,18 @@ public class HistoricoFiltro implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 		FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		if (req.getRequestURI().contains("ranking")) {
+		if (req.getRequestURI().contains("/ranking")) {
 			dao.adicionaHistorico(1);
 		}
-
 		else if (req.getRequestURI().contains("/compara")) {
 			dao.adicionaHistorico(2);
 		}
-
 		else if (req.getRequestURI().contains("/projecao")) {
 			dao.adicionaHistorico(3);
 		}
-
 		else if (req.getRequestURI().contains("/grafico")) {
 			dao.adicionaHistorico(4);
 		}
-
 		chain.doFilter(request, response);
 	}
 
