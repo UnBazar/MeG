@@ -23,14 +23,7 @@
 			<h2>Gerar ranking</h2>
 			<br>
 			<form action="ranking" method="post">
-				<label id="ano">Ano:</label> <select name="ano">
-					<option value="2007" selected="selected">2007</option>
-					<option value="2008">2008</option>
-					<option value="2009">2009</option>
-					<option value="2010">2010</option>
-					<option value="2011">2011</option>
-					<option value="2012">2012</option>
-				</select> <label> Descricao</label> <select name="descricao">
+				<label> Tipo de pesquisa</label> <select name="descricao">
 					<option value="1">Número de empresas e outras
 						<option value="1">Número de empresas e outras organizações
 						(Unidades)</option>
@@ -69,8 +62,16 @@
 					<option value="20">Serviços domésticos</option>
 					<option value="21">Organismos internacionais e outras
 						instituições extraterritoriais</option>
-				</select> <br> <br>
-				<br>
+				</select> <br>
+				<label id="ano">Ano:</label> <select name="ano">
+					<option value="2007" selected="selected">2007</option>
+					<option value="2008">2008</option>
+					<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+				</select> 
+				<br> <br>
 				<button type="submit" class="btn btn-primary" id="btn-submit">Gerar
 					Tabela</button>
 			</form>

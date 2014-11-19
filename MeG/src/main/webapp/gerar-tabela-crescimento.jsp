@@ -23,22 +23,8 @@
 			<h2>Gerar ranking de crescimento</h2>
 			<br>
 			<form action="crescimento" method="post">
-				<label id="anoInicial">Ano inicial:</label> <select
-					name="anoInicial">
-					<option value="2007" selected="selected">2007</option>
-					<option value="2008">2008</option>
-					<option value="2009">2009</option>
-					<option value="2010">2010</option>
-					<option value="2011">2011</option>
-					<option value="2012">2012</option>
-				</select> <label id="anoFinal">Ano Final:</label> <select name="anoFinal">
-					<option value="2007" selected="selected">2007</option>
-					<option value="2008">2008</option>
-					<option value="2009">2009</option>
-					<option value="2010">2010</option>
-					<option value="2011">2011</option>
-					<option value="2012">2012</option>
-				</select> <label id="descricao">Descricao:</label> <select name="descricao">
+
+				<label id="descricao">Tipo de pesquisa:</label> <select name="descricao">
 					<option value="1">Número de empresas e outras organizações
 						(Unidades)</option>
 					<option value="2">Pessoal ocupado total (Pessoas)</option>
@@ -46,7 +32,9 @@
 					<option value="4">Salários e outras remunerações (Mil
 						Reais)</option>
 					<option value="5">Salário médio mensal (Salários mínimos)</option>
-				</select><br> <label id="secao">Setor:</label> <select name="setor">
+				</select>
+
+				<label id="secao">Setor:</label> <select name="setor">
 					<option value="1">Agricultura, pecuária, produção
 						florestal, pesca e aquicultura</option>
 					<option value="2">Indústrias extrativas</option>
@@ -76,7 +64,26 @@
 					<option value="20">Serviços domésticos</option>
 					<option value="21">Organismos internacionais e outras
 						instituições extraterritoriais</option>
+				</select> <br>
+
+				<label id="anoInicial">Ano inicial:</label> <select name="anoInicial">
+					<option value="2007" selected="selected">2007</option>
+					<option value="2008">2008</option>
+					<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+				</select>
+
+				<label id="anoFinal">Ano Final:</label> <select name="anoFinal">
+					<option value="2007">2007</option>
+					<option value="2008">2008</option>
+					<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012" selected="selected">2012</option>
 				</select> <br> <br>
+
 				<button type="submit" class="btn btn-primary" id="btn-submit">Gerar
 					Tabela</button>
 			</form>
