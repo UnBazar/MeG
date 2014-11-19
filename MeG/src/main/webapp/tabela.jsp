@@ -57,20 +57,9 @@
 				de ${setor} - ${ano}</h1>
 			<table border="1" style="width: 30%; border: 2px solid #3366FF">
 				<tr>
-					<!-- 
 					<th style="text-align: center">Ranking</th>
 					<th style="text-align: center">Estado</th>
 					<th style="text-align: center">${descricao.nome}</th>
-					 -->
-
-					<td>${id.count}º</td>
-					<td>${quadro.estado.nome}</td>
-					<td class="dado"><c:if
-							test="${descricao.id == 4 || descricao.id == 5}">	
-							R$ ${quadro.valor} 
-						</c:if> <c:if test="${descricao.id != 4 && descricao.id != 5}">
-							${quadro.valor}
-						</c:if></td>
 				</tr>
 				<c:forEach var="quadro" items="${lista}" varStatus="id">
 					<tr>
@@ -79,11 +68,12 @@
 						<td class="dado"><c:if
 								test="${descricao.id == 4 || descricao.id == 5}">	
 									R$ ${quadro.valor} 
-								</c:if> <c:if test="${descricao.id != 4 || descricao.id != 5}">
+								</c:if> <c:if test="${descricao.id != 4 && descricao.id != 5}">
 									${quadro.valor}
 								</c:if></td>
 					</tr>
 				</c:forEach>
+				
 			</table>
 		</div>
 		<br>
