@@ -27,8 +27,8 @@ function listarValoresporAnos(){
 	var i = 1;
 	var lista = new Array();
 	lista[0] = ['Anos', '${titulo}'];
-	for(i = 1; i <= tamanho; i++){
-		lista[i] = [anos[i],  valores[i]];
+	for(i = 0; i <= tamanho; i++){
+		lista[i+1] = [anos[i],  valores[i]];
 	}
 	return lista;
 }

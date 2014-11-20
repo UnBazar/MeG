@@ -53,18 +53,16 @@ public class QuadroDAO {
 	 */
 	public boolean existeQuadro(Quadro quadro){
 		String sql = "SELECT * FROM Quadro "
-				+ "WHERE valor = ? "
-				+ "AND estado_id = ? "
+				+ "WHERE estado_id = ? "
 				+ "AND secao_id = ? "
 				+ "AND descricao_id = ? "
 				+ "AND ano = ? ";
 		try {
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setFloat(1, quadro.getValor());
-			ps.setInt(2, quadro.getEstado().getId());
-			ps.setInt(3, quadro.getSecao().getId());
-			ps.setInt(4, quadro.getDescricao().getId());
-			ps.setInt(5, quadro.getAno());
+			ps.setInt(1, quadro.getEstado().getId());
+			ps.setInt(2, quadro.getSecao().getId());
+			ps.setInt(3, quadro.getDescricao().getId());
+			ps.setInt(4, quadro.getAno());
 			ResultSet rs = ps.executeQuery();
 			boolean existeQuadro = rs.first();
 			rs.close();

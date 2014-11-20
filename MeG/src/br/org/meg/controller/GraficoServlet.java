@@ -58,6 +58,7 @@ public class GraficoServlet extends HttpServlet{
 		Descricao descricao = new Descricao(idDescricao);
 		Secao secao = new Secao(idSetor);
 		Estado estado = new Estado (idEstado);
+		System.out.println(anoInicial);
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
 		request.getSession().setAttribute("valores", listarValores(quadros));
 		request.getSession().setAttribute("anos", listarAnos(quadros));
