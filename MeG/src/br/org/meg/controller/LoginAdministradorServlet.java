@@ -30,7 +30,7 @@ public class LoginAdministradorServlet extends HttpServlet {
 		if (administrador != null) {
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("administrador", administrador);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/home.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/administrador.jsp");
 			requestDispatcher.forward(request, response);
 		} else{
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("login-adm.jsp");
