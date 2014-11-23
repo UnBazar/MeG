@@ -249,5 +249,22 @@ public class UtilDAO {
 			throw new DAOException("Erro ao adicionar no historico!");
 		}
 	}
-
+	public int getHistorico(int id){
+		int acesso = 0;
+		try {
+			String sql = "Select * From Historico Where id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				acesso = rs.getInt("acessos");
+			}
+		} catch (SQLException sqlException) {
+			System.err.println("Erro ao buscar o numero de acessos no banco onde id = "+ id);
+			throw new DAOException(sqlException);
+		}
+		
+		return acesso;
+	}
 }

@@ -31,6 +31,24 @@
   	<description></description>
   	<servlet-class>org.meg.controller.TabelaServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>HomeServlet</servlet-name>
+  	<display-name>HomeServlet</display-name>
+  	<description></description>
+  	<servlet-class>org.meg.controller.HomeServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>HistoricoServlet</servlet-name>
+  	<display-name>HistoricoServlet</display-name>
+  	<description></description>
+  	<servlet-class>org.meg.controller.HistoricoServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UploadServlet</servlet-name>
+  	<display-name>UploadServlet</display-name>
+  	<description></description>
+  	<servlet-class>org.meg.controller.UploadServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>GraficoServlet</servlet-name>
   	<url-pattern>/GraficoServlet</url-pattern>
@@ -42,5 +60,17 @@
   <servlet-mapping>
   	<servlet-name>TabelaServlet</servlet-name>
   	<url-pattern>/TabelaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>HomeServlet</servlet-name>
+  	<url-pattern>/HomeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>HistoricoServlet</servlet-name>
+  	<url-pattern>/HistoricoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UploadServlet</servlet-name>
+  	<url-pattern>/UploadServlet</url-pattern>
   </servlet-mapping>
 </web-app>

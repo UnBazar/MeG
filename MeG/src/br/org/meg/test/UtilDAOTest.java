@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import org.meg.dao.UtilDAO;
+import org.mockito.Mock;
 
 public class UtilDAOTest {
 	private UtilDAO dao;
-	
+	private UtilDAO daoMock;
 	@Before
 	public void setUp() throws Exception {
 		dao = new UtilDAO();
@@ -60,5 +60,10 @@ public class UtilDAOTest {
 	public void getSalarioMinimoTest(){
 		int ano = 2008;
 		assertEquals(dao.getSalarioMinimo(ano), 415.00 , 0.001);
+	}
+	@Test
+	public void getHistoricoTest(){
+		int id = 1;
+		assertNotNull(dao.getHistorico(id));
 	}
 }
