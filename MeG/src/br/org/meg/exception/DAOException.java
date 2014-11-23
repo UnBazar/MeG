@@ -1,20 +1,35 @@
 package org.meg.exception;
 
+import java.sql.Date;
+
+import org.meg.dao.UtilDAO;
+import org.meg.model.Erro;
+
 public class DAOException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	String mensagem;
+	private String mensagem;
+	private String nomeDaClasse;
 	
-	public DAOException(Exception e) {
-		this.mensagem = "Falha ao acessar o banco de dados! " + e.getMessage();
-	}
-	
-	public DAOException(String mensagem) {
+	public DAOException(String mensagem, String nomeDaClasse) {
 		this.mensagem = mensagem;
+		this.nomeDaClasse = nomeDaClasse;
+		printStackTrace();
 	}
 	
 	@Override
 	public String getMessage() {
 		return this.mensagem;
+	}
+	
+	@Override
+	public void printStackTrace() {
+		Erro erro = new Erro();
+		erro.setData(new Date(System.currentTimeMillis()));
+		erro.setNomeDaClasseReferente(nomeDaClasse);
+		erro.setDescricao(mensagem);
+		erro.setStatus(0);
+		UtilDAO dao = new UtilDAO();
+		dao.registraErro(erro);
 	}
 }

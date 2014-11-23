@@ -1,6 +1,7 @@
 package org.meg.model;
 
 import org.meg.dao.UtilDAO;
+import org.meg.exception.QuebraSistemaException;
 
 public class Estado {
 	private int id;
@@ -21,7 +22,7 @@ public class Estado {
 
 	public void setId(int id) {
 		if (id < 1 || id > 27){
-			throw new IllegalArgumentException("ID do estado inválido!");
+			throw new QuebraSistemaException("Um id invalido de Estado foi inserido!");
 		}
 		this.id = id;
 		UtilDAO dao = new UtilDAO();

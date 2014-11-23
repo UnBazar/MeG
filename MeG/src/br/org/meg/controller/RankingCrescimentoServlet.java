@@ -19,6 +19,9 @@ import org.meg.model.Secao;
 public class RankingCrescimentoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int anoInicial = Integer.parseInt(request.getParameter("anoInicial"));
@@ -42,24 +45,26 @@ public class RankingCrescimentoServlet extends HttpServlet {
 		request.getRequestDispatcher("tabela-crescimento.jsp").forward(request, response);
 	}
 	/**
-	 * Método que pega uma lista com o crescimento
+	 * Método que pega Quadros de crescimento. Substituindo os valores por porcentagens
 	 * @param listaInicial
 	 * @param listaFinal
 	 * @return uma lista de quadros em que o valor é o crescimento
 	 */
-	private ArrayList<Quadro> obterListaCrescimento(List<Quadro> listaInicial, 
-			List<Quadro> listaFinal){
+	private ArrayList<Quadro> obterListaCrescimento(List<Quadro> listaInicial, List<Quadro> listaFinal){
 		ArrayList<Quadro> listaCrescimento = new ArrayList<Quadro>();
 		for(int i = 0; i < listaInicial.size(); i++){
-			if(i < listaFinal.size()){
 				float crescimento = calculaCrescimento(listaFinal.get(i).getValor(),listaInicial.get(i).getValor());
-				Quadro lista = listaFinal.get(i);
-				lista.setValor(crescimento);
-				listaCrescimento.add(lista);
-			}
+				/*
+				 * Esse quadro podia ser listaInicial, o importante é pegar
+				 * os outros atributos como Secao e Descricao
+				 */
+				Quadro quadro = listaFinal.get(i);
+				quadro.setValor(crescimento);
+				listaCrescimento.add(quadro);
 		}
 		return listaCrescimento;
 	}
+
 	/**
 	 * Método que calcula o crescimento em porcentagem
 	 * @param valorFinal

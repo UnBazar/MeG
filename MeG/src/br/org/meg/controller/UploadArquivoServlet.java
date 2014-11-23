@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.meg.exception.UploadArquivoException;
 import org.meg.model.Administrador;
 import org.meg.parser.Parser;
 
@@ -55,7 +54,7 @@ public class UploadArquivoServlet extends HttpServlet {
 					}
 				}
 				if (contemArquivo) {
-					throw new UploadArquivoException("Nenhum arquivo foi enviado!");
+					throw new RuntimeException("Nenhum arquivo foi enviado!");
 				}
 			} catch(Exception e) {
 				request.setAttribute("erro", true);

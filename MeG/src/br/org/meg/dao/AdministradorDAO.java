@@ -23,20 +23,19 @@ public class AdministradorDAO {
 	 * 
 	 * @param adm Objeto a ser adicionado ao banco
 	 */
-	public void adicionar(Administrador adm) {
+	public void adicionar(Administrador administrador) {
 		String sql = "INSERT INTO Administrador(nome, nome_de_usuario, email, senha)"
 				+ "values(?,?,?,?)";
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, adm.getNome());
-			stmt.setString(2, adm.getNomeDeUsuario());
-			stmt.setString(3, adm.getEmail());
-			stmt.setString(4, adm.getSenha());
+			stmt.setString(1, administrador.getNome());
+			stmt.setString(2, administrador.getNomeDeUsuario());
+			stmt.setString(3, administrador.getEmail());
+			stmt.setString(4, administrador.getSenha());
 			stmt.execute();
 			stmt.close();
 		} catch(SQLException sqlException) {
-			System.err.println(sqlException);
-			throw new DAOException("Erro ao adicionar um administrador!");
+			throw new DAOException("Erro ao adicionar um administrador!", this.getClass().getName());
 		}
 	}
 	
@@ -67,8 +66,6 @@ public class AdministradorDAO {
 			rs.close();
 			stmt.close();
 		} catch (SQLException sqlException) {
-			System.err.println(sqlException);
-			throw new DAOException("Administrador não encontrado no banco!");
 		}
 		return administrador;
 	}
@@ -89,8 +86,7 @@ public class AdministradorDAO {
 			stmt.close();
 			return existeNome;
 		} catch (SQLException sqlException) {
-			System.err.println(sqlException);
-			throw new DAOException("Erro ao acessar o banco!");
+			throw new DAOException("Erro ao acessar o banco!", this.getClass().getName());
 		}
 	}
 	
