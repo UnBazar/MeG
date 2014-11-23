@@ -35,7 +35,7 @@ function listarValoresporAnos(){
 
 function drawChart() {
   var data = google.visualization.arrayToDataTable(listarValoresporAnos());
-  var options = {title: "Estado: ${estado} / Setor: ${secao}"};
+  var options = {title: "Estado: ${estado} / Setor: ${secao} / Gráfico ${grafico}"};
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 

@@ -49,6 +49,8 @@ public class GraficoServlet extends HttpServlet{
 		int idEstado = 0;
 		int anoInicial = 0;
 		int anoFinal = 0;
+		String opcao;
+		opcao = request.getParameter("grafico");
 		idDescricao = Integer.valueOf(request.getParameter("descricao"));
 		idSetor = Integer.valueOf(request.getParameter("setor"));
 		idEstado= Integer.valueOf(request.getParameter("estado"));
@@ -58,14 +60,18 @@ public class GraficoServlet extends HttpServlet{
 		Descricao descricao = new Descricao(idDescricao);
 		Secao secao = new Secao(idSetor);
 		Estado estado = new Estado (idEstado);
-		System.out.println(anoInicial);
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
-		request.getSession().setAttribute("valores", listarValores(quadros));
+		if(opcao.equalsIgnoreCase("geral")){
+			request.getSession().setAttribute("valores", listarValores(quadros));
+		}else{
+			request.getSession().setAttribute("valores", listarCrescimento(quadros));
+		}
 		request.getSession().setAttribute("anos", listarAnos(quadros));
 		request.getSession().setAttribute("tamanho", quadros.size());
 		request.getSession().setAttribute("titulo", descricao.getNome());
 		request.getSession().setAttribute("secao", secao.getNome());
 		request.getSession().setAttribute("estado", estado.getNome());
+		request.getSession().setAttribute("grafico", opcao);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -82,6 +88,23 @@ public class GraficoServlet extends HttpServlet{
 		return valores;
 	}
 	
+	private List<Float> listarCrescimento(List<Quadro> quadros){
+		List<Float> valores = new ArrayList<Float>();
+		float valorInicial = 0,valorFinal = 0;
+		for(int i = 0; i < quadros.size(); i++){
+			if(i == 0){
+				valorInicial= quadros.get(i).getValor();
+				valorFinal = valorInicial;
+			}
+			else{
+				valorInicial = valorFinal;
+				valorFinal = quadros.get(i).getValor();
+			}
+			valores.add(calculaCrescimento(valorFinal,valorInicial));
+		}
+		
+		return valores;
+	}
 	/**
 	 * Lista os anos dos Quadros contidos na lista global 'quadros'
 	 * 
@@ -93,5 +116,9 @@ public class GraficoServlet extends HttpServlet{
 			anos.add(String.valueOf(q.getAno()));
 		}
 		return anos;
+	}
+	private float calculaCrescimento(float valorFinal, float valorInicial){
+		float crescimento = ((valorFinal/valorInicial)-1)* 100;
+		return crescimento;
 	}
 }

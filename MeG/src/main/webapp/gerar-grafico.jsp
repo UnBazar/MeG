@@ -20,7 +20,9 @@
 		<h2>Gerar gráfico</h2>
 		<br>
 		<form action="grafico" method="POST">
-			<label>Tipo de pesquisa:</label>
+			<input type="radio" name="grafico" value="geral" checked> Gráfico geral
+			<input type="radio" name="grafico" value="do crescimento"> Gráfico do crescimento
+			<br><br><label>Tipo de pesquisa:</label>
 			<select name="descricao">
 				<option value="1">Número de empresas e outras organizações (Unidades)</option>
 				<option value="2">Pessoal ocupado total (Pessoas)</option>
