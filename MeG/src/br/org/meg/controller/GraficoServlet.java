@@ -87,7 +87,11 @@ public class GraficoServlet extends HttpServlet{
 		}
 		return valores;
 	}
-	
+	/**
+	 * Lista os valores dos quadros contidos na lista global 'quadros' mas fazendo o calculo do crescimento anual
+	 * @param quadros
+	 * @return uma lista de floats contendo os valores de crescimento
+	 */
 	private List<Float> listarCrescimento(List<Quadro> quadros){
 		List<Float> valores = new ArrayList<Float>();
 		float valorInicial = 0,valorFinal = 0;
@@ -117,6 +121,12 @@ public class GraficoServlet extends HttpServlet{
 		}
 		return anos;
 	}
+	/**
+	 * Calcula o valor do crescimento percentual anual
+	 * @param valorFinal
+	 * @param valorInicial
+	 * @return float com o valor do crescimento
+	 */
 	private float calculaCrescimento(float valorFinal, float valorInicial){
 		float crescimento = ((valorFinal/valorInicial)-1)* 100;
 		return crescimento;

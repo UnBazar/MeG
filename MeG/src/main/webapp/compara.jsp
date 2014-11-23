@@ -59,7 +59,7 @@
 		var data = google.visualization
 				.arrayToDataTable(listarValoresporAnos());
 		var options = {
-			title : "Setor: ${secao} / ${titulo}"
+			title : "Setor: ${secao} / ${titulo} / Gráfico ${grafico}"
 		};
 
 		var chart_div = document.getElementById("chart_div");

@@ -38,9 +38,15 @@ public class ComparaServlet extends HttpServlet {
 		List<String> listadeAnos = (List<String>) request.getSession().getAttribute("anos");
 		int anoInicial = Integer.parseInt(listadeAnos.get(0));
 		int anoFinal = Integer.parseInt(listadeAnos.get(listadeAnos.size()-1));
+		String opcao = (String) request.getSession().getAttribute("grafico");
 		QuadroDAO dao = new QuadroDAO();
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
-		request.getSession().setAttribute("valores2", listarValores(quadros));
+		if(opcao.equalsIgnoreCase("geral")){
+			request.getSession().setAttribute("valores2", listarValores(quadros));
+		}
+		else if(opcao.equalsIgnoreCase("do crescimento")){
+			request.getSession().setAttribute("valores2", listarCrescimento(quadros));
+		}
 		request.getSession().setAttribute("estado2", estado.getNome());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("compara.jsp");
 		requestDispatcher.forward(request, response);
@@ -57,5 +63,37 @@ public class ComparaServlet extends HttpServlet {
 			valores.add(q.getValor());
 		}
 		return valores;
+	}
+	/**
+	 * Lista os valores dos quadros contidos na lista global 'quadros' mas fazendo o calculo do crescimento anual
+	 * @param quadros
+	 * @return uma lista de floats contendo os valores de crescimento
+	 */
+	private List<Float> listarCrescimento(List<Quadro> quadros){
+		List<Float> valores = new ArrayList<Float>();
+		float valorInicial = 0,valorFinal = 0;
+		for(int i = 0; i < quadros.size(); i++){
+			if(i == 0){
+				valorInicial= quadros.get(i).getValor();
+				valorFinal = valorInicial;
+			}
+			else{
+				valorInicial = valorFinal;
+				valorFinal = quadros.get(i).getValor();
+			}
+			valores.add(calculaCrescimento(valorFinal,valorInicial));
+		}
+		
+		return valores;
+	}
+	/**
+	 * Calcula o valor do crescimento percentual anual
+	 * @param valorFinal
+	 * @param valorInicial
+	 * @return float com o valor do crescimento
+	 */
+	private float calculaCrescimento(float valorFinal, float valorInicial){
+		float crescimento = ((valorFinal/valorInicial)-1)* 100;
+		return crescimento;
 	}
 }

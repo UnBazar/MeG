@@ -29,7 +29,22 @@ public class ComparaServletTest {
 	}
 
 	@Test
-	public void testDoPost() throws ServletException, IOException {
+	public void testDoPostGeral() throws ServletException, IOException {
+		when(request.getSession().getAttribute("grafico")).thenReturn("geral");
+		when(request.getSession().getAttribute("secao")).thenReturn("Agricultura, pecuária, produção florestal, pesca e aquicultura");
+		when(request.getSession().getAttribute("titulo")).thenReturn("Pessoal ocupado total (Pessoas)");
+		when(request.getParameter("estado")).thenReturn("1");
+		List<String> anos = new ArrayList<String>();
+		anos.add("2008");
+		anos.add("2012");
+		when(request.getSession().getAttribute("anos")).thenReturn(anos);
+		when(request.getRequestDispatcher("compara.jsp")).thenReturn(mock(RequestDispatcher.class));
+		ComparaServlet servlet = new ComparaServlet();
+		servlet.doPost(request, response);
+	}
+	@Test
+	public void testDoPostCrescimentol() throws ServletException, IOException {
+		when(request.getSession().getAttribute("grafico")).thenReturn("do Crescimento");
 		when(request.getSession().getAttribute("secao")).thenReturn("Agricultura, pecuária, produção florestal, pesca e aquicultura");
 		when(request.getSession().getAttribute("titulo")).thenReturn("Pessoal ocupado total (Pessoas)");
 		when(request.getParameter("estado")).thenReturn("1");
