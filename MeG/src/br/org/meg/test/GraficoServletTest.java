@@ -26,9 +26,22 @@ public class GraficoServletTest {
 		this.response = mock(HttpServletResponse.class);
 		when(request.getSession()).thenReturn(mock(HttpSession.class));
 	}
-
 	@Test
-	public void test() throws ServletException, IOException {
+	public void test1() throws ServletException, IOException {
+		when(request.getParameter("grafico")).thenReturn("geral");
+		when(request.getParameter("descricao")).thenReturn("1");
+		when(request.getParameter("setor")).thenReturn("1");
+		when(request.getParameter("estado")).thenReturn("1");
+		when(request.getParameter("anoInicial")).thenReturn("2007");
+		when(request.getParameter("anoFinal")).thenReturn("2012");
+		when(request.getRequestDispatcher("grafico.jsp")).thenReturn(
+				mock(RequestDispatcher.class));
+		GraficoServlet servlet = new GraficoServlet();
+		servlet.doPost(request, response);
+	}
+	@Test
+	public void test2() throws ServletException, IOException {
+		when(request.getParameter("grafico")).thenReturn("do crescimento");
 		when(request.getParameter("descricao")).thenReturn("1");
 		when(request.getParameter("setor")).thenReturn("1");
 		when(request.getParameter("estado")).thenReturn("1");

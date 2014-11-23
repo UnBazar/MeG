@@ -63,7 +63,7 @@ public class GraficoServlet extends HttpServlet{
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
 		if(opcao.equalsIgnoreCase("geral")){
 			request.getSession().setAttribute("valores", listarValores(quadros));
-		}else{
+		}else if(opcao.equalsIgnoreCase("do crescimento")){
 			request.getSession().setAttribute("valores", listarCrescimento(quadros));
 		}
 		request.getSession().setAttribute("anos", listarAnos(quadros));
