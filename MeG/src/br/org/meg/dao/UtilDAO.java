@@ -359,4 +359,21 @@ public class UtilDAO {
 		}
 		return erros;
 	}
+	public int getHistorico(int id){
+		int acesso = 0;
+		try {
+			String sql = "Select * From Historico Where id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+			stmt.execute();
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				acesso = rs.getInt("acessos");
+			}
+		} catch (SQLException sqlException) {
+			throw new DAOException("Erro ao buscar o numero de acessos no banco onde id = "+ id,this.getClass().getName());
+		}
+		
+		return acesso;
+	}
 }

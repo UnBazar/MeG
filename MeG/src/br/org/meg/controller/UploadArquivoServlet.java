@@ -60,7 +60,7 @@ public class UploadArquivoServlet extends HttpServlet {
 				request.setAttribute("erro", true);
 			} 
 		}
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/administrador.jsp");
 		requestDispatcher.forward(request, response);
 	}		
 	/**
