@@ -30,7 +30,7 @@ public class LoginAdministradorServletTest {
 	public void testExecutaSuccess() throws ServletException, IOException {
 		when(request.getParameter("nomeDeUsuario")).thenReturn("pedrodelyra10");
 		when(request.getParameter("senha")).thenReturn("mudar123");
-		when(request.getRequestDispatcher("WEB-INF/jsp/home.jsp")).thenReturn(
+		when(request.getRequestDispatcher("WEB-INF/jsp/administrador.jsp")).thenReturn(
 				mock(RequestDispatcher.class));
 		LoginAdministradorServlet servlet = new LoginAdministradorServlet();
 		servlet.doPost(request, response);
