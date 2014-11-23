@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.meg.exception.DAOException;
+
 public class ConnectionFactory {
 	
 	private static Connection connection = createConnection();
@@ -20,10 +22,10 @@ public class ConnectionFactory {
 	        String password = prop.getProperty("password").toString();
 	        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			return DriverManager.getConnection(host, username, password);
-		}catch (IOException | SQLException e) {
-			e.printStackTrace();
+		}catch (IOException | SQLException exception) {
+			throw new DAOException("Falha ao criar conexao, a seguinte excecao foi lancada: "
+										+ exception.getMessage(), "ConnectionFactory");
 		}
-        return connection;
     }
 	
 	public static Connection getConnection(){
