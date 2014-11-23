@@ -23,7 +23,6 @@ pageEncoding="UTF-8"%>
 			<input type="text" name="nomeDeUsuario" placeholder="Login" /><br>
 			<input type="password" name="senha" placeholder="Senha" /><br>
 			<button type="submit" class="btn btn-primary" id="button-login">Entrar</button><br>
-			<a href="cadastro-adm.jsp">Cadastre-se</a>
 		</form>
 		</section>
 	</body>

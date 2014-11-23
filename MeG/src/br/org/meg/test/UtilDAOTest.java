@@ -61,4 +61,9 @@ public class UtilDAOTest {
 		int ano = 2008;
 		assertEquals(dao.getSalarioMinimo(ano), 415.00 , 0.001);
 	}
+	
+	@Test
+	public void obterErrosTest(){
+		assertNotNull(dao.obterErros());
+	}
 }

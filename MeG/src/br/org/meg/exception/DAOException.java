@@ -18,11 +18,6 @@ public class DAOException extends RuntimeException {
 	}
 	
 	@Override
-	public String getMessage() {
-		return this.mensagem;
-	}
-	
-	@Override
 	public void printStackTrace() {
 		Erro erro = new Erro();
 		erro.setData(new Date(System.currentTimeMillis()));

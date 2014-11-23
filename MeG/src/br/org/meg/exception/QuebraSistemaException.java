@@ -15,6 +15,7 @@ public class QuebraSistemaException extends RuntimeException{
 	
 	public QuebraSistemaException(String mensagem) {
 		this.mensagem = mensagem;
+		printStackTrace();
 	}
 	
 	@Override

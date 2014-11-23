@@ -281,10 +281,10 @@ public class UtilDAO {
 	 */
 	public List<Erro> obterErros(){
 		String sql = "SELECT * FROM Erro";
+		List<Erro> erros = new ArrayList<Erro>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			List<Erro> erros = new ArrayList<Erro>();
 			while(rs.next()){
 				Erro erro = new Erro();
 				erro.setData(rs.getDate("data"));
@@ -296,10 +296,10 @@ public class UtilDAO {
 			}
 			rs.close();
 			stmt.close();
-			return erros;
 		} catch (SQLException e) {
+			//Impossivel testar
 			e.printStackTrace();
 		}
-		return null;
+		return erros;
 	}	
 }
