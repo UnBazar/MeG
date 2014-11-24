@@ -24,8 +24,7 @@
 			<br>
 			<form action="ranking" method="post">
 				<label> Tipo de pesquisa</label> <select name="descricao">
-					<option value="1">Número de empresas e outras
-						<option value="1">Número de empresas e outras organizações
+					<option value="1">Número de empresas e outras organizações
 						(Unidades)</option>
 					<option value="2">Pessoal ocupado total (Pessoas)</option>
 					<option value="3">Pessoal ocupado assalariado (Pessoas)</option>

@@ -31,6 +31,12 @@
   	<description></description>
   	<servlet-class>org.meg.controller.TabelaServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>Noticia</servlet-name>
+  	<display-name>Noticia</display-name>
+  	<description></description>
+  	<servlet-class>org.meg.controller.Noticia</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>GraficoServlet</servlet-name>
   	<url-pattern>/GraficoServlet</url-pattern>
@@ -42,5 +48,9 @@
   <servlet-mapping>
   	<servlet-name>TabelaServlet</servlet-name>
   	<url-pattern>/TabelaServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Noticia</servlet-name>
+  	<url-pattern>/Noticia</url-pattern>
   </servlet-mapping>
 </web-app>
