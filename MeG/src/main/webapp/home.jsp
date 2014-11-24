@@ -3,13 +3,18 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@include file='shared/head.html'%>
+
+<%@ page  language="java" import="org.meg.controller.NoticiaServlet"%>
+<%@ page  language="java" import="java.util.ArrayList"%>
+<%@ page  language="java" import="org.meg.model.Noticia"%>
+
+<%@include file='shared/head.html' %>
 <meta charset="utf-8">
 <title>MeG - Home</title>
 <!-- Script to Activate the Carousel -->
 <script>
 	$('.carousel').carousel({
-		interval : 5000
+		interval : 15000
 	//changes the speed
 	})
 </script>
@@ -26,22 +31,25 @@ pageEncoding="UTF-8"%>
 
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner">
+	<%  	NoticiaServlet noticiaServ = NoticiaServlet.getInstance();
+			ArrayList<Noticia> noticias = noticiaServ.exibirNoticias();
+	%>
 		<div class="item active">
-			<div class="fill" style="background-image: url();"></div>
+			<div class="fill" style="background-image: url(<% out.print(noticias.get(0).getImagem()); %>);"></div>
 			<div class="carousel-caption">
-				<h2>Você sabia que o Acre existe?!</h2>
+				<h2><% out.print(noticias.get(0).getNoticia()); %></h2>
 			</div>
 		</div>
 		<div class="item">
-			<div class="fill" style="background-image: url();"></div>
+			<div class="fill" style="background-image: url(<% out.print(noticias.get(1).getImagem()); %>);"></div>
 			<div class="carousel-caption">
-				<h2>Você sabia que a notícia anterior é verdade?!</h2>
+				<h2><% out.print(noticias.get(1).getNoticia()); %></h2>
 			</div>
 		</div>
 		<div class="item">
-			<div class="fill" style="background-image: url();"></div>
+			<div class="fill" style="background-image: url(<% out.print(noticias.get(2).getImagem()); %>);"></div>
 			<div class="carousel-caption">
-				<h2>Só que não!</h2>
+				<h2><% out.print(noticias.get(2).getNoticia()); %></h2>
 			</div>
 		</div>
 	</div>
@@ -114,7 +122,7 @@ pageEncoding="UTF-8"%>
 	<!-- Script to Activate the Carousel -->
 	<script>
 		$('.carousel').carousel({
-			interval : 5000
+			interval : 15000
 		//changes the speed
 		})
 	</script>

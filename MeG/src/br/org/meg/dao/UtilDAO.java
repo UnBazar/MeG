@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.meg.exception.DAOException;
+import org.meg.model.Noticia;
 
 public class UtilDAO {
 	private Connection connection;
@@ -224,9 +226,14 @@ public class UtilDAO {
 		}
 	}
 
+	/**
+	 * Método que adiciona o histórico de uso das servlets do banco de dados
+	 * 
+	 * @param id
+	 */
 	public void adicionaHistorico(int id) {
 		try {
-			String add = "";			
+			String add = "";
 			switch (id) {
 			case 1:
 				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'ranking'";
@@ -239,8 +246,8 @@ public class UtilDAO {
 				break;
 			case 4:
 				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'grafico'";
-				break;				
-			}			
+				break;
+			}
 			PreparedStatement stmt = this.connection.prepareStatement(add);
 			stmt.execute();
 			stmt.close();
@@ -248,6 +255,37 @@ public class UtilDAO {
 			System.err.println(sqlException);
 			throw new DAOException("Erro ao adicionar no historico!");
 		}
+	}
+
+	public ArrayList<Noticia> prepararNoticia() {
+		
+		String sql = "SELECT * FROM Noticias ORDER BY RAND() LIMIT 3";
+
+		ArrayList<Noticia> noticias = new ArrayList<Noticia>();
+		PreparedStatement stmt;
+		try {
+			stmt = this.connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int db_id = rs.getInt("id");
+				String db_noticia = rs.getString("noticia");
+				String db_imagem = rs.getString("imagem");
+
+				Noticia noticia = new Noticia();
+				noticia.setNoticia(db_noticia);
+				noticia.setId(db_id);
+				noticia.setImagem(db_imagem);
+
+				noticias.add(noticia);
+			}
+
+		} catch (SQLException e) {
+			System.err.println(e);
+			throw new DAOException("Erro ao obter noticias do banco de dados!");
+		}
+
+		return noticias;
 	}
 
 }
