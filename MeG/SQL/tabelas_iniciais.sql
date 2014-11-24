@@ -44,6 +44,16 @@ CREATE TABLE IF NOT EXISTS `MEG`.`Descricao` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table `MEG`.`Noticias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `MEG`.`Noticias` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `noticia` VARCHAR(200) NOT NULL,
+  `imagem` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `MEG`.`Quadro`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `MEG`.`Quadro` (
