@@ -31,18 +31,22 @@ public class HistoricoFiltro implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response,
 		FilterChain chain) throws IOException, ServletException {
+		int idRanking = 1;
+		int idCompara = 2;
+		int idProjecao = 3;
+		int idGrafico = 4;
 		HttpServletRequest req = (HttpServletRequest) request;
 		if (req.getRequestURI().contains("/ranking")) {
-			dao.adicionaHistorico(1);
+			dao.adicionaHistorico(idRanking);
 		}
 		else if (req.getRequestURI().contains("/compara")) {
-			dao.adicionaHistorico(2);
+			dao.adicionaHistorico(idCompara);
 		}
 		else if (req.getRequestURI().contains("/projecao")) {
-			dao.adicionaHistorico(3);
+			dao.adicionaHistorico(idProjecao);
 		}
 		else if (req.getRequestURI().contains("/grafico")) {
-			dao.adicionaHistorico(4);
+			dao.adicionaHistorico(idGrafico);
 		}
 		chain.doFilter(request, response);
 	}

@@ -34,9 +34,6 @@ public class RankingServlet extends HttpServlet {
 		if(descricao.getId() == 5){
 			this.alterarSalario(lista, ano);
 		}
-		for(int i = 0; i < lista.size(); i++){
-			System.out.println(lista.get(i).getEstado().getNome());
-		}
 		request.setAttribute("lista", lista);
 		request.setAttribute("ano", ano);
 		request.setAttribute("setor", secao.getNome());

@@ -51,12 +51,14 @@ pageEncoding="UTF-8"%>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4>
-							<i class="fa fa-fw fa-fire"></i> Gerar Projeção
+							<i class="fa fa-fw fa-fire"></i> Tabela de Erros
 						</h4>
 					</div>
 					<div class="panel-body">
-						<p>Vamos prever o futuro!</p>
-						<a href="" class="btn btn-default">GO!</a>
+						<p>Clique aqui para gerar uma tabela com o hitórico de erros</p>
+						<form action="erro" method="POST">
+							<button type="submit" class="btn btn-primary" id="btn-submit">GO!</button>
+						</form>
 					</div>
 				</div>
 			</div>

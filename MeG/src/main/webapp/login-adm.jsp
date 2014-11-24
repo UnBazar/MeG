@@ -25,12 +25,5 @@
 			<br> <a href="cadastro-adm.jsp">Cadastre-se</a>
 		</form>
 	</div>
-	<form action="login" method="POST" id="toLogin">
-		<input type="text" name="nomeDeUsuario" placeholder="Login" /><br>
-		<input type="password" name="senha" placeholder="Senha" /><br>
-		<button type="submit" class="btn btn-primary" id="button-login">Entrar</button>
-		<br>
-	</form>
-	</section>
 </body>
 </html>
