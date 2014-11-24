@@ -40,8 +40,8 @@ public class QuadroDAO {
 				stmt.execute();
 				stmt.close();
 			} catch (SQLException sqlException) {
-				System.err.println(sqlException);
-				throw new DAOException(sqlException);
+				throw new DAOException("O sistema nao conseguiu adicionar um quadro. Excecao: " 
+											+ sqlException.getMessage(), this.getClass().getName());
 			}
 		}
 	}
@@ -68,9 +68,9 @@ public class QuadroDAO {
 			rs.close();
 			ps.close();
 			return existeQuadro;
-			
 		}catch(SQLException exception){
-			throw new DAOException("Erro ao acessar o banco de dados!");
+			throw new DAOException("Erro em metodo existeQuadro. Causa:" 
+										+ exception.getMessage(), this.getClass().getClass().getName());
 		}
 	}
 	
@@ -113,21 +113,28 @@ public class QuadroDAO {
 			rs.close();
 			ps.close();
 			if(quadros.isEmpty()){
-				throw new DAOException("Lista não existe!");
+				String mensagem = "Tentou obterLista dos anos de "+anoInicial+" - "+anoFinal+" e nada foi retornado.";
+				throw new DAOException(mensagem, this.getClass().getName());
 			}
 			return quadros;
-		}catch (SQLException e) {
-			e.printStackTrace();
+		}catch (SQLException sqlException) {
+			throw new DAOException("Em metodo obterLista, a seguinte excecao foi lancada: "
+										+ sqlException.getMessage(), this.getClass().getName());
 		}
-		return null;
 	}
 	
+	/**
+	 * 
+	 * @param ano 
+	 * @param secao
+	 * @param descricao
+	 * @return
+	 */
 	public List<Quadro> obterLista(int ano, Secao secao, Descricao descricao) {
 		String sql = "SELECT * FROM Quadro "
 				+ "WHERE secao_id = ? "
 				+ "AND descricao_id = ? "
 				+ "AND ano = ?";
-		
 		try{
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, secao.getId());
@@ -150,8 +157,8 @@ public class QuadroDAO {
 			stmt.close();
 			return lista;
 		}catch(SQLException exception){
-			System.err.println(exception);
-			throw new DAOException(exception);
+			throw new DAOException("No segundo metodo obterLista a seguinte excecao foi gerada: "
+										+ exception.getMessage(), this.getClass().getName());
 		}
 		
 	}

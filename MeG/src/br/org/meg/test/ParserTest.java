@@ -62,8 +62,7 @@ public class ParserTest {
 	
 	@Test(expected = UploadArquivoException.class)
 	public void testValidarSecaoShouldThrowException() throws FileNotFoundException {
-		this.parser = new Parser(url,
-				27, 4, 2006, 2012);
+		this.parser = new Parser(url,27, 4, 2006, 2012);
 		this.parser.validarSecao("E Construção");
 	}
 	

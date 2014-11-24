@@ -14,8 +14,20 @@ CREATE TABLE IF NOT EXISTS `MEG`.`Estado` (
   `sigla` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+-- -----------------------------------------------------
+-- Table `MEG`.`Erro`
+-- -----------------------------------------------------
 
-
+CREATE TABLE IF NOT EXISTS `MEG`.`Erro` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(255) NOT NULL,
+  `nomeDaClasseReferente` varchar(50) NOT NULL,
+  `data` date NOT NULL,
+  `status` int(3) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB;
+  
 -- -----------------------------------------------------
 -- Table `MEG`.`Secao`
 -- -----------------------------------------------------

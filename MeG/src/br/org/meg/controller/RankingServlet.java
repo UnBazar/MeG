@@ -20,8 +20,7 @@ public class RankingServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public void doPost(HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException{
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		int ano = Integer.parseInt(request.getParameter("ano"));
 		int setor_id = Integer.parseInt(request.getParameter("setor"));
 		int descricao_id = Integer.parseInt(request.getParameter("descricao"));

@@ -1,6 +1,7 @@
 package org.meg.model;
 
 import org.meg.dao.UtilDAO;
+import org.meg.exception.QuebraSistemaException;
 
 public class Secao {
 	private int id;
@@ -23,7 +24,9 @@ public class Secao {
 	}
 	
 	public void setId(int id) {
-		if (id < 1 || id > 21) throw new IllegalArgumentException("ID da seção inválido!");
+		if (id < 1 || id > 21) {
+			throw new QuebraSistemaException("Um id invalido de Secao foi inserido!");
+		}
 		UtilDAO dao = new UtilDAO();
 		this.id = id;
 		nome = dao.getNomeSecao(id);

@@ -5,15 +5,16 @@ import java.sql.Date;
 import org.meg.dao.UtilDAO;
 import org.meg.model.Erro;
 
-public class DAOException extends RuntimeException {
-
+public class QuebraSistemaException extends RuntimeException{
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+	private final String tipoExcecao = "QuebraDeSistema>>";
 	private String mensagem;
-	private String nomeDaClasse;
 	
-	public DAOException(String mensagem, String nomeDaClasse) {
+	public QuebraSistemaException(String mensagem) {
 		this.mensagem = mensagem;
-		this.nomeDaClasse = nomeDaClasse;
 		printStackTrace();
 	}
 	
@@ -21,9 +22,8 @@ public class DAOException extends RuntimeException {
 	public void printStackTrace() {
 		Erro erro = new Erro();
 		erro.setData(new Date(System.currentTimeMillis()));
-		erro.setNomeDaClasseReferente(nomeDaClasse);
-		erro.setDescricao(mensagem);
 		erro.setStatus(0);
+		erro.setDescricao(tipoExcecao + mensagem);
 		UtilDAO dao = new UtilDAO();
 		dao.registraErro(erro);
 	}
