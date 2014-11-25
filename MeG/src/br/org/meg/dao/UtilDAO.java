@@ -359,6 +359,7 @@ public class UtilDAO {
 		}
 		return erros;
 	}
+	
 	public int getHistorico(int id){
 		int acesso = 0;
 		try {
