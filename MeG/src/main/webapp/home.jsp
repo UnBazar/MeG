@@ -1,22 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ page  language="java" import="org.meg.controller.NoticiaServlet"%>
 <%@ page  language="java" import="java.util.ArrayList"%>
 <%@ page  language="java" import="org.meg.model.Noticia"%>
-
 <%@include file='shared/head.html' %>
-<meta charset="utf-8">
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>MeG - Home</title>
 <!-- Script to Activate the Carousel -->
 <script>
 	$('.carousel').carousel({
 		interval : 15000
 	//changes the speed
-	})
+	});
 </script>
 </head>
 <body>
@@ -54,8 +52,8 @@ pageEncoding="UTF-8"%>
 		</div>
 	</div>
 
-	<!-- Controls --> <a class="left carousel-control" href="#myCarousel"
-		data-slide="prev"> <span class="icon-prev"></span>
+	<!-- Controls --> 
+	<a class="left carousel-control" href="#myCarousel" data-slide="prev"> <span class="icon-prev"></span>
 	</a> <a class="right carousel-control" href="#myCarousel" data-slide="next">
 		<span class="icon-next"></span>
 	</a> </header>
@@ -66,17 +64,17 @@ pageEncoding="UTF-8"%>
 		<!-- Marketing Icons Section -->
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Bem Vindo ao Mercado em Gr√°fico</h1>
+				<h1 class="page-header">Bem Vindo ao Mercado em Gr·fico</h1>
 			</div>
 			<div class="col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4>
-							<i class="fa fa-fw fa-headphones"></i> Gerar Gr√°fico
+							<i class="fa fa-fw fa-headphones"></i> Gerar Gr·fico
 						</h4>
 					</div>
 					<div class="panel-body">
-						<p>Clique aqui para gerar um gr√°fico de diferentes setores da
+						<p>Clique aqui para gerar um gr·fico de diferentes setores da
 							economia!!!</p>
 						<a href="gerar-grafico.jsp" class="btn btn-default">GO!</a>
 					</div>
@@ -100,7 +98,7 @@ pageEncoding="UTF-8"%>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4>
-							<i class="fa fa-fw fa-fire"></i> Gerar Proje√ß√£o
+							<i class="fa fa-fw fa-fire"></i> Gerar ProjeÁ„o
 						</h4>
 					</div>
 					<div class="panel-body">
@@ -124,7 +122,7 @@ pageEncoding="UTF-8"%>
 		$('.carousel').carousel({
 			interval : 15000
 		//changes the speed
-		})
+		});
 	</script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false"%>
-
+<!DOCTYPE html>
 <html>
 <head>
 <%@include file='shared/head.html'%>
@@ -53,13 +53,12 @@
 	<div class="container">
 		<div id="imprimir">
 			<br>
-			<h1 style="color: #000000">Ranking de ${descricao.nome} na área
-				de ${setor} - ${ano}</h1>
-			<table border="1" style="width: 30%; border: 2px solid #3366FF">
+			<h3>Ranking de ${descricao.nome} na área de ${setor} - ${ano} </h3>
+			<table border="1" class="tabelas">
 				<tr>
-					<th style="text-align: center">Ranking</th>
-					<th style="text-align: center">Estado</th>
-					<th style="text-align: center">${descricao.nome}</th>
+					<th>Ranking</th>
+					<th>Estado</th>
+					<th>${descricao.nome}</th>
 				</tr>
 				<c:forEach var="quadro" items="${lista}" varStatus="id">
 					<tr>

@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
 <html>
 <head>
 <%@include file='shared/head.html'%>
@@ -15,10 +15,8 @@ pageEncoding="UTF-8"%>
 		<!-- Marketing Icons Section -->
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">FaÃ§a o Upload do arquivo aqui</h1>
+				<h1 class="page-header">Faça o Upload do arquivo aqui</h1>
 			</div>
-
-				<p align="right"><a href="logout">Logout</a></p><br />
 				<form action="upload" enctype="multipart/form-data" method="post">
 				    <label>De </label>
 				    <select name="anoInicial">
@@ -29,7 +27,7 @@ pageEncoding="UTF-8"%>
 				    	<option>2010</option>
 				    	<option>2011</option>		    
 				    </select>
-				    <label>AtÃ© </label>
+				    <label>Até </label>
 				    <select name="anoFinal">
 				    	<option>2007</option>
 				    	<option>2008</option>
@@ -39,27 +37,27 @@ pageEncoding="UTF-8"%>
 				    	<option>2012</option>
 				    </select>
 				    <br />
-				    <input type="checkbox" name="secao" value="A Agricultura, pecuÃ¡ria, produÃ§Ã£o florestal, pesca e aquicultura">Agricultura, pecuÃ¡ria, produÃ§Ã£o florestal, pesca e aquicultura<br>
-					<input type="checkbox" name="secao" value="B IndÃºstrias extrativas">IndÃºstrias extrativas <br>
-				    <input type="checkbox" name="secao" value="C IndÃºstrias de transformaÃ§Ã£o">IndÃºstrias de transformaÃ§Ã£o <br>
-				    <input type="checkbox" name="secao" value="D Eletricidade e gÃ¡s">Eletricidade e gÃ¡s <br>
-				    <input type="checkbox" name="secao" value="E Ãgua, esgoto, atividades de gestÃ£o de resÃ­duos e descontaminaÃ§Ã£o">Ãgua, esgoto, atividades de gestÃ£o de resÃ­duos e descontaminaÃ§Ã£o <br>
-				    <input type="checkbox" name="secao" value="F ConstruÃ§Ã£o">ConstruÃ§Ã£o <br>
-				    <input type="checkbox" name="secao" value="G ComÃ©rcio, reparaÃ§Ã£o de veÃ­culos automotores e motocicletas">ComÃ©rcio, reparaÃ§Ã£o de veÃ­culos automotores e motocicletas <br>
+				    <input type="checkbox" name="secao" value="A Agricultura, pecuária, produção florestal, pesca e aquicultura">Agricultura, pecuária, produção florestal, pesca e aquicultura<br>
+					<input type="checkbox" name="secao" value="B Indústrias extrativas">Indústrias extrativas <br>
+				    <input type="checkbox" name="secao" value="C Indústrias de transformação">Indústrias de transformação <br>
+				    <input type="checkbox" name="secao" value="D Eletricidade e gás">Eletricidade e gás <br>
+				    <input type="checkbox" name="secao" value="E Água, esgoto, atividades de gestão de resíduos e descontaminação">Água, esgoto, atividades de gestão de resíduos e descontaminação <br>
+				    <input type="checkbox" name="secao" value="F Construção">Construção <br>
+				    <input type="checkbox" name="secao" value="G Comércio, reparação de veículos automotores e motocicletas">Comércio, reparação de veículos automotores e motocicletas <br>
 				    <input type="checkbox" name="secao" value="H Transporte, armazenagem e correio">Transporte, armazenagem e correio <br>
-				    <input type="checkbox" name="secao" value="I Alojamento e alimentaÃ§Ã£o">Alojamento e alimentaÃ§Ã£o <br>
-				    <input type="checkbox" name="secao" value="J InformaÃ§Ã£o e comunicaÃ§Ã£o">InformaÃ§Ã£o e comunicaÃ§Ã£o <br>
-				    <input type="checkbox" name="secao" value="K Atividades financeiras, de seguros e serviÃ§os relacionados">Atividades financeiras, de seguros e serviÃ§os relacionados <br>
-				    <input type="checkbox" name="secao" value="L Atividades imobiliÃ¡rias">Atividades imobiliÃ¡rias <br>
-				    <input type="checkbox" name="secao" value="M Atividades profissionais, cientÃ­ficas e tÃ©cnicas">Atividades profissionais, cientÃ­ficas e tÃ©cnicas <br>
-				    <input type="checkbox" name="secao" value="N Atividades administrativas e serviÃ§os complementares">Atividades administrativas e serviÃ§os complementares <br>
-				    <input type="checkbox" name="secao" value="O AdministraÃ§Ã£o pÃºblica, defesa e seguridade social">AdministraÃ§Ã£o pÃºblica, defesa e seguridade social <br>
-				    <input type="checkbox" name="secao" value="P EducaÃ§Ã£o">EducaÃ§Ã£o <br>
-				    <input type="checkbox" name="secao" value="Q SaÃºde humana e serviÃ§os sociais">SaÃºde humana e serviÃ§os sociais <br>
-				    <input type="checkbox" name="secao" value="R Artes, cultura, esporte e recreaÃ§Ã£o">Artes, cultura, esporte e recreaÃ§Ã£o <br>
-				    <input type="checkbox" name="secao" value="S Outras atividades de serviÃ§os">Outras atividades de serviÃ§os <br>
-				    <input type="checkbox" name="secao" value="T ServiÃ§os domÃ©sticos">ServiÃ§os domÃ©sticos <br>
-				    <input type="checkbox" name="secao" value="U Organismos internacionais e outras instituiÃ§Ãµes extraterritoriais">Organismos internacionais e outras instituiÃ§Ãµes extraterritoriais <br>
+				    <input type="checkbox" name="secao" value="I Alojamento e alimentação">Alojamento e alimentação <br>
+				    <input type="checkbox" name="secao" value="J Informação e comunicação">Informação e comunicação <br>
+				    <input type="checkbox" name="secao" value="K Atividades financeiras, de seguros e serviços relacionados">Atividades financeiras, de seguros e serviços relacionados <br>
+				    <input type="checkbox" name="secao" value="L Atividades imobiliárias">Atividades imobiliárias <br>
+				    <input type="checkbox" name="secao" value="M Atividades profissionais, científicas e técnicas">Atividades profissionais, científicas e técnicas <br>
+				    <input type="checkbox" name="secao" value="N Atividades administrativas e serviços complementares">Atividades administrativas e serviços complementares <br>
+				    <input type="checkbox" name="secao" value="O Administração pública, defesa e seguridade social">Administração pública, defesa e seguridade social <br>
+				    <input type="checkbox" name="secao" value="P Educação">Educação <br>
+				    <input type="checkbox" name="secao" value="Q Saúde humana e serviços sociais">Saúde humana e serviços sociais <br>
+				    <input type="checkbox" name="secao" value="R Artes, cultura, esporte e recreação">Artes, cultura, esporte e recreação <br>
+				    <input type="checkbox" name="secao" value="S Outras atividades de serviços">Outras atividades de serviços <br>
+				    <input type="checkbox" name="secao" value="T Serviços domésticos">Serviços domésticos <br>
+				    <input type="checkbox" name="secao" value="U Organismos internacionais e outras instituições extraterritoriais">Organismos internacionais e outras instituições extraterritoriais <br>
 				    
 				    <p align="center">
 				    	<label>Arquivo </label>

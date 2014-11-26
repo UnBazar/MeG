@@ -7,6 +7,7 @@ a:HOVER{
 	text-decoration: none;
 }
 
+
 #cabecalho{
 	width: 100%;
 	height: 80px;
@@ -80,4 +81,14 @@ a:HOVER{
 
 #gerador select{
 	margin-left: 20px;
+}
+
+.tabelas th{
+	text-align: center;	
+	padding: 5px;
+}
+
+.tabelas td{
+	text-align: center;
+	padding: 5px;
 }
