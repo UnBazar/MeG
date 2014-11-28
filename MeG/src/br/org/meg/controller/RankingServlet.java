@@ -45,7 +45,7 @@ public class RankingServlet extends HttpServlet {
 	 * Método responsável por ordenar a lista de salário médio em ordem crescente
 	 * @param lista de salários médios
 	 */
-	private void ordenacaoCrescente(List<Quadro> lista) {
+	public void ordenacaoCrescente(List<Quadro> lista) {
 		int tamanho = lista.size();
 		int maiorElemento;
 		for (int i = 0; i < tamanho - 1; i++) {

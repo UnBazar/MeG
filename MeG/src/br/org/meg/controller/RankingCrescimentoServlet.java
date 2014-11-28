@@ -36,7 +36,8 @@ public class RankingCrescimentoServlet extends HttpServlet {
 		List<Quadro> listaInicial = dao.obterLista(anoInicial, secao, descricao);
 		List<Quadro> listaFinal = dao.obterLista(anoFinal, secao, descricao);
 		List<Quadro> listaCrescimento = obterListaCrescimento(listaInicial,listaFinal);
-		this.ordenacaoCrescente(listaCrescimento);
+		RankingServlet rnk = new RankingServlet();
+		rnk.ordenacaoCrescente(listaCrescimento);
 		request.setAttribute("listaCrescimento", listaCrescimento);
 		request.setAttribute("anoInicial", anoInicial);
 		request.setAttribute("anoFinal", anoFinal);
@@ -75,23 +76,6 @@ public class RankingCrescimentoServlet extends HttpServlet {
 		float resultado = 0;
 		resultado = ((valorFinal / valorInicial)-1) * 100;
 		return resultado;
-	}
-	/**
-	 * Método responsável por ordenar a lista de salário médio em ordem crescente
-	 * @param lista de salários médios
-	 */
-	private void ordenacaoCrescente(List<Quadro> lista) {
-		int tamanho = lista.size();
-		int maiorElemento;
-		for (int i = 0; i < tamanho - 1; i++) {
-			maiorElemento = i;
-			for (int j = i + 1; j < lista.size(); j++) {
-				if (lista.get(maiorElemento).getValor() < lista.get(j).getValor()) {
-					maiorElemento = j;
-				}
-			}
-			troca(lista, i, maiorElemento);
-		}
 	}
 	
 	/**

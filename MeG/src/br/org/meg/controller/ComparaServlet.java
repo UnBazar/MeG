@@ -41,29 +41,19 @@ public class ComparaServlet extends HttpServlet {
 		String opcao = (String) request.getSession().getAttribute("grafico");
 		QuadroDAO dao = new QuadroDAO();
 		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
+		
+		GraficoServlet grafico = new GraficoServlet();
 		if(opcao.equalsIgnoreCase("geral")){
-			request.getSession().setAttribute("valores2", listarValores(quadros));
+			request.getSession().setAttribute("valores2", grafico.listarValores(quadros));
 		}
 		else if(opcao.equalsIgnoreCase("do crescimento")){
 			request.getSession().setAttribute("valores2", listarCrescimento(quadros));
 		}
 		request.getSession().setAttribute("estado2", estado.getNome());
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("compara.jsp");
-		requestDispatcher.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("compara.jsp");
+		rd.forward(request, response);
 	}
 	
-	/**
-	 * Lista os valores dos Quadros contidos na lista global 'quadros'
-	 * 
-	 * @return	uma lista de Strings contendo os valores
-	 */
-	private List<Float> listarValores(List<Quadro> quadros){
-		List<Float> valores = new ArrayList<Float>();
-		for( Quadro q: quadros){
-			valores.add(q.getValor());
-		}
-		return valores;
-	}
 	/**
 	 * Lista os valores dos quadros contidos na lista global 'quadros' mas fazendo o calculo do crescimento anual
 	 * @param quadros

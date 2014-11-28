@@ -80,7 +80,7 @@ public class GraficoServlet extends HttpServlet{
 	 * 
 	 * @return	uma lista de floats contendo os valores
 	 */
-	private List<Float> listarValores(List<Quadro> quadros){
+	public List<Float> listarValores(List<Quadro> quadros){
 		List<Float> valores = new ArrayList<Float>();
 		for( Quadro q: quadros){
 			valores.add(q.getValor());
