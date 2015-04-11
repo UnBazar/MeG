@@ -17,73 +17,78 @@ import org.meg.model.Estado;
 import org.meg.model.Quadro;
 import org.meg.model.Secao;
 
-@WebServlet ("/compara")
-public class ComparaServlet extends HttpServlet {
+@WebServlet("/compara")
+public class CompareServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public ComparaServlet(){
+	public CompareServlet(){
 		super();
 	}
 	/**
-	 * Método que faz comparacao de dados entre dois estados
+	 * Compares growth rates between two different states
 	 */
 	@SuppressWarnings("unchecked")
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Quadro> quadros = new ArrayList<>();
-		Estado estado = new Estado();
-		Secao secao = new Secao((String)request.getSession().getAttribute("secao"));
-		Descricao descricao = new Descricao();
-		descricao.setNome((String)request.getSession().getAttribute("titulo"));
-		estado.setId( Integer.parseInt(request.getParameter("estado")));
-		List<String> listadeAnos = (List<String>) request.getSession().getAttribute("anos");
-		int anoInicial = Integer.parseInt(listadeAnos.get(0));
-		int anoFinal = Integer.parseInt(listadeAnos.get(listadeAnos.size()-1));
-		String opcao = (String) request.getSession().getAttribute("grafico");
-		QuadroDAO dao = new QuadroDAO();
-		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
+		List<Quadro> frames = new ArrayList<>();
+		Estado state = new Estado();
+		Secao section = new Secao((String) request.getSession().getAttribute("secao"));
+		Descricao description = new Descricao();
+		List<String> yearList = (List<String>) request.getSession().getAttribute("anos");
+		int initialYear = Integer.parseInt(yearList.get(0));
+		int finalYear = Integer.parseInt(yearList.get(yearList.size()-1));
 		
-		GraficoServlet grafico = new GraficoServlet();
-		if(opcao.equalsIgnoreCase("geral")){
-			request.getSession().setAttribute("valores2", grafico.listarValores(quadros));
+		description.setNome((String) request.getSession().getAttribute("titulo"));
+		state.setId(Integer.parseInt(request.getParameter("estado")));
+		String option = (String) request.getSession().getAttribute("grafico");
+		QuadroDAO dao = new QuadroDAO();
+		frames = dao.obterLista(initialYear, finalYear, state, section, description);
+		
+		GraficoServlet graphic = new GraficoServlet();
+		
+		if(option.equalsIgnoreCase("geral")){
+			request.getSession().setAttribute("valores2", graphic.listarValores(frames));
 		}
-		else if(opcao.equalsIgnoreCase("do crescimento")){
-			request.getSession().setAttribute("valores2", listarCrescimento(quadros));
+		else if(option.equalsIgnoreCase("do crescimento")){
+			request.getSession().setAttribute("valores2", listSectorGrowth(frames));
 		}
-		request.getSession().setAttribute("estado2", estado.getNome());
+		request.getSession().setAttribute("estado2", state.getNome());
 		RequestDispatcher rd = request.getRequestDispatcher("compara.jsp");
 		rd.forward(request, response);
 	}
 	
 	/**
-	 * Lista os valores dos quadros contidos na lista global 'quadros' mas fazendo o calculo do crescimento anual
-	 * @param quadros
-	 * @return uma lista de floats contendo os valores de crescimento
+	 * List the growth through the years of a market's sector
+	 * @param frames
+	 * @return a list storing sector's growth through years
 	 */
-	private List<Float> listarCrescimento(List<Quadro> quadros){
-		List<Float> valores = new ArrayList<Float>();
-		float valorInicial = 0,valorFinal = 0;
-		for(int i = 0; i < quadros.size(); i++){
-			if(i == 0){
-				valorInicial= quadros.get(i).getValor();
-				valorFinal = valorInicial;
+	private List<Float> listSectorGrowth(List<Quadro> frames){
+		List<Float> values = new ArrayList<Float>();
+		float initialValue = 0, finalValue = 0;
+		for(int i = 0; i < frames.size(); i++){
+			if(i == 0) {
+				initialValue = frames.get(i).getValor();
+				finalValue = initialValue;
+			} else {
+				initialValue = finalValue;
+				finalValue = frames.get(i).getValor();
 			}
-			else{
-				valorInicial = valorFinal;
-				valorFinal = quadros.get(i).getValor();
-			}
-			valores.add(calculaCrescimento(valorFinal,valorInicial));
+			values.add(calculateGrowth(initialValue, finalValue));
 		}
 		
-		return valores;
+		return values;
 	}
 	/**
-	 * Calcula o valor do crescimento percentual anual
-	 * @param valorFinal
-	 * @param valorInicial
-	 * @return float com o valor do crescimento
+	 * Calculates the annual growth of a particular sector of the market in percentage.
+	 * @param initialValue
+	 * @param finalValue
+	 * @return growth's rate in percentage
 	 */
-	private float calculaCrescimento(float valorFinal, float valorInicial){
-		float crescimento = ((valorFinal/valorInicial)-1)* 100;
-		return crescimento;
+	private float calculateGrowth(float initialValue, float finalValue) {
+		/* calculates increase of values between the initial year and final year
+		 *  and multiplies by 100 to convert to percentage notation
+		 */
+		float increase = ((finalValue / initialValue) - 1) * 100f;
+		return increase;
 	}
 }
+
