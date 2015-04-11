@@ -16,13 +16,13 @@ import org.meg.dao.UtilDAO;
  * Servlet implementation class HistoricoServlet
  */
 @WebServlet("/historico")
-public class HistoricoServlet extends HttpServlet {
+public class HistoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public HistoricoServlet() {
+	public HistoryServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

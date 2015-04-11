@@ -20,7 +20,7 @@ import org.meg.model.Administrador;
 import org.meg.parser.Parser;
 
 @WebServlet("/upload")
-public class UploadArquivoServlet extends HttpServlet {
+public class FileUploadServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 

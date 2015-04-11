@@ -15,7 +15,7 @@ import org.meg.dao.UtilDAO;
 /**
  * Servlet Filter implementation class HistoricoFiltro
  */
-public class HistoricoFiltro implements Filter {
+public class FilterHistory implements Filter {
 
 	UtilDAO dao = new UtilDAO();
 

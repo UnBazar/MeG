@@ -16,7 +16,7 @@ import org.meg.model.Quadro;
 import org.meg.model.Secao;
 
 @WebServlet("/crescimento")
-public class RankingCrescimentoServlet extends HttpServlet {
+public class GrowthRankingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

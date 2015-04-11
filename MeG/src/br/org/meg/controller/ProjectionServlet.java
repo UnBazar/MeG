@@ -23,7 +23,7 @@ import org.meg.model.Secao;
  * Servlet implementation class Login
  */
 @WebServlet("/projecao")
-public class ProjecaoServlet extends HttpServlet {
+public class ProjectionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	public static int numeroDeAcertos = 0;
@@ -34,7 +34,7 @@ public class ProjecaoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ProjecaoServlet() {
+	public ProjectionServlet() {
 		super();
 	}
 

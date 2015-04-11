@@ -10,11 +10,13 @@ import org.meg.model.Noticia;
 /**
  * Servlet implementation class Noticia
  */
-public class NoticiaServlet extends HttpServlet {
+public class NewsServlet extends HttpServlet {
 	
 	private static NoticiaServlet noticiaServ = new NoticiaServlet();
 	
-	public NoticiaServlet() {}
+	public NewsServlet() {
+
+	}
 	
 	public static NoticiaServlet getInstance() {
 		return noticiaServ;

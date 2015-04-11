@@ -21,13 +21,13 @@ import org.meg.model.Secao;
  * Servlet implementation class Login
  */
 @WebServlet("/grafico")
-public class GraficoServlet extends HttpServlet{
+public class GraphicServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GraficoServlet() {
+    public GraphicServlet() {
         super();
     }
     

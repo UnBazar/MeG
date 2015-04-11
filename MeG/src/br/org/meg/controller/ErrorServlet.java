@@ -16,13 +16,13 @@ import org.meg.model.Erro;
  * Servlet implementation class ErroServlet
  */
 @WebServlet("/erro")
-public class ErroServlet extends HttpServlet {
+public class ErrorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ErroServlet() {
+    public ErrorServlet() {
         super();
     }
 
