@@ -122,7 +122,7 @@ public class FileUploadServlet extends HttpServlet {
 	 */
 	private String criaCaminhoDoArquivo() {
 		String url;
-		url = UploadArquivoServlet.class.getProtectionDomain().getCodeSource().getLocation()+"";
+		url = FileUploadServlet.class.getProtectionDomain().getCodeSource().getLocation()+"";
 		url = url.replaceAll("file:", "");
 		url = url.replaceAll("WEB-INF/classes/br/org/meg/controller/UploadArquivo.class", "");
 		return url;

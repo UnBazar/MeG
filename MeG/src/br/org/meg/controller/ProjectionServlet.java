@@ -68,7 +68,7 @@ public class ProjectionServlet extends HttpServlet {
 		Descricao descricao = new Descricao(idDescricao);
 		Secao secao = new Secao(idSetor);
 		Estado estado = new Estado(idEstado);
-		quadros = dao.obterLista(2006, 2012, estado, secao, descricao);
+		quadros = dao.getListOfScene(2006, 2012, estado, secao, descricao);
 		float dadoReal = quadros.get(quadros.size() - 1).getValor();
 		quadros.remove(quadros.size() - 1);
 		float projecao = criarProjecao(quadros);

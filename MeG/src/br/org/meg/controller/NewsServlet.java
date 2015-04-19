@@ -12,13 +12,13 @@ import org.meg.model.Noticia;
  */
 public class NewsServlet extends HttpServlet {
 	
-	private static NoticiaServlet noticiaServ = new NoticiaServlet();
+	private static NewsServlet noticiaServ = new NewsServlet();
 	
 	public NewsServlet() {
 
 	}
 	
-	public static NoticiaServlet getInstance() {
+	public static NewsServlet getInstance() {
 		return noticiaServ;
 	}
 	
