@@ -36,7 +36,13 @@ public class ComparaServlet extends HttpServlet {
 		super();
 	}
 	
-	public List<Quadro> getSelectedScenes(HttpServletRequest request){
+	/**
+	 * Create an list with all scenes requested 
+	 * 
+	 * @param request have parameters in session and passed by parameters
+	 * @return List<Quadro> with scenes corresponding 
+	 */
+	public List<Quadro> getSelectedScenes(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
 		// Instantiate an State from an id passed by parameter
@@ -69,6 +75,7 @@ public class ComparaServlet extends HttpServlet {
 	
 	/**
 	 * Main method, used to generate informations in graphic
+	 * 
 	 * @param request is the current Request that have parametters 
 	 * 		  stored in session
 	 * @param response is an new response to generate
@@ -109,35 +116,37 @@ public class ComparaServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Lista os valores dos quadros contidos na lista global 'quadros' mas fazendo o calculo do crescimento anual
-	 * @param quadros
-	 * @return uma lista de floats contendo os valores de crescimento
+	 * List values with increase betwen two years
+	 * 
+	 * @param scenes to assess growth
+	 * @return List<Float> with all values calculated
 	 */
-	private List<Float> getIncrease(List<Quadro> quadros){
-		List<Float> valores = new ArrayList<Float>();
-		float valorInicial = 0,valorFinal = 0;
-		for(int i = 0; i < quadros.size(); i++){
-			if(i == 0){
-				valorInicial= quadros.get(i).getValor();
-				valorFinal = valorInicial;
+	private List<Float> getIncrease(List<Quadro> scenes) {
+		// List for values of scenes
+		List<Float> values = new ArrayList<Float>();
+		float initialValue = 0, finalValue = 0;
+		for (int i = 0; i < scenes.size(); i++) {
+			if(i == 0) {
+				initialValue= scenes.get(i).getValor();
+				finalValue = initialValue;
+			} else {
+				initialValue = finalValue;
+				finalValue = scenes.get(i).getValor();
 			}
-			else{
-				valorInicial = valorFinal;
-				valorFinal = quadros.get(i).getValor();
-			}
-			valores.add(calculaCrescimento(valorFinal,valorInicial));
+			values.add(calculateIncrease(finalValue, initialValue));
 		}
-		
-		return valores;
+		return values;
 	}
+	
 	/**
-	 * Calcula o valor do crescimento percentual anual
-	 * @param valorFinal
-	 * @param valorInicial
-	 * @return float com o valor do crescimento
+	 * Get increase percentage annual
+	 * 
+	 * @param finalValue is value generate next year
+	 * @param initialValue is value of current year
+	 * @return float with value of increase
 	 */
-	private float calculaCrescimento(float valorFinal, float valorInicial){
-		float crescimento = ((valorFinal/valorInicial)-1)* 100;
-		return crescimento;
+	private float calculateIncrease(float finalValue, float initialValue){
+		float increase = ((finalValue/initialValue)-1)* 100;
+		return increase;
 	}
 }
