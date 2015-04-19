@@ -86,7 +86,7 @@ public class QuadroDAO {
 	 * @param descricao	titulo do quadro
 	 * @return	uma Lista contendo quadros referentes aos parametros passados
 	 */
-	public List<Quadro> obterLista(int anoInicial, int anoFinal, Estado estado, Secao secao, Descricao descricao) {
+	public List<Quadro> getListOfScene(int anoInicial, int anoFinal, Estado estado, Secao secao, Descricao descricao) {
 		String sql = "SELECT * FROM Quadro "
 				+ "WHERE estado_id = ? "
 				+ "AND secao_id = ? "

@@ -47,7 +47,7 @@
 	function listarValoresporAnos() {
 		var i = 1;
 		var lista = new Array();
-		lista[0] = [ 'Anos', '${estado}', '${estado2}' ];
+		lista[0] = [ 'Anos', '${estado}', '${secondStateName}' ];
 		for (i = 1; i <= tamanho; i++) {
 			lista[i] = [ anos[i], valores[i], valores2[i] ];
 		}

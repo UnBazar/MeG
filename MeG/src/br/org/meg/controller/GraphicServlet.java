@@ -60,9 +60,9 @@ public class GraphicServlet extends HttpServlet{
 		Descricao descricao = new Descricao(idDescricao);
 		Secao secao = new Secao(idSetor);
 		Estado estado = new Estado (idEstado);
-		quadros = dao.obterLista(anoInicial, anoFinal, estado, secao, descricao);
+		quadros = dao.getListOfScene(anoInicial, anoFinal, estado, secao, descricao);
 		if(opcao.equalsIgnoreCase("geral")){
-			request.getSession().setAttribute("valores", listarValores(quadros));
+			request.getSession().setAttribute("valores", getValues(quadros));
 		}else if(opcao.equalsIgnoreCase("do crescimento")){
 			request.getSession().setAttribute("valores", listarCrescimento(quadros));
 		}
@@ -80,7 +80,7 @@ public class GraphicServlet extends HttpServlet{
 	 * 
 	 * @return	uma lista de floats contendo os valores
 	 */
-	public List<Float> listarValores(List<Quadro> quadros){
+	public List<Float> getValues(List<Quadro> quadros){
 		List<Float> valores = new ArrayList<Float>();
 		for( Quadro q: quadros){
 			valores.add(q.getValor());

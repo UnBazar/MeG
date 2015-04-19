@@ -14,6 +14,10 @@ public class Descricao {
 	public Descricao(int id){
 		setId(id);
 	}
+	
+	public Descricao(String titulo){
+		setNome(titulo);
+	}
 
 	public int getId() {
 		return id;

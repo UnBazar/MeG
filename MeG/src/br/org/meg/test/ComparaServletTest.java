@@ -42,6 +42,7 @@ public class ComparaServletTest {
 		ComparaServlet servlet = new ComparaServlet();
 		servlet.doPost(request, response);
 	}
+	
 	@Test
 	public void testDoPostCrescimentol() throws ServletException, IOException {
 		when(request.getSession().getAttribute("grafico")).thenReturn("do Crescimento");
