@@ -36,6 +36,37 @@ public class ComparaServlet extends HttpServlet {
 		super();
 	}
 	
+	public List<Quadro> getSelectedScenes(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		
+		// Instantiate an State from an id passed by parameter
+		int stateId = Integer.parseInt(request.getParameter("estado"));
+		Estado state = new Estado(stateId);
+		// Put second state name in session
+		session.setAttribute("secondStateName", state.getNome());
+		// Get the name of section of scene stored in session object
+		String sectionName = (String) session.getAttribute("secao"); 
+		// Instantiate an Section from your name
+		Secao section = new Secao(sectionName);
+		// Get title of scene stored in session
+		String title = (String)session.getAttribute("titulo");
+		// Instantiate an Section from your title
+		Descricao descricao = new Descricao(title);
+		/*
+		 * Get all years in certly interval set init and final year in two variables
+		 */
+		@SuppressWarnings("unchecked")
+		
+		List<String> years = (List<String>) session.getAttribute("anos");
+		int initalYear = Integer.parseInt(years.get(0));
+		int finalYear = Integer.parseInt(years.get(years.size()-1));
+		
+		// Instantiate DAO to get all scenes with the following parametters
+		QuadroDAO SceneDAO = new QuadroDAO();
+		List<Quadro> scenes = SceneDAO.getListOfScene(initalYear, finalYear, state, section, descricao);
+		return scenes;
+	}
+	
 	/**
 	 * Main method, used to generate informations in graphic
 	 * @param request is the current Request that have parametters 
@@ -49,31 +80,11 @@ public class ComparaServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		List<Quadro> scenes = new ArrayList<>();
 		// Get session of request
 		HttpSession session = request.getSession();
-		// Instantiate an State from an id
-		int stateId = Integer.parseInt(request.getParameter("estado"));
-		Estado state = new Estado(stateId);
-		// Put state name in session
-		session.setAttribute("secondStateName", state.getNome());
-		// Instantiate an Section from your name
-		String sectionName = (String) session.getAttribute("secao"); 
-		Secao section = new Secao(sectionName);
-		// Instantiate an Section from your title
-		String titulo = (String)session.getAttribute("titulo");
-		Descricao descricao = new Descricao(titulo);
-		@SuppressWarnings("unchecked")
-		/*
-		 * Get all years in certly interval set init and final year in two variables
-		 */
-		List<String> years = (List<String>) session.getAttribute("anos");
-		int initalYear = Integer.parseInt(years.get(0));
-		int finalYear = Integer.parseInt(years.get(years.size()-1));
 		
-		// Instantiate DAO to get all scenes with the following parametters
-		QuadroDAO SceneDAO = new QuadroDAO();
-		scenes = SceneDAO.getListOfScene(initalYear, finalYear, state, section, descricao);
+		// Load scenes from session and request
+		List<Quadro> scenes = getSelectedScenes(request);
 		
 		/* 
 		 * Type of chart data, can be:
