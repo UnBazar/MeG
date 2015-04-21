@@ -12,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.HistoricoServlet;
+import org.meg.controller.HistoryServlet;
 
 public class HistoricoServletTest {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	private HistoricoServlet servlet;
+	private HistoryServlet servlet;
 	
 	@Before
 	public void setUp() throws Exception{
 		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
-		this.servlet = new HistoricoServlet();
+		this.servlet = new HistoryServlet();
 	}
 	
 	@Test

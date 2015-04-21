@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.ProjecaoServlet;
+import org.meg.controller.ProjectionServlet;
 
 public class ProjecaoTest {
 	
@@ -39,14 +39,14 @@ public class ProjecaoTest {
 					when(request.getParameter("anoFinal")).thenReturn("2012");
 					when(request.getSession()).thenReturn(mock(HttpSession.class));
 					when(request.getRequestDispatcher("grafico.jsp")).thenReturn(mock(RequestDispatcher.class));
-					ProjecaoServlet servlet = new ProjecaoServlet();
+					ProjectionServlet servlet = new ProjectionServlet();
 					servlet.doPost(request, response);
 				}
 			}
 		}
-		System.out.println(ProjecaoServlet.b.divide(new BigDecimal(2835.0), 4, RoundingMode.UP));
-		System.out.println(ProjecaoServlet.numeroDeAcertos);
-		System.out.println(ProjecaoServlet.quaseAcertos);
+		System.out.println(ProjectionServlet.b.divide(new BigDecimal(2835.0), 4, RoundingMode.UP));
+		System.out.println(ProjectionServlet.numeroDeAcertos);
+		System.out.println(ProjectionServlet.quaseAcertos);
 	}
 
 }

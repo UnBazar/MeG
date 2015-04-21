@@ -42,12 +42,12 @@ public class QuadroDAOTest {
 	
 	@Test
 	public void testObterLista() {
-		assertFalse(dao.obterLista(2008, 2012, new Estado(5), new Secao(3), new Descricao(3)).isEmpty());
+		assertFalse(dao.getListOfScene(2008, 2012, new Estado(5), new Secao(3), new Descricao(3)).isEmpty());
 	}
 	
 	@Test(expected =  DAOException.class)
 	public void testObterListaExcecao(){
-		dao.obterLista(1998, 2005, new Estado(5), new Secao(3), new Descricao(3));
+		dao.getListOfScene(1998, 2005, new Estado(5), new Secao(3), new Descricao(3));
 	}
 	
 	@Test

@@ -12,20 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.HistoricoFiltro;
+import org.meg.controller.FilterHistory;
+import org.meg.controller.FilterHistory;
 
 public class HistoricoFiltroTest {
 
 	private HttpServletResponse response;
 	private HttpServletRequest request;
-	private HistoricoFiltro historico;
+	private FilterHistory historico;
 	private FilterConfig filterConfig;
 	
 	@Before
 	public void setUp() throws Exception {
 		this.response = mock(HttpServletResponse.class);
 		this.request = mock(HttpServletRequest.class);
-		this.historico = new HistoricoFiltro();
+		this.historico = new FilterHistory();
 		this.filterConfig = mock(FilterConfig.class);
 	}
 	

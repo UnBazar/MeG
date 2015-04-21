@@ -12,18 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.ErroServlet;
+import org.meg.controller.ErrorServlet;
 
 public class ErroServletTest {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-	private ErroServlet servlet;
+	private ErrorServlet servlet;
 	
 	@Before
 	public void setUp(){
 		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
-		this.servlet = new ErroServlet();
+		this.servlet = new ErrorServlet();
 	}
 	@Test
 	public void doPostTest() throws ServletException, IOException{

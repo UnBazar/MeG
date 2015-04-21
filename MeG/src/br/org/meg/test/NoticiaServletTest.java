@@ -2,15 +2,15 @@ package org.meg.test;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.NoticiaServlet;
+import org.meg.controller.NewsServlet;
 
 public class NoticiaServletTest {
 
-	private NoticiaServlet noticia = new NoticiaServlet();
+	private NewsServlet noticia = new NewsServlet();
 	
 	@Before
 	public void setUp() throws Exception {
-		this.noticia = new NoticiaServlet();
+		this.noticia = new NewsServlet();
 	}
 	
 	@Test

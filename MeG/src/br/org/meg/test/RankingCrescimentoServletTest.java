@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.RankingCrescimentoServlet;
+import org.meg.controller.GrowthRankingServlet;
 
 public class RankingCrescimentoServletTest {
 
@@ -33,7 +33,7 @@ public class RankingCrescimentoServletTest {
 		when(request.getParameter("descricao")).thenReturn("5");
 		when(request.getRequestDispatcher("tabela-crescimento.jsp"))
 				.thenReturn(mock(RequestDispatcher.class));
-		RankingCrescimentoServlet servlet = new RankingCrescimentoServlet();
+		GrowthRankingServlet servlet = new GrowthRankingServlet();
 		servlet.doPost(request, response);
 	}
 

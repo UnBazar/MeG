@@ -1,6 +1,7 @@
 package org.meg.test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
@@ -12,8 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import org.meg.controller.GraficoServlet;
+import org.meg.controller.GraphicServlet;
 
 public class GraficoServletTest {
 
@@ -36,7 +36,7 @@ public class GraficoServletTest {
 		when(request.getParameter("anoFinal")).thenReturn("2012");
 		when(request.getRequestDispatcher("grafico.jsp")).thenReturn(
 				mock(RequestDispatcher.class));
-		GraficoServlet servlet = new GraficoServlet();
+		GraphicServlet servlet = new GraphicServlet();
 		servlet.doPost(request, response);
 	}
 	@Test
@@ -49,7 +49,7 @@ public class GraficoServletTest {
 		when(request.getParameter("anoFinal")).thenReturn("2012");
 		when(request.getRequestDispatcher("grafico.jsp")).thenReturn(
 				mock(RequestDispatcher.class));
-		GraficoServlet servlet = new GraficoServlet();
+		GraphicServlet servlet = new GraphicServlet();
 		servlet.doPost(request, response);
 	}
 }
