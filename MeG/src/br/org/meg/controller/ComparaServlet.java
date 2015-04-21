@@ -19,7 +19,7 @@ import org.meg.model.Frame;
 import org.meg.model.Section;
 
 /**
- * It's an Servlet class, your function is called in /compara
+ * It's a Servlet class, your function is called in /compara
  * This class compares two states in same section and years
  */
 @WebServlet ("/compara")
