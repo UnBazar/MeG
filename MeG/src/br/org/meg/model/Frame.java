@@ -2,11 +2,11 @@ package org.meg.model;
 
 public class Frame {
 	private int id;
-	private Description descricao;
-	private int ano;
-	private float valor;
-	private State estado;
-	private Section secao;
+	private Description description;
+	private int year;
+	private float value;
+	private State state;
+	private Section section;
 
 	public int getId() {
 		return id;
@@ -17,43 +17,43 @@ public class Frame {
 	}
 
 	public int getYear() {
-		return ano;
+		return year;
 	}
 
-	public void setYear(int ano) {
-		this.ano = ano;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	public float getValue() {
-		return valor;
+		return value;
 	}
 
-	public void setValue(float valor) {
-		this.valor = valor;
+	public void setValue(float value) {
+		this.value = value;
 	}
 
 	public State getState() {
-		return estado;
+		return state;
 	}
 
-	public void setState(State estado) {
-		this.estado = estado;
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	public Section getSection() {
-		return secao;
+		return section;
 	}
 
-	public void setSection(Section secao) {
-		this.secao = secao;
+	public void setSection(Section section) {
+		this.section = section;
 	}
 
 	public Description getDescription() {
-		return descricao;
+		return description;
 	}
 
-	public void setDescription(Description titulo) {
-		this.descricao = titulo;
+	public void setDescription(Description description) {
+		this.description = description;
 	}
 	
 }

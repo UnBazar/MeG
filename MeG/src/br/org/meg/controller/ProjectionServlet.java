@@ -1,8 +1,6 @@
 package org.meg.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.meg.dao.FrameDAO;
 import org.meg.model.Description;
@@ -27,11 +26,12 @@ import org.meg.model.Section;
 public class ProjectionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public static int numeroDeAcertos = 0;
+	// Stores the number of hits the projections got.
+	public static int hits = 0;
 	
-	public static int quaseAcertos = 0;
+	// Stores the number of projections that missed by less than 10% in the exact number.
+	public static int almostHits = 0;
 
-	public static BigDecimal b = new BigDecimal(0.0f);
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -49,55 +49,44 @@ public class ProjectionServlet extends HttpServlet {
 	}
 
 	/**
-	 * Metodo que realiza o busca de dados para plotar grafico
+	 * Parse user's request and creates a projection based on the year sent by the client. 
+	 * Renders a graphic with the projection that was created.
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		final int initialProjectionYear = 2012, initialYear = 2006, finalYear = 2012;
+		HttpSession session = request.getSession();
+		
+		final int initialProjectionYear = 2013, finalProjectionYear, initialYear = 2006, finalYear = 2012;
+		
 		List<Frame> frames = new ArrayList<>();
 		
-		// create a hash that maps attributes of a frame into ids
-		HashMap<String, Integer> idsHash = getHash(request);
+		// create a hash that maps attributes of a frame (sent in the request) from String format to Integers
+		HashMap<String, Integer> hash = getHash(request);
 		
 		FrameDAO dao = new FrameDAO();
 		
-		Description description = new Description(idsHash.get("descricao"));
-		Section section = new Section(idsHash.get("secao"));
-		State state = new State(idsHash.get("estado"));
+		Description description = new Description(hash.get("descricao"));
+		Section section = new Section(hash.get("setor"));
+		State state = new State(hash.get("estado"));
 		frames = dao.getFramesList(initialYear, finalYear, state, section, description);
 		
-		float dadoReal = getLastFrame(frames).getValue();
-		frames.remove(frames.size() - 1);
-		float projecao = criarProjecao(frames);
-		if (Math.abs(projecao) > 0.0) b = b.add(new BigDecimal(Math.abs(dadoReal - projecao)).divide(new BigDecimal(Math.abs(projecao)), 4, RoundingMode.UP));
-		if ((dadoReal - projecao) == 0) numeroDeAcertos++;
-		if (Math.abs(dadoReal - projecao) <= Math.abs(dadoReal / 10.0)) quaseAcertos++;
+		finalProjectionYear = hash.get("anoFinal");
 		
-		frames.remove(frames.size() - 1);
-		Frame quadro = new Frame();
-		quadro.setYear(2012);
-		quadro.setDescription(frames.get(frames.size() - 1).getDescription());
-		quadro.setState(frames.get(frames.size() - 1).getState());
-		quadro.setSection(frames.get(frames.size() - 1).getSection());
-		quadro.setValue(dadoReal);
-		frames.add(quadro);
-		
-		for (int i = initialProjectionYear; i < 212; i++) {
-			criarProjecao(frames);
+		for (int i = initialProjectionYear; i <= finalProjectionYear; i++) {
+			createProjection(frames);
 		}
 		
-		request.getSession().setAttribute("valores", getValuesList(frames));
-		request.getSession().setAttribute("anos", getYearsList(frames));
-		request.getSession().setAttribute("tamanho", frames.size());
-		request.getSession().setAttribute("titulo", description.getNome());
-		request.getSession().setAttribute("secao", section.getNome());
-		request.getSession().setAttribute("estado", state.getNome());
+		session.setAttribute("valores", getValuesList(frames));
+		session.setAttribute("anos", getYearsList(frames));
+		session.setAttribute("tamanho", frames.size());
+		session.setAttribute("titulo", description.getNome());
+		session.setAttribute("secao", section.getNome());
+		session.setAttribute("estado", state.getNome());
 		
-		RequestDispatcher requestDispatcher = request
-				.getRequestDispatcher("projecao.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("projecao.jsp");
 		requestDispatcher.forward(request, response);
 	}
 
@@ -129,62 +118,92 @@ public class ProjectionServlet extends HttpServlet {
 		return yearsList;
 	}
 
-	private float criarProjecao(List<Frame> quadros) {
-		float mediasMoveis[] = new float[quadros.size() + 1];
-		float projecoes[] = new float[9];
-		float maiorProjecao;
-		int topo = 0;
-		Frame projecao = new Frame();
-		projecao.setYear(quadros.get(quadros.size() - 1).getYear() + 1);
-		projecao.setDescription(quadros.get(quadros.size() - 1).getDescription());
-		projecao.setState(quadros.get(quadros.size() - 1).getState());
-		projecao.setSection(quadros.get(quadros.size() - 1).getSection());
-		if (!this.verificarFuncaoCrescente(quadros) && !this.verificarFuncaoDecrescente(quadros)) {
-			for (float alfa = 0.1f; alfa < 1.0f; alfa += 0.1) {
-				mediasMoveis[0] = quadros.get(0).getValue();
-				for (int i = 0; i < quadros.size(); i++) {
-					mediasMoveis[i + 1] = mediasMoveis[i] 
-							+ alfa * (quadros.get(i).getValue() - mediasMoveis[i]);
-				}
-				projecoes[topo++] = mediasMoveis[quadros.size()];
-			}
-			maiorProjecao = projecoes[projecoes.length - 1];
-			projecao.setValue((int) Math.ceil(maiorProjecao));
+	/**
+	 * This method is based on the moving average statistics technic to calculate a frame's projection.
+	 * It calculates the projection of the next year after the last frame in the List sent as argument.
+	 * It also adds to the list the projection frame that was created.
+	 * 
+	 * @return the value of the projection.
+	 */
+	private float createProjection(List<Frame> frames) {
+		// a new frame (projection) will be added so array's size is frame's size plus one
+		float movingAverage[] = new float[frames.size() + 1];
+		float projections[] = new float[9];
+		float biggestProjection = 0.0f;
+		int currentIndex = 0;
+		Frame projection = new Frame();
+		projection.setYear(getLastFrame(frames).getYear() + 1);
+		projection.setDescription(getLastFrame(frames).getDescription());
+		projection.setState(getLastFrame(frames).getState());
+		projection.setSection(getLastFrame(frames).getSection());
+		
+		if (isFunctionAscending(frames) || isFunctionDescending(frames)) {
+			projection.setValue((int) Math.ceil(getLastFrame(frames).getValue() 
+					+ this.getGrowthAverage(frames)));
 		} else {
-			projecao.setValue((int) Math.ceil(quadros.get(quadros.size() - 1).getValue() 
-					+ this.mediazinhaCrescimento(quadros)));
+			for (float alfa = 0.1f; alfa < 1.0f; alfa += 0.1) {
+				movingAverage[0] = frames.get(0).getValue();
+				for (int i = 0; i < frames.size(); i++) {
+					movingAverage[i + 1] = movingAverage[i] 
+							+ alfa * (frames.get(i).getValue() - movingAverage[i]);
+				}
+				projections[currentIndex++] = movingAverage[frames.size()];
+			}
+			biggestProjection = projections[projections.length - 1];
+			projection.setValue((int) Math.ceil(biggestProjection));
 		}
-		quadros.add(projecao);
-		return quadros.get(quadros.size() - 1).getValue();
+		
+		frames.add(projection);
+		return getLastFrame(frames).getValue();
 	}
 	
-	private boolean verificarFuncaoCrescente(List<Frame> quadros) {
-		for (int i = quadros.size() - 2; i < quadros.size(); i++) {
-			if (quadros.get(i).getValue() < quadros.get(i - 1).getValue()) {
+	/**
+	 * Identifies if the function described by the list of frames sent as argument is ascending.
+	 * 
+	 * @return a boolean stating if the function is ascending.
+	 */
+	private boolean isFunctionAscending(List<Frame> frames) {
+		for (int i = frames.size() - 2; i < frames.size(); i++) {
+			if (frames.get(i).getValue() < frames.get(i - 1).getValue()) {
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	private boolean verificarFuncaoDecrescente(List<Frame> quadros) {
-		for (int i = quadros.size() - 2; i < quadros.size(); i++) {
-			if (quadros.get(i).getValue() > quadros.get(i - 1).getValue()) {
+	/**
+	 * Identifies if the function described by the list of frames sent as argument is descending.
+	 * 
+	 * @return a boolean stating if the function is descending.
+	 */
+	private boolean isFunctionDescending(List<Frame> frames) {
+		for (int i = frames.size() - 2; i < frames.size(); i++) {
+			if (frames.get(i).getValue() > frames.get(i - 1).getValue()) {
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	private float mediazinhaCrescimento(List<Frame> quadros) {
+	/**
+	 * Calculates the average growth of the list of frames sent as argument.
+	 * 
+	 * @return a float value representing the growth average.
+	 */
+	private float getGrowthAverage(List<Frame> frames) {
 		float media = 0.0f;
-		for (int i = 1; i < quadros.size(); i++) {
-			media += quadros.get(i).getValue() - quadros.get(i - 1).getValue();
+		for (int i = 1; i < frames.size(); i++) {
+			media += frames.get(i).getValue() - frames.get(i - 1).getValue();
 		}
-		media = 0.3f * media/quadros.size();
+		media = 0.3f * media/frames.size();
 		return media;
 	}
 	
+	/**
+	 * Creates a hash that maps the attributes sent in the user's request in String type to Integer type.
+	 * 
+	 * @return a hash mapping String keys into Integer values.
+	 */
 	private HashMap<String, Integer> getHash(HttpServletRequest request) {
 		HashMap<String, Integer> hash = new HashMap<>();
 		String[] attributesFrame = {"descricao", "setor", "estado", "anoFinal"};
@@ -196,8 +215,14 @@ public class ProjectionServlet extends HttpServlet {
 		return hash;
 	}
 	
+	/**
+	 * Gets the last element of the list of frames sent as argument.
+	 * 
+	 * @return last frame of the list.
+	 */
 	private Frame getLastFrame(List<Frame> framesList) {
 		Frame lastElement = framesList.get(framesList.size() - 1);
 		return lastElement;
 	}
+	
 }

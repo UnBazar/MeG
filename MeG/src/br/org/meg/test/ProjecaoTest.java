@@ -4,8 +4,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -44,9 +42,6 @@ public class ProjecaoTest {
 				}
 			}
 		}
-		System.out.println(ProjectionServlet.b.divide(new BigDecimal(2835.0), 4, RoundingMode.UP));
-		System.out.println(ProjectionServlet.numeroDeAcertos);
-		System.out.println(ProjectionServlet.quaseAcertos);
 	}
 
 }
