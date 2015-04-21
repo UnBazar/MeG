@@ -3,10 +3,10 @@ package org.meg.test;
 import org.junit.Before;
 import org.junit.Test;
 import org.meg.exception.QuebraSistemaException;
-import org.meg.model.Administrador;
-import org.meg.model.Descricao;
-import org.meg.model.Estado;
-import org.meg.model.Secao;
+import org.meg.model.Administrator;
+import org.meg.model.Description;
+import org.meg.model.State;
+import org.meg.model.Section;
 
 public class ModelExceptionTest {
 
@@ -16,7 +16,7 @@ public class ModelExceptionTest {
 
 	@Test(expected=QuebraSistemaException.class)
 	public void testDescricaoException() {
-		Descricao descricao = new Descricao();
+		Description descricao = new Description();
 		descricao.setId(0);
 	}
 }

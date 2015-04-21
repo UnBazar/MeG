@@ -5,16 +5,16 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.meg.dao.AdministradorDAO;
-import org.meg.model.Administrador;
+import org.meg.model.Administrator;
 
 public class AdministradorDAOTest {
 
-	private Administrador adm;
+	private Administrator adm;
 	private AdministradorDAO dao;
 	
 	@Before
 	public void setUp() throws Exception {
-		adm = new Administrador();
+		adm = new Administrator();
 		dao = new AdministradorDAO();
 	}
 

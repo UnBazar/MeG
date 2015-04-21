@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.meg.dao.AdministradorDAO;
-import org.meg.model.Administrador;
+import org.meg.model.Administrator;
 
 @WebServlet("/login")
 public class LoginAdministradorServlet extends HttpServlet {
@@ -26,7 +26,7 @@ public class LoginAdministradorServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		AdministradorDAO dao = new AdministradorDAO();
-		Administrador administrador = dao.buscaAdministrador(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
+		Administrator administrador = dao.buscaAdministrador(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
 		if (administrador != null) {
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("administrador", administrador);

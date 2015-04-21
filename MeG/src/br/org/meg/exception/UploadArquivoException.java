@@ -3,7 +3,7 @@ package org.meg.exception;
 import java.sql.Date;
 
 import org.meg.dao.UtilDAO;
-import org.meg.model.Erro;
+import org.meg.model.Error;
 
 public class UploadArquivoException extends RuntimeException {
 
@@ -17,7 +17,7 @@ public class UploadArquivoException extends RuntimeException {
 	
 	@Override
 	public void printStackTrace() {
-		Erro erro = new Erro();
+		Error erro = new Error();
 		erro.setData(new Date(System.currentTimeMillis()));
 		erro.setNomeDaClasseReferente("Parser");
 		erro.setDescricao(mensagem);

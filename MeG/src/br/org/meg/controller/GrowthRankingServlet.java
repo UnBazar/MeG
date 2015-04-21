@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.meg.dao.QuadroDAO;
-import org.meg.model.Descricao;
-import org.meg.model.Quadro;
-import org.meg.model.Secao;
+import org.meg.dao.FrameDAO;
+import org.meg.model.Description;
+import org.meg.model.Frame;
+import org.meg.model.Section;
 
 @WebServlet("/crescimento")
 public class GrowthRankingServlet extends HttpServlet {
@@ -28,14 +28,14 @@ public class GrowthRankingServlet extends HttpServlet {
 		int anoFinal = Integer.parseInt(request.getParameter("anoFinal"));
 		int setor_id = Integer.parseInt(request.getParameter("setor"));
 		int descricao_id = Integer.parseInt(request.getParameter("descricao"));
-		QuadroDAO dao = new QuadroDAO();
-		Secao secao = new Secao();
-		Descricao descricao = new Descricao();
+		FrameDAO dao = new FrameDAO();
+		Section secao = new Section();
+		Description descricao = new Description();
 		secao.setId(setor_id);
 		descricao.setId(descricao_id);
-		List<Quadro> listaInicial = dao.obterLista(anoInicial, secao, descricao);
-		List<Quadro> listaFinal = dao.obterLista(anoFinal, secao, descricao);
-		List<Quadro> listaCrescimento = obterListaCrescimento(listaInicial,listaFinal);
+		List<Frame> listaInicial = dao.obterLista(anoInicial, secao, descricao);
+		List<Frame> listaFinal = dao.obterLista(anoFinal, secao, descricao);
+		List<Frame> listaCrescimento = obterListaCrescimento(listaInicial,listaFinal);
 		RankingServlet rnk = new RankingServlet();
 		rnk.ordenacaoCrescente(listaCrescimento);
 		request.setAttribute("listaCrescimento", listaCrescimento);
@@ -51,16 +51,16 @@ public class GrowthRankingServlet extends HttpServlet {
 	 * @param listaFinal
 	 * @return uma lista de quadros em que o valor é o crescimento
 	 */
-	private ArrayList<Quadro> obterListaCrescimento(List<Quadro> listaInicial, List<Quadro> listaFinal){
-		ArrayList<Quadro> listaCrescimento = new ArrayList<Quadro>();
+	private ArrayList<Frame> obterListaCrescimento(List<Frame> listaInicial, List<Frame> listaFinal){
+		ArrayList<Frame> listaCrescimento = new ArrayList<Frame>();
 		for(int i = 0; i < listaInicial.size(); i++){
-				float crescimento = calculaCrescimento(listaFinal.get(i).getValor(),listaInicial.get(i).getValor());
+				float crescimento = calculaCrescimento(listaFinal.get(i).getValue(),listaInicial.get(i).getValue());
 				/*
 				 * Esse quadro podia ser listaInicial, o importante é pegar
 				 * os outros atributos como Secao e Descricao
 				 */
-				Quadro quadro = listaFinal.get(i);
-				quadro.setValor(crescimento);
+				Frame quadro = listaFinal.get(i);
+				quadro.setValue(crescimento);
 				listaCrescimento.add(quadro);
 		}
 		return listaCrescimento;
@@ -84,8 +84,8 @@ public class GrowthRankingServlet extends HttpServlet {
 	 * @param index1 índice do primeiro elemento 
 	 * @param index2 índice do segundo elemento
 	 */
-	private void troca(List<Quadro> lista, int index1, int index2) {
-		Quadro buffer = lista.get(index1);
+	private void troca(List<Frame> lista, int index1, int index2) {
+		Frame buffer = lista.get(index1);
 		lista.set(index1, lista.get(index2));
 		lista.set(index2, buffer);
 	}

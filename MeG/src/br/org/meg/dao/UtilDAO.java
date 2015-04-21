@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.meg.exception.DAOException;
-import org.meg.model.Noticia;
+import org.meg.model.News;
 import java.util.List;
-import org.meg.model.Erro;
+import org.meg.model.Error;
 
 public class UtilDAO {
 	private Connection connection;
@@ -260,11 +260,11 @@ public class UtilDAO {
 		}
 	}
 
-	public ArrayList<Noticia> prepararNoticia() {
+	public ArrayList<News> prepararNoticia() {
 
 		String sql = "SELECT * FROM Noticias ORDER BY RAND() LIMIT 3";
 
-		ArrayList<Noticia> noticias = new ArrayList<Noticia>();
+		ArrayList<News> noticias = new ArrayList<News>();
 		PreparedStatement stmt;
 		try {
 			stmt = this.connection.prepareStatement(sql);
@@ -275,7 +275,7 @@ public class UtilDAO {
 				String db_noticia = rs.getString("noticia");
 				String db_imagem = rs.getString("imagem");
 
-				Noticia noticia = new Noticia();
+				News noticia = new News();
 				noticia.setNoticia(db_noticia);
 				noticia.setId(db_id);
 				noticia.setImagem(db_imagem);
@@ -297,7 +297,7 @@ public class UtilDAO {
 	 * @param erro
 	 *            contém informacoes
 	 */
-	public void registraErro(Erro erro) {
+	public void registraErro(Error erro) {
 		String sql = "INSERT INTO Erro(descricao, nomeDaClasseReferente, data, status) values(?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -335,14 +335,14 @@ public class UtilDAO {
 	 * 
 	 * @return Uma lista todos erros
 	 */
-	public List<Erro> obterErros() {
+	public List<Error> obterErros() {
 		String sql = "SELECT * FROM Erro";
-		List<Erro> erros = new ArrayList<Erro>();
+		List<Error> erros = new ArrayList<Error>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Erro erro = new Erro();
+				Error erro = new Error();
 				erro.setData(rs.getDate("data"));
 				erro.setNomeDaClasseReferente(rs
 						.getString("nomeDaClasseReferente"));

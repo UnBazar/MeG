@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page language="java" import="org.meg.controller.NoticiaServlet"%>
 <%@ page language="java" import="java.util.ArrayList"%>
-<%@ page language="java" import="org.meg.model.Noticia"%>
+<%@ page language="java" import="org.meg.model.News"%>
 <%@include file='shared/head.html'%>
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,7 @@
 		<div class="carousel-inner">
 			<%
 				NoticiaServlet noticiaServ = NoticiaServlet.getInstance();
-				ArrayList<Noticia> noticias = noticiaServ.exibirNoticias();
+					ArrayList<News> noticias = noticiaServ.exibirNoticias();
 			%>
 			<div class="item active">
 				<div class="fill"

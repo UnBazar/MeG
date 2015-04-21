@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.meg.exception.DAOException;
-import org.meg.model.Administrador;
+import org.meg.model.Administrator;
 
 public class AdministradorDAO {
 	private Connection connection;
@@ -23,7 +23,7 @@ public class AdministradorDAO {
 	 * 
 	 * @param adm Objeto a ser adicionado ao banco
 	 */
-	public void adicionar(Administrador administrador) {
+	public void adicionar(Administrator administrador) {
 		String sql = "INSERT INTO Administrador(nome, nome_de_usuario, email, senha)"
 				+ " values(?,?,?,?)";
 		try {
@@ -47,9 +47,9 @@ public class AdministradorDAO {
 	 * @return	nulo caso nome ou senha estejam errados. 
 	 * 			Ou um administrador com seus dados
 	 */
-	public Administrador buscaAdministrador(String nomeDeUsuario, String senha){
+	public Administrator buscaAdministrador(String nomeDeUsuario, String senha){
 		String sql = "SELECT * FROM Administrador where nome_de_usuario = ? AND senha = ?";
-		Administrador administrador = null;
+		Administrator administrador = null;
 		try{
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nomeDeUsuario);
@@ -57,7 +57,7 @@ public class AdministradorDAO {
 			stmt.setMaxRows(1);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.first()) {
-				administrador = new Administrador();
+				administrador = new Administrator();
 				administrador.setNome(rs.getString("nome"));
 				administrador.setSenha(rs.getString("senha"));
 				administrador.setEmail(rs.getString("email"));

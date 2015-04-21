@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.meg.dao.QuadroDAO;
+import org.meg.dao.FrameDAO;
 import org.meg.dao.UtilDAO;
-import org.meg.model.Descricao;
-import org.meg.model.Quadro;
-import org.meg.model.Secao;
+import org.meg.model.Description;
+import org.meg.model.Frame;
+import org.meg.model.Section;
 
 @WebServlet("/ranking")
 public class RankingServlet extends HttpServlet {
@@ -24,12 +24,12 @@ public class RankingServlet extends HttpServlet {
 		int ano = Integer.parseInt(request.getParameter("ano"));
 		int setor_id = Integer.parseInt(request.getParameter("setor"));
 		int descricao_id = Integer.parseInt(request.getParameter("descricao"));
-		QuadroDAO dao = new QuadroDAO();
-		Secao secao = new Secao();
-		Descricao descricao = new Descricao();
+		FrameDAO dao = new FrameDAO();
+		Section secao = new Section();
+		Description descricao = new Description();
 		descricao.setId(descricao_id);
 		secao.setId(setor_id);
-		List<Quadro> lista = dao.obterLista(ano, secao, descricao);
+		List<Frame> lista = dao.obterLista(ano, secao, descricao);
 		this.ordenacaoCrescente(lista);
 		if(descricao.getId() == 5){
 			this.alterarSalario(lista, ano);
@@ -45,13 +45,13 @@ public class RankingServlet extends HttpServlet {
 	 * Método responsável por ordenar a lista de salário médio em ordem crescente
 	 * @param lista de salários médios
 	 */
-	public void ordenacaoCrescente(List<Quadro> lista) {
+	public void ordenacaoCrescente(List<Frame> lista) {
 		int tamanho = lista.size();
 		int maiorElemento;
 		for (int i = 0; i < tamanho - 1; i++) {
 			maiorElemento = i;
 			for (int j = i + 1; j < lista.size(); j++) {
-				if (lista.get(maiorElemento).getValor() < lista.get(j).getValor()) {
+				if (lista.get(maiorElemento).getValue() < lista.get(j).getValue()) {
 					maiorElemento = j;
 				}
 			}
@@ -65,8 +65,8 @@ public class RankingServlet extends HttpServlet {
 	 * @param index1 índice do primeiro elemento 
 	 * @param index2 índice do segundo elemento
 	 */
-	private void troca(List<Quadro> lista, int index1, int index2) {
-		Quadro buffer = lista.get(index1);
+	private void troca(List<Frame> lista, int index1, int index2) {
+		Frame buffer = lista.get(index1);
 		lista.set(index1, lista.get(index2));
 		lista.set(index2, buffer);
 	}
@@ -76,13 +76,13 @@ public class RankingServlet extends HttpServlet {
 	 * @param lista de salários médios
 	 * @param ano
 	 */
-	private void alterarSalario(List<Quadro> lista, int ano) {
+	private void alterarSalario(List<Frame> lista, int ano) {
 		int tamanho = lista.size();
 		float numeroDeSalarios;
 		float salarioMinimo = getSalarioMinimo(ano);
 		for (int i = 0; i < tamanho; i++) {
-			numeroDeSalarios = lista.get(i).getValor();
-			lista.get(i).setValor(salarioMinimo * numeroDeSalarios);
+			numeroDeSalarios = lista.get(i).getValue();
+			lista.get(i).setValue(salarioMinimo * numeroDeSalarios);
 		}
 	}
 	

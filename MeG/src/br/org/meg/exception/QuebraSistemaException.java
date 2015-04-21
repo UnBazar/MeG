@@ -3,7 +3,7 @@ package org.meg.exception;
 import java.sql.Date;
 
 import org.meg.dao.UtilDAO;
-import org.meg.model.Erro;
+import org.meg.model.Error;
 
 public class QuebraSistemaException extends RuntimeException{
 	/**
@@ -20,7 +20,7 @@ public class QuebraSistemaException extends RuntimeException{
 	
 	@Override
 	public void printStackTrace() {
-		Erro erro = new Erro();
+		Error erro = new Error();
 		erro.setData(new Date(System.currentTimeMillis()));
 		erro.setStatus(0);
 		erro.setDescricao(tipoExcecao + mensagem);

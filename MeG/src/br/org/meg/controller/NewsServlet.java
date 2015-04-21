@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServlet;
 
 import org.meg.dao.UtilDAO;
-import org.meg.model.Noticia;
+import org.meg.model.News;
 
 /**
  * Servlet implementation class Noticia
@@ -22,9 +22,9 @@ public class NewsServlet extends HttpServlet {
 		return noticiaServ;
 	}
 	
-	public ArrayList<Noticia> exibirNoticias(){
+	public ArrayList<News> exibirNoticias(){
 		UtilDAO utilDAO = new UtilDAO();
-		ArrayList<Noticia> noticias = utilDAO.prepararNoticia();
+		ArrayList<News> noticias = utilDAO.prepararNoticia();
 		return noticias;
 	}
 

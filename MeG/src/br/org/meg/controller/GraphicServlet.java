@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.meg.dao.QuadroDAO;
-import org.meg.model.Descricao;
-import org.meg.model.Estado;
-import org.meg.model.Quadro;
-import org.meg.model.Secao;
+import org.meg.dao.FrameDAO;
+import org.meg.model.Description;
+import org.meg.model.State;
+import org.meg.model.Frame;
+import org.meg.model.Section;
 
 /**
  * Servlet implementation class Login
@@ -43,7 +43,7 @@ public class GraphicServlet extends HttpServlet{
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Quadro> quadros = new ArrayList<>();
+		List<Frame> quadros = new ArrayList<>();
 		int idDescricao = 0;
 		int idSetor = 0;
 		int idEstado = 0;
@@ -56,11 +56,11 @@ public class GraphicServlet extends HttpServlet{
 		idEstado= Integer.valueOf(request.getParameter("estado"));
 		anoInicial = Integer.valueOf(request.getParameter("anoInicial"));
 		anoFinal = Integer.valueOf(request.getParameter("anoFinal"));
-		QuadroDAO dao = new QuadroDAO();
-		Descricao descricao = new Descricao(idDescricao);
-		Secao secao = new Secao(idSetor);
-		Estado estado = new Estado (idEstado);
-		quadros = dao.getListOfScene(anoInicial, anoFinal, estado, secao, descricao);
+		FrameDAO dao = new FrameDAO();
+		Description descricao = new Description(idDescricao);
+		Section secao = new Section(idSetor);
+		State estado = new State (idEstado);
+		quadros = dao.getFramesList(anoInicial, anoFinal, estado, secao, descricao);
 		if(opcao.equalsIgnoreCase("geral")){
 			request.getSession().setAttribute("valores", getValues(quadros));
 		}else if(opcao.equalsIgnoreCase("do crescimento")){
@@ -80,10 +80,10 @@ public class GraphicServlet extends HttpServlet{
 	 * 
 	 * @return	uma lista de floats contendo os valores
 	 */
-	public List<Float> getValues(List<Quadro> quadros){
+	public List<Float> getValues(List<Frame> quadros){
 		List<Float> valores = new ArrayList<Float>();
-		for( Quadro q: quadros){
-			valores.add(q.getValor());
+		for( Frame q: quadros){
+			valores.add(q.getValue());
 		}
 		return valores;
 	}
@@ -92,17 +92,17 @@ public class GraphicServlet extends HttpServlet{
 	 * @param quadros
 	 * @return uma lista de floats contendo os valores de crescimento
 	 */
-	private List<Float> listarCrescimento(List<Quadro> quadros){
+	private List<Float> listarCrescimento(List<Frame> quadros){
 		List<Float> valores = new ArrayList<Float>();
 		float valorInicial = 0,valorFinal = 0;
 		for(int i = 0; i < quadros.size(); i++){
 			if(i == 0){
-				valorInicial= quadros.get(i).getValor();
+				valorInicial= quadros.get(i).getValue();
 				valorFinal = valorInicial;
 			}
 			else{
 				valorInicial = valorFinal;
-				valorFinal = quadros.get(i).getValor();
+				valorFinal = quadros.get(i).getValue();
 			}
 			valores.add(calculaCrescimento(valorFinal,valorInicial));
 		}
@@ -114,10 +114,10 @@ public class GraphicServlet extends HttpServlet{
 	 * 
 	 * @return uma lista de Strings contendo os anos
 	 */
-	private List<String> listarAnos(List<Quadro> quadros){
+	private List<String> listarAnos(List<Frame> quadros){
 		List<String> anos = new ArrayList<String>();
-		for( Quadro q: quadros){
-			anos.add(String.valueOf(q.getAno()));
+		for( Frame q: quadros){
+			anos.add(String.valueOf(q.getYear()));
 		}
 		return anos;
 	}

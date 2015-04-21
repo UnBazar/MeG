@@ -5,12 +5,12 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.meg.dao.QuadroDAO;
+import org.meg.dao.FrameDAO;
 import org.meg.exception.UploadArquivoException;
-import org.meg.model.Descricao;
-import org.meg.model.Estado;
-import org.meg.model.Quadro;
-import org.meg.model.Secao;
+import org.meg.model.Description;
+import org.meg.model.State;
+import org.meg.model.Frame;
+import org.meg.model.Section;
 
 public class Parser {
 	private Scanner scanner;
@@ -97,18 +97,18 @@ public class Parser {
 	@SuppressWarnings("resource")
 	public void persist() throws FileNotFoundException {
 		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
-		ArrayList<Quadro> quadros = this.lerEstados();
-		QuadroDAO dao = new QuadroDAO();
-		for (Quadro quadro : quadros) {
+		ArrayList<Frame> quadros = this.lerEstados();
+		FrameDAO dao = new FrameDAO();
+		for (Frame quadro : quadros) {
 			dao.adicionar(quadro);
 		}
 		scanner.close();
 	}
 
-	private ArrayList<Quadro> lerEstados() {
-		ArrayList<Quadro> quadros = new ArrayList<>();
-		Estado estado;
-		Secao secao;
+	private ArrayList<Frame> lerEstados() {
+		ArrayList<Frame> quadros = new ArrayList<>();
+		State estado;
+		Section secao;
 		String[] tokens;
 		int tempo = this.anoFinal - this.anoInicial + 1;
 		this.lerCabecalho();
@@ -116,30 +116,30 @@ public class Parser {
 		for (int j = 0; j < this.quantidadeEstados; j++) {
 			for (int i = 0; i < this.quantidadeSecoes; i++) {
 				tokens = scanner.nextLine().split(";");
-				estado = new Estado();
+				estado = new State();
 				estado.setNome(tokens[0].substring(1, tokens[0].length() - 1));
-				secao = new Secao();
+				secao = new Section();
 				secao.setNome(tokens[1].substring(3, tokens[1].length() - 1));
 				for (int k = 0; k < 5 * tempo; k++) {
-					quadros.add(new Quadro());
-					quadros.get(quadros.size() - 1).setEstado(estado);
-					quadros.get(quadros.size() - 1).setSecao(secao);
-					quadros.get(quadros.size() - 1).setAno(
+					quadros.add(new Frame());
+					quadros.get(quadros.size() - 1).setState(estado);
+					quadros.get(quadros.size() - 1).setSection(secao);
+					quadros.get(quadros.size() - 1).setYear(
 							this.anoInicial + k % tempo);
-					Descricao descricao = new Descricao();
+					Description descricao = new Description();
 					descricao.setId(1 + k / tempo);
-					quadros.get(quadros.size() - 1).setDescricao(descricao);
+					quadros.get(quadros.size() - 1).setDescription(descricao);
 					if (!tokens[2 + k].equals("-")
 							&& !tokens[2 + k].equals("X")) {
 						if (k < 28)
-							quadros.get(quadros.size() - 1).setValor(
+							quadros.get(quadros.size() - 1).setValue(
 									Float.parseFloat(tokens[2 + k]));
 						else
 							quadros.get(quadros.size() - 1)
-									.setValor(
+									.setValue(
 											Float.parseFloat(corrigirVirgula(tokens[2 + k])));
 					} else
-						quadros.get(quadros.size() - 1).setValor(-1.0f);
+						quadros.get(quadros.size() - 1).setValue(-1.0f);
 				}
 			}
 		}
