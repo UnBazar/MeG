@@ -27,8 +27,8 @@ public class FrameDAO {
 	 * 
 	 * @param quadro	Objeto a ser adicionado ao banco
 	 */
-	public void adicionar(Frame quadro) {
-		if(!existeQuadro(quadro)){
+	public void addFrame(Frame quadro) {
+		if(!frameExists(quadro)){
 			String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
 			try {
 				PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -51,7 +51,7 @@ public class FrameDAO {
 	 * @param quadro	objeto a ser verificado no banco de dados
 	 * @return	true caso exista
 	 */
-	public boolean existeQuadro(Frame quadro){
+	public boolean frameExists(Frame quadro){
 		String sql = "SELECT * FROM Quadro "
 				+ "WHERE estado_id = ? "
 				+ "AND secao_id = ? "
@@ -130,7 +130,7 @@ public class FrameDAO {
 	 * @param descricao
 	 * @return
 	 */
-	public List<Frame> obterLista(int ano, Section secao, Description descricao) {
+	public List<Frame> getFramesList(int ano, Section secao, Description descricao) {
 		String sql = "SELECT * FROM Quadro "
 				+ "WHERE secao_id = ? "
 				+ "AND descricao_id = ? "

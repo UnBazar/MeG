@@ -100,7 +100,7 @@ public class Parser {
 		ArrayList<Frame> quadros = this.lerEstados();
 		FrameDAO dao = new FrameDAO();
 		for (Frame quadro : quadros) {
-			dao.adicionar(quadro);
+			dao.addFrame(quadro);
 		}
 		scanner.close();
 	}

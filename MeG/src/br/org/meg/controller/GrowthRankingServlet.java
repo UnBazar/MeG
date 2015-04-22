@@ -2,6 +2,7 @@ package org.meg.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,73 +21,90 @@ public class GrowthRankingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Generates two new lists of frames containing the growth of all states between
+	 * two years sent in the request, then renders the page that displays the table with
+	 * all state's growth.
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int anoInicial = Integer.parseInt(request.getParameter("anoInicial"));
-		int anoFinal = Integer.parseInt(request.getParameter("anoFinal"));
-		int setor_id = Integer.parseInt(request.getParameter("setor"));
-		int descricao_id = Integer.parseInt(request.getParameter("descricao"));
+		// maps user's request from String format to its corresponding values in Integer format
+		HashMap<String, Integer> hash = getHash(request);
+		List<Frame> firstList;
+		List<Frame> secondList;
+		List<Frame> growthList;
 		FrameDAO dao = new FrameDAO();
-		Section secao = new Section();
-		Description descricao = new Description();
-		secao.setId(setor_id);
-		descricao.setId(descricao_id);
-		List<Frame> listaInicial = dao.obterLista(anoInicial, secao, descricao);
-		List<Frame> listaFinal = dao.obterLista(anoFinal, secao, descricao);
-		List<Frame> listaCrescimento = obterListaCrescimento(listaInicial,listaFinal);
-		RankingServlet rnk = new RankingServlet();
-		rnk.ordenacaoCrescente(listaCrescimento);
-		request.setAttribute("listaCrescimento", listaCrescimento);
-		request.setAttribute("anoInicial", anoInicial);
-		request.setAttribute("anoFinal", anoFinal);
-		request.setAttribute("descricao", descricao);
-		request.setAttribute("setor", secao.getNome());
+		Section section = new Section();
+		Description description = new Description();
+		section.setId(hash.get("setor"));
+		description.setId(hash.get("descricao"));
+		
+		// get list of all frames of initial and final year
+		firstList = dao.getFramesList(hash.get("anoInicial"), section, description);
+		secondList = dao.getFramesList(hash.get("anoFinal"), section, description);
+		growthList = getGrowthList(firstList, secondList);
+		
+		RankingServlet ranking = new RankingServlet();
+		ranking.selectionSort(growthList);
+		
+		request.setAttribute("listaCrescimento", growthList);
+		request.setAttribute("anoInicial", hash.get("anoInicial"));
+		request.setAttribute("anoFinal", hash.get("anoFinal"));
+		request.setAttribute("descricao", description);
+		request.setAttribute("setor", section.getNome());
 		request.getRequestDispatcher("tabela-crescimento.jsp").forward(request, response);
-	}
-	/**
-	 * Método que pega Quadros de crescimento. Substituindo os valores por porcentagens
-	 * @param listaInicial
-	 * @param listaFinal
-	 * @return uma lista de quadros em que o valor é o crescimento
-	 */
-	private ArrayList<Frame> obterListaCrescimento(List<Frame> listaInicial, List<Frame> listaFinal){
-		ArrayList<Frame> listaCrescimento = new ArrayList<Frame>();
-		for(int i = 0; i < listaInicial.size(); i++){
-				float crescimento = calculaCrescimento(listaFinal.get(i).getValue(),listaInicial.get(i).getValue());
-				/*
-				 * Esse quadro podia ser listaInicial, o importante é pegar
-				 * os outros atributos como Secao e Descricao
-				 */
-				Frame quadro = listaFinal.get(i);
-				quadro.setValue(crescimento);
-				listaCrescimento.add(quadro);
-		}
-		return listaCrescimento;
-	}
-
-	/**
-	 * Método que calcula o crescimento em porcentagem
-	 * @param valorFinal
-	 * @param valorInicial
-	 * @return o crescimento percentual de dois valores
-	 */
-	private float calculaCrescimento(float valorFinal, float valorInicial){
-		float resultado = 0;
-		resultado = ((valorFinal / valorInicial)-1) * 100;
-		return resultado;
 	}
 	
 	/**
-	 * Realiza uma troca entre dois elementos da lista
-	 * @param lista que possui os elementos que serão trocados
-	 * @param index1 índice do primeiro elemento 
-	 * @param index2 índice do segundo elemento
+	 * This method calculates the average growth of a frame in each state 
+	 * for a initial and a final year. It accepts as argument two lists of
+	 * frames, which contains all state frames for the initial and final year, 
+	 * respectively.
+	 * @param firstList
+	 * @param secondList
+	 * @return a list of frames containing the average growth for each state
 	 */
-	private void troca(List<Frame> lista, int index1, int index2) {
-		Frame buffer = lista.get(index1);
-		lista.set(index1, lista.get(index2));
-		lista.set(index2, buffer);
+	private ArrayList<Frame> getGrowthList(List<Frame> firstList, List<Frame> secondList){
+		ArrayList<Frame> growthList = new ArrayList<Frame>();
+		Frame frame;
+		float growth = 0.0f;
+		final int numberOfStates = 27;
+		for(int i = 0; i < numberOfStates; i++){
+			growth = getAverageGrowth(firstList.get(i).getValue(), secondList.get(i).getValue());
+			// takes advantage of existing frame object and overwrites value with the corresponding growth
+			frame = firstList.get(i);
+			frame.setValue(growth);
+			growthList.add(frame);
+		}
+		return growthList;
 	}
+
+	/**
+	 * Calculates the average growth of a frame based on its initial
+	 * and final value in a period of time
+	 * @param finalValue
+	 * @param initialValue
+	 * @return the average growth of a frame in percentage
+	 */
+	private float getAverageGrowth(float initialValue, float finalValue){
+		float average = ((finalValue / initialValue) - 1) * 100;
+		return average;
+	}
+	
+	/**
+	 * Creates a hash that maps the attributes name sent in the request
+	 * into its respective values in Integer format.
+	 * 
+	 * @return a hash mapping String keys into Integer values.
+	 */
+	private HashMap<String, Integer> getHash(HttpServletRequest request) {
+		HashMap<String, Integer> hash = new HashMap<>();
+		String[] attributesFrame = {"anoInicial", "anoFinal", "setor", "descricao"};
+		
+		for(String iterator : attributesFrame) {
+			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
+		}
+		
+		return hash;
+	}
+	
 }
