@@ -1,31 +1,31 @@
 package org.meg.model;
 
 public class Administrator {
-	private String nome;
+	private String name;
 	private String email;
-	private String nomeDeUsuario;
-	private String senha;
+	private String userName;
+	private String password;
 	
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 	
-	public void setNome(String nome) {
-		if (nome == null || nome.length() < 3){
+	public void setNome(String name) {
+		if (name == null || name.length() < 3){
 			throw new IllegalArgumentException("Nome inválido!");
 		}
-		this.nome = nome;
+		this.name = name;
 	}
 	
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 	
-	public void setSenha(String senha) {
-		if (senha == null || senha.length() < 6 || senha.length() > 20) {
+	public void setSenha(String password) {
+		if (password == null || password.length() < 6 || password.length() > 20) {
 			throw new IllegalArgumentException("Senha inválida!");
 		}
-		this.senha = senha;
+		this.password = password;
 	}
 
 	public String getEmail() {
@@ -36,27 +36,27 @@ public class Administrator {
 		if (email == null){
 			throw new IllegalArgumentException("Email inválido!");
 		}
-		int numeroDeArrobas = 0;
+		int numberOfSpecialCharacter = 0;
 		for (int i = 0; i < email.length(); i++) {
 			if (email.charAt(i) == '@'){
-				numeroDeArrobas++;
+				numberOfSpecialCharacter++;
 			}
 		}
-		if (numeroDeArrobas != 1){
+		if (numberOfSpecialCharacter != 1){
 			throw new IllegalArgumentException("Email inválido!");
 		}
 		this.email = email;
 	}
 
-	public String getNomeDeUsuario() {
-		return nomeDeUsuario;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setNomeDeUsuario(String nomeDeUsuario) {
-		if (nomeDeUsuario == null || nomeDeUsuario.length() < 3) {
+	public void setNomeDeUsuario(String userName) {
+		if (userName == null || userName.length() < 3) {
 			throw new IllegalArgumentException("Nome de usuário inválido!");
 		}
-		this.nomeDeUsuario = nomeDeUsuario;
+		this.userName = userName;
 	}
 	
 }

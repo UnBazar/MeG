@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.meg.dao.AdministradorDAO;
+import org.meg.dao.AdministratorDAO;
 import org.meg.model.Administrator;
 /**
  * It's a Servlet class. Its function is called in /login
@@ -24,7 +24,8 @@ public class AdministratorLoginServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		AdministradorDAO dao = new AdministradorDAO();
+		// Instantiate DAO to find an administrator
+		AdministratorDAO dao = new AdministratorDAO();
 		Administrator administrador = dao.buscaAdministrador(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
 		
 		if (administrador != null) {

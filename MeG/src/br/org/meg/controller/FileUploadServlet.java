@@ -69,13 +69,13 @@ public class FileUploadServlet extends HttpServlet {
 	 * @return vetor de caracteres que contêm o nome do administrador formatado 
 	 */
 	private char[] formatarNomeUsuario(Administrator administrador) {
-		char[] aux = new char[administrador.getNome().length()];
+		char[] aux = new char[administrador.getName().length()];
 		
-		for (int i = 0; i < administrador.getNome().length(); i++) {
-			if (administrador.getNome().charAt(i) == ' ') {
+		for (int i = 0; i < administrador.getName().length(); i++) {
+			if (administrador.getName().charAt(i) == ' ') {
 				aux[i] = '_';
 			} else {
-				aux[i] = administrador.getNome().charAt(i);
+				aux[i] = administrador.getName().charAt(i);
 			}
 		}
 		return aux;

@@ -59,7 +59,7 @@ public class ComparaServlet extends HttpServlet {
 		// Instantiate an Section from your title
 		Description descricao = new Description(title);
 		/*
-		 * Get all years in certly interval set init and final year in two variables
+		 * Get all years in specific interval set initialS and final year in two variables
 		 */
 		@SuppressWarnings("unchecked")
 		
