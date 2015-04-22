@@ -52,12 +52,12 @@ public class QuadroDAOTest {
 	
 	@Test
 	public void testAdicionar(){
-		dao.adicionar(quadro);
+		dao.addFrame(quadro);
 	}
 	
 	@Test
 	public void testQuadroInexistente(){
-		assertFalse(dao.existeQuadro(quadro));
+		assertFalse(dao.frameExists(quadro));
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class QuadroDAOTest {
 		quadroExistente.setState(new State(5));
 		quadroExistente.setSection(new Section(15));
 		quadroExistente.setValue(529532);
-		assertTrue(dao.existeQuadro(quadroExistente));
+		assertTrue(dao.frameExists(quadroExistente));
 	}
 	
 	@After

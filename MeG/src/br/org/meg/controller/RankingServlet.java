@@ -1,6 +1,7 @@
 package org.meg.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -21,68 +22,73 @@ public class RankingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		int ano = Integer.parseInt(request.getParameter("ano"));
-		int setor_id = Integer.parseInt(request.getParameter("setor"));
-		int descricao_id = Integer.parseInt(request.getParameter("descricao"));
+		final int minimumWageId = 5;
+		// maps user's request from String format to its corresponding values in Integer format
+		HashMap<String, Integer> hash = getHash(request);
+		List<Frame> list;
 		FrameDAO dao = new FrameDAO();
-		Section secao = new Section();
-		Description descricao = new Description();
-		descricao.setId(descricao_id);
-		secao.setId(setor_id);
-		List<Frame> lista = dao.obterLista(ano, secao, descricao);
-		this.ordenacaoCrescente(lista);
-		if(descricao.getId() == 5){
-			this.alterarSalario(lista, ano);
+		Section section = new Section();
+		Description description = new Description();
+		
+		description.setId(hash.get("descricao"));
+		section.setId(hash.get("setor"));
+		list = dao.getFramesList(hash.get("ano"), section, description);
+		selectionSort(list);
+		
+		// identifies if user requested to display a ranking of the average salaries
+		if(description.getId() == minimumWageId){
+			setSalary(list, hash.get("ano"));
 		}
-		request.setAttribute("lista", lista);
-		request.setAttribute("ano", ano);
-		request.setAttribute("setor", secao.getNome());
-		request.setAttribute("descricao", descricao);
+		
+		request.setAttribute("lista", list);
+		request.setAttribute("ano", hash.get("ano"));
+		request.setAttribute("setor", section.getNome());
+		request.setAttribute("descricao", description);
 		request.getRequestDispatcher("tabela.jsp").forward(request, response);
 	}
 	
 	/**
-	 * Método responsável por ordenar a lista de salário médio em ordem crescente
-	 * @param lista de salários médios
+	 * Order the frame's list of average salary in descending order.
+	 * @param frames
 	 */
-	public void ordenacaoCrescente(List<Frame> lista) {
-		int tamanho = lista.size();
-		int maiorElemento;
-		for (int i = 0; i < tamanho - 1; i++) {
-			maiorElemento = i;
-			for (int j = i + 1; j < lista.size(); j++) {
-				if (lista.get(maiorElemento).getValue() < lista.get(j).getValue()) {
-					maiorElemento = j;
+	public void selectionSort(List<Frame> frames) {
+		int listSize = frames.size();
+		int biggestElement = 0;
+		for (int i = 0; i < listSize - 1; i++) {
+			biggestElement = i;
+			for (int j = i + 1; j < frames.size(); j++) {
+				if (frames.get(biggestElement).getValue() < frames.get(j).getValue()) {
+					biggestElement = j;
 				}
 			}
-			troca(lista, i, maiorElemento);
+			swap(frames, i, biggestElement);
 		}
 	}
 	
 	/**
-	 * Realiza um swap entre dois elementos da lista
-	 * @param lista que possui os elementos que serão trocados
-	 * @param index1 índice do primeiro elemento 
-	 * @param index2 índice do segundo elemento
+	 * Swaps two itens from the list sent as argument based on the indexes sent as argument.
+	 * @param frames
+	 * @param firstElementIndex
+	 * @param secondElementIndex
 	 */
-	private void troca(List<Frame> lista, int index1, int index2) {
-		Frame buffer = lista.get(index1);
-		lista.set(index1, lista.get(index2));
-		lista.set(index2, buffer);
+	private void swap(List<Frame> frames, int firstElementIndex, int secondElementIndex) {
+		Frame buffer = frames.get(firstElementIndex);
+		frames.set(firstElementIndex, frames.get(secondElementIndex));
+		frames.set(secondElementIndex, buffer);
 	}
 	
 	/**
-	 * Converte os salários médios da lista de número de salários mínimos para reais
-	 * @param lista de salários médios
-	 * @param ano
+	 * This method converts the data from number of minimum wage per month into reais
+	 * based on the minimum wage's value in the year sent as argument.
+	 * @param frames
+	 * @param year
 	 */
-	private void alterarSalario(List<Frame> lista, int ano) {
-		int tamanho = lista.size();
-		float numeroDeSalarios;
-		float salarioMinimo = getSalarioMinimo(ano);
-		for (int i = 0; i < tamanho; i++) {
-			numeroDeSalarios = lista.get(i).getValue();
-			lista.get(i).setValue(salarioMinimo * numeroDeSalarios);
+	private void setSalary(List<Frame> frames, int year) {
+		float minimumWageFactor = 0.0f;
+		float minimumWage = getMinimumWage(year);
+		for(Frame iterator : frames) {
+			minimumWageFactor = iterator.getValue();
+			iterator.setValue(minimumWage * minimumWageFactor);
 		}
 	}
 	
@@ -91,9 +97,27 @@ public class RankingServlet extends HttpServlet {
 	 * @param ano
 	 * @return o valor do salário mínimo no ano especificado
 	 */
-	private float getSalarioMinimo(int ano) {
+	private float getMinimumWage(int ano) {
 		UtilDAO dao = new UtilDAO();
 		float salarioMinimo = dao.getSalarioMinimo(ano);
 		return salarioMinimo;
 	}
+	
+	/**
+	 * Creates a hash that maps the attributes name sent in the request
+	 * into its respective values in Integer format.
+	 * 
+	 * @return a hash mapping String keys into Integer values.
+	 */
+	private HashMap<String, Integer> getHash(HttpServletRequest request) {
+		HashMap<String, Integer> hash = new HashMap<>();
+		String[] attributesFrame = {"ano", "setor", "descricao"};
+		
+		for(String iterator : attributesFrame) {
+			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
+		}
+		
+		return hash;
+	}
+	
 }
