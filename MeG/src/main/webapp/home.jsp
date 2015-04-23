@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page language="java" import="org.meg.controller.NoticiaServlet"%>
+<%@ page language="java" import="org.meg.controller.NewsServlet"%>
 <%@ page language="java" import="java.util.ArrayList"%>
 <%@ page language="java" import="org.meg.model.Noticia"%>
 <%@include file='shared/head.html'%>
@@ -31,7 +31,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner">
 			<%
-				NoticiaServlet noticiaServ = NoticiaServlet.getInstance();
+				NewsServlet noticiaServ = NewsServlet.getInstance();
 				ArrayList<Noticia> noticias = noticiaServ.exibirNoticias();
 			%>
 			<div class="item active">

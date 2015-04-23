@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 import org.meg.dao.UtilDAO;
@@ -15,6 +16,7 @@ import org.meg.dao.UtilDAO;
 /**
  * Servlet Filter implementation class HistoricoFiltro
  */
+@WebFilter("/*")
 public class FilterHistory implements Filter {
 
 	UtilDAO dao = new UtilDAO();
