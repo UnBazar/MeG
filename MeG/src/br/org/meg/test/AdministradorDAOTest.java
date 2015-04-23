@@ -4,18 +4,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.dao.AdministradorDAO;
-import org.meg.model.Administrador;
+import org.meg.dao.AdministratorDAO;
+import org.meg.model.Administrator;
 
 public class AdministradorDAOTest {
 
-	private Administrador adm;
-	private AdministradorDAO dao;
+	private Administrator adm;
+	private AdministratorDAO dao;
 	
 	@Before
 	public void setUp() throws Exception {
-		adm = new Administrador();
-		dao = new AdministradorDAO();
+		adm = new Administrator();
+		dao = new AdministratorDAO();
 	}
 
 	@Test
@@ -24,7 +24,7 @@ public class AdministradorDAOTest {
 		adm.setNomeDeUsuario("pedrodelyra10");
 		adm.setEmail("plp_129@hotmail.com");
 		adm.setSenha("mudar123");
-		dao.adicionar(adm);
+		dao.addAdministrator(adm);
 	}
 	
 	@Test

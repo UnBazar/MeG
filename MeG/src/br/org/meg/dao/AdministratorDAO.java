@@ -6,32 +6,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.meg.exception.DAOException;
-import org.meg.model.Administrador;
+import org.meg.model.Administrator;
 
-public class AdministradorDAO {
+public class AdministratorDAO {
 	private Connection connection;
 		
-	/**
-	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
+	/** 
+	 * Creates a connection with the database through ConnectionFactory class.
 	 */
-	public AdministradorDAO() {
+	public AdministratorDAO() {
 		this.connection = ConnectionFactory.getConnection();
 	}
 	
 	/**
-	 * Adiciona um administrador no banco de dados.
+	 * Adds an administrator into the database.
 	 * 
-	 * @param adm Objeto a ser adicionado ao banco
+	 * @param adm Object to be added into the database.
 	 */
-	public void adicionar(Administrador administrador) {
+	public void addAdministrator(Administrator administrator) {
 		String sql = "INSERT INTO Administrador(nome, nome_de_usuario, email, senha)"
 				+ " values(?,?,?,?)";
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, administrador.getNome());
-			stmt.setString(2, administrador.getNomeDeUsuario());
-			stmt.setString(3, administrador.getEmail());
-			stmt.setString(4, administrador.getSenha());
+			stmt.setString(1, administrator.getName());
+			stmt.setString(2, administrator.getUserName());
+			stmt.setString(3, administrator.getEmail());
+			stmt.setString(4, administrator.getPassword());
 			stmt.execute();
 			stmt.close();
 		} catch(SQLException sqlException) {
@@ -47,9 +47,9 @@ public class AdministradorDAO {
 	 * @return	nulo caso nome ou senha estejam errados. 
 	 * 			Ou um administrador com seus dados
 	 */
-	public Administrador buscaAdministrador(String nomeDeUsuario, String senha){
+	public Administrator buscaAdministrador(String nomeDeUsuario, String senha){
 		String sql = "SELECT * FROM Administrador where nome_de_usuario = ? AND senha = ?";
-		Administrador administrador = null;
+		Administrator administrador = null;
 		try{
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, nomeDeUsuario);
@@ -57,7 +57,7 @@ public class AdministradorDAO {
 			stmt.setMaxRows(1);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.first()) {
-				administrador = new Administrador();
+				administrador = new Administrator();
 				administrador.setNome(rs.getString("nome"));
 				administrador.setSenha(rs.getString("senha"));
 				administrador.setEmail(rs.getString("email"));

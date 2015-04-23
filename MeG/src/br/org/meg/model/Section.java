@@ -3,19 +3,19 @@ package org.meg.model;
 import org.meg.dao.UtilDAO;
 import org.meg.exception.QuebraSistemaException;
 
-public class Secao {
+public class Section {
 	private int id;
 	private String nome;
 	
-	public Secao() {
+	public Section() {
 		
 	}
 	
-	public Secao(int id) {
+	public Section(int id) {
 		this.setId(id);
 	}
 	
-	public Secao(String nome){
+	public Section(String nome){
 		this.setNome(nome);
 	}
 	

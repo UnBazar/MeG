@@ -12,26 +12,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.meg.dao.ConnectionFactory;
-import org.meg.dao.QuadroDAO;
+import org.meg.dao.FrameDAO;
 import org.meg.exception.DAOException;
-import org.meg.model.Descricao;
-import org.meg.model.Estado;
-import org.meg.model.Quadro;
-import org.meg.model.Secao;
+import org.meg.model.Description;
+import org.meg.model.State;
+import org.meg.model.Frame;
+import org.meg.model.Section;
 
 public class QuadroDAOTest {
-	private QuadroDAO dao;
-	private Quadro quadro;
+	private FrameDAO dao;
+	private Frame quadro;
 	private Connection connection;
 	
 	@Before
 	public void setUp() throws Exception {
-		dao = new QuadroDAO();
-		quadro = new Quadro();
-		quadro.setAno(404);
-		quadro.setDescricao(new Descricao(3));
-		quadro.setSecao(new Secao(3));
-		quadro.setEstado(new Estado(4));
+		dao = new FrameDAO();
+		quadro = new Frame();
+		quadro.setYear(404);
+		quadro.setDescription(new Description(3));
+		quadro.setSection(new Section(3));
+		quadro.setState(new State(4));
 		
 	}
 	
@@ -42,33 +42,33 @@ public class QuadroDAOTest {
 	
 	@Test
 	public void testObterLista() {
-		assertFalse(dao.getListOfScene(2008, 2012, new Estado(5), new Secao(3), new Descricao(3)).isEmpty());
+		assertFalse(dao.getFramesList(2008, 2012, new State(5), new Section(3), new Description(3)).isEmpty());
 	}
 	
 	@Test(expected =  DAOException.class)
 	public void testObterListaExcecao(){
-		dao.getListOfScene(1998, 2005, new Estado(5), new Secao(3), new Descricao(3));
+		dao.getFramesList(1998, 2005, new State(5), new Section(3), new Description(3));
 	}
 	
 	@Test
 	public void testAdicionar(){
-		dao.adicionar(quadro);
+		dao.addFrame(quadro);
 	}
 	
 	@Test
 	public void testQuadroInexistente(){
-		assertFalse(dao.existeQuadro(quadro));
+		assertFalse(dao.frameExists(quadro));
 	}
 
 	@Test
 	public void testeExisteQuadro(){
-		Quadro quadroExistente = new Quadro();
-		quadroExistente.setAno(2011);
-		quadroExistente.setDescricao(new Descricao(3));
-		quadroExistente.setEstado(new Estado(5));
-		quadroExistente.setSecao(new Secao(15));
-		quadroExistente.setValor(529532);
-		assertTrue(dao.existeQuadro(quadroExistente));
+		Frame quadroExistente = new Frame();
+		quadroExistente.setYear(2011);
+		quadroExistente.setDescription(new Description(3));
+		quadroExistente.setState(new State(5));
+		quadroExistente.setSection(new Section(15));
+		quadroExistente.setValue(529532);
+		assertTrue(dao.frameExists(quadroExistente));
 	}
 	
 	@After
@@ -77,7 +77,7 @@ public class QuadroDAOTest {
 		String sql = "DELETE FROM Quadro WHERE ano = ?";
 		try {
 			PreparedStatement ps = this.connection.prepareStatement(sql);
-			ps.setInt(1, this.quadro.getAno());
+			ps.setInt(1, this.quadro.getYear());
 			ps.execute();
 			ps.close();
 		} catch (SQLException e) {

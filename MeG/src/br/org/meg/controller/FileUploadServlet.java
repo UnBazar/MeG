@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.meg.model.Administrador;
+import org.meg.model.Administrator;
 import org.meg.parser.Parser;
 
 @WebServlet("/upload")
@@ -41,7 +41,7 @@ public class FileUploadServlet extends HttpServlet {
 						int anoFinal = Integer.parseInt(items.get(1).getString());;
 						int numeroDeSecoes = 0;
 						HttpSession sessao = request.getSession();
-						Administrador administrador = (Administrador) sessao.getAttribute("administrador");
+						Administrator administrador = (Administrator) sessao.getAttribute("administrador");
 						String nomeAdm = new String(formatarNomeUsuario(administrador));
 						File uploadedFile = new File(url + nomeAdm + "_" + item.getName());
 						item.write(uploadedFile);						
@@ -68,14 +68,14 @@ public class FileUploadServlet extends HttpServlet {
 	 * @param administrador
 	 * @return vetor de caracteres que contêm o nome do administrador formatado 
 	 */
-	private char[] formatarNomeUsuario(Administrador administrador) {
-		char[] aux = new char[administrador.getNome().length()];
+	private char[] formatarNomeUsuario(Administrator administrador) {
+		char[] aux = new char[administrador.getName().length()];
 		
-		for (int i = 0; i < administrador.getNome().length(); i++) {
-			if (administrador.getNome().charAt(i) == ' ') {
+		for (int i = 0; i < administrador.getName().length(); i++) {
+			if (administrador.getName().charAt(i) == ' ') {
 				aux[i] = '_';
 			} else {
-				aux[i] = administrador.getNome().charAt(i);
+				aux[i] = administrador.getName().charAt(i);
 			}
 		}
 		return aux;

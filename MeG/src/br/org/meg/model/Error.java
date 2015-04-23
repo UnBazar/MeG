@@ -2,7 +2,7 @@ package org.meg.model;
 
 import java.sql.Date;
 
-public class Erro {
+public class Error {
 	private int id;
 	private String descricao;
 	private String nomeDaClasseReferente;

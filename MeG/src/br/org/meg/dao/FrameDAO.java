@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.meg.exception.DAOException;
-import org.meg.model.Descricao;
-import org.meg.model.Estado;
-import org.meg.model.Quadro;
-import org.meg.model.Secao;
+import org.meg.model.Description;
+import org.meg.model.State;
+import org.meg.model.Frame;
+import org.meg.model.Section;
 
-public class QuadroDAO {
+public class FrameDAO {
 	private Connection connection;
 	/**
 	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
 	 */
-	public QuadroDAO() {
+	public FrameDAO() {
 		this.connection = ConnectionFactory.getConnection();
 	}
 	
@@ -27,16 +27,16 @@ public class QuadroDAO {
 	 * 
 	 * @param quadro	Objeto a ser adicionado ao banco
 	 */
-	public void adicionar(Quadro quadro) {
-		if(!existeQuadro(quadro)){
+	public void addFrame(Frame quadro) {
+		if(!frameExists(quadro)){
 			String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
 			try {
 				PreparedStatement stmt = this.connection.prepareStatement(sql);
-				stmt.setInt(1, quadro.getAno());
-				stmt.setFloat(2, quadro.getValor());
-				stmt.setInt(3, quadro.getEstado().getId());
-				stmt.setInt(4, quadro.getSecao().getId());
-				stmt.setInt(5, quadro.getDescricao().getId());
+				stmt.setInt(1, quadro.getYear());
+				stmt.setFloat(2, quadro.getValue());
+				stmt.setInt(3, quadro.getState().getId());
+				stmt.setInt(4, quadro.getSection().getId());
+				stmt.setInt(5, quadro.getDescription().getId());
 				stmt.execute();
 				stmt.close();
 			} catch (SQLException sqlException) {
@@ -51,7 +51,7 @@ public class QuadroDAO {
 	 * @param quadro	objeto a ser verificado no banco de dados
 	 * @return	true caso exista
 	 */
-	public boolean existeQuadro(Quadro quadro){
+	public boolean frameExists(Frame quadro){
 		String sql = "SELECT * FROM Quadro "
 				+ "WHERE estado_id = ? "
 				+ "AND secao_id = ? "
@@ -59,10 +59,10 @@ public class QuadroDAO {
 				+ "AND ano = ? ";
 		try {
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1, quadro.getEstado().getId());
-			ps.setInt(2, quadro.getSecao().getId());
-			ps.setInt(3, quadro.getDescricao().getId());
-			ps.setInt(4, quadro.getAno());
+			ps.setInt(1, quadro.getState().getId());
+			ps.setInt(2, quadro.getSection().getId());
+			ps.setInt(3, quadro.getDescription().getId());
+			ps.setInt(4, quadro.getYear());
 			ResultSet rs = ps.executeQuery();
 			boolean existeQuadro = rs.first();
 			rs.close();
@@ -86,7 +86,7 @@ public class QuadroDAO {
 	 * @param descricao	titulo do quadro
 	 * @return	uma Lista contendo quadros referentes aos parametros passados
 	 */
-	public List<Quadro> getListOfScene(int anoInicial, int anoFinal, Estado estado, Secao secao, Descricao descricao) {
+	public List<Frame> getFramesList(int anoInicial, int anoFinal, State estado, Section secao, Description descricao) {
 		String sql = "SELECT * FROM Quadro "
 				+ "WHERE estado_id = ? "
 				+ "AND secao_id = ? "
@@ -100,14 +100,14 @@ public class QuadroDAO {
 			ps.setInt(4, anoInicial);
 			ps.setInt(5, anoFinal);
 			ResultSet rs = ps.executeQuery();
-			List<Quadro> quadros = new ArrayList<Quadro>();
+			List<Frame> quadros = new ArrayList<Frame>();
 			while(rs.next()){
-				Quadro quadro = new Quadro();
-				quadro.setDescricao(descricao);
-				quadro.setEstado(estado);
-				quadro.setSecao(secao);
-				quadro.setAno(rs.getInt("ano"));
-				quadro.setValor(rs.getFloat("valor"));
+				Frame quadro = new Frame();
+				quadro.setDescription(descricao);
+				quadro.setState(estado);
+				quadro.setSection(secao);
+				quadro.setYear(rs.getInt("ano"));
+				quadro.setValue(rs.getFloat("valor"));
 				quadros.add(quadro);				
 			}
 			rs.close();
@@ -130,7 +130,7 @@ public class QuadroDAO {
 	 * @param descricao
 	 * @return
 	 */
-	public List<Quadro> obterLista(int ano, Secao secao, Descricao descricao) {
+	public List<Frame> getFramesList(int ano, Section secao, Description descricao) {
 		String sql = "SELECT * FROM Quadro "
 				+ "WHERE secao_id = ? "
 				+ "AND descricao_id = ? "
@@ -141,16 +141,16 @@ public class QuadroDAO {
 			stmt.setInt(2, descricao.getId());
 			stmt.setInt(3, ano);
 			ResultSet rs = stmt.executeQuery();
-			List<Quadro> lista = new ArrayList<>();
+			List<Frame> lista = new ArrayList<>();
 			while(rs.next()){
-				Quadro quadro = new Quadro();
-				quadro.setAno(ano);
-				Estado estado = new Estado();
+				Frame quadro = new Frame();
+				quadro.setYear(ano);
+				State estado = new State();
 				estado.setId(rs.getInt("estado_id"));
-				quadro.setEstado(estado);
-				quadro.setSecao(secao);
-				quadro.setDescricao(descricao);
-				quadro.setValor(rs.getFloat("valor"));
+				quadro.setState(estado);
+				quadro.setSection(secao);
+				quadro.setDescription(descricao);
+				quadro.setValue(rs.getFloat("valor"));
 				lista.add(quadro);
 			}
 			rs.close();

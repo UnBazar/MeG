@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.LoginAdministradorServlet;
+import org.meg.controller.AdministratorLoginServlet;
 
 public class LoginAdministradorServletTest {
 	private HttpServletRequest request;
@@ -32,7 +32,7 @@ public class LoginAdministradorServletTest {
 		when(request.getParameter("senha")).thenReturn("mudar123");
 		when(request.getRequestDispatcher("WEB-INF/jsp/administrador.jsp")).thenReturn(
 				mock(RequestDispatcher.class));
-		LoginAdministradorServlet servlet = new LoginAdministradorServlet();
+		AdministratorLoginServlet servlet = new AdministratorLoginServlet();
 		servlet.doPost(request, response);
 	}
 	
@@ -42,7 +42,7 @@ public class LoginAdministradorServletTest {
 		when(request.getParameter("senha")).thenReturn("mudar123");
 		when(request.getRequestDispatcher("login-adm.jsp")).thenReturn(
 				mock(RequestDispatcher.class));
-		LoginAdministradorServlet servlet = new LoginAdministradorServlet();
+		AdministratorLoginServlet servlet = new AdministratorLoginServlet();
 		servlet.doPost(request, response);
 	}
 

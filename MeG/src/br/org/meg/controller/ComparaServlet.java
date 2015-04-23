@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.meg.dao.QuadroDAO;
-import org.meg.model.Descricao;
-import org.meg.model.Estado;
-import org.meg.model.Quadro;
-import org.meg.model.Secao;
+import org.meg.dao.FrameDAO;
+import org.meg.model.Description;
+import org.meg.model.State;
+import org.meg.model.Frame;
+import org.meg.model.Section;
 
 /**
- * It's an Servlet class, your function is called in /compara
+ * It's a Servlet class, your function is called in /compara
  * This class compares two states in same section and years
  */
 @WebServlet ("/compara")
@@ -42,24 +42,24 @@ public class ComparaServlet extends HttpServlet {
 	 * @param request have parameters in session and passed by parameters
 	 * @return List<Quadro> with scenes corresponding 
 	 */
-	public List<Quadro> getSelectedScenes(HttpServletRequest request) {
+	public List<Frame> getSelectedScenes(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
 		// Instantiate an State from an id passed by parameter
 		int stateId = Integer.parseInt(request.getParameter("estado"));
-		Estado state = new Estado(stateId);
+		State state = new State(stateId);
 		// Put second state name in session
 		session.setAttribute("secondStateName", state.getNome());
 		// Get the name of section of scene stored in session object
 		String sectionName = (String) session.getAttribute("secao"); 
 		// Instantiate an Section from your name
-		Secao section = new Secao(sectionName);
+		Section section = new Section(sectionName);
 		// Get title of scene stored in session
 		String title = (String)session.getAttribute("titulo");
 		// Instantiate an Section from your title
-		Descricao descricao = new Descricao(title);
+		Description descricao = new Description(title);
 		/*
-		 * Get all years in certly interval set init and final year in two variables
+		 * Get all years in specific interval set initialS and final year in two variables
 		 */
 		@SuppressWarnings("unchecked")
 		
@@ -68,8 +68,8 @@ public class ComparaServlet extends HttpServlet {
 		int finalYear = Integer.parseInt(years.get(years.size()-1));
 		
 		// Instantiate DAO to get all scenes with the following parametters
-		QuadroDAO SceneDAO = new QuadroDAO();
-		List<Quadro> scenes = SceneDAO.getListOfScene(initalYear, finalYear, state, section, descricao);
+		FrameDAO SceneDAO = new FrameDAO();
+		List<Frame> scenes = SceneDAO.getFramesList(initalYear, finalYear, state, section, descricao);
 		return scenes;
 	}
 	
@@ -91,7 +91,7 @@ public class ComparaServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		// Load scenes from session and request
-		List<Quadro> scenes = getSelectedScenes(request);
+		List<Frame> scenes = getSelectedScenes(request);
 		
 		/* 
 		 * Type of chart data, can be:
@@ -121,17 +121,17 @@ public class ComparaServlet extends HttpServlet {
 	 * @param scenes to assess growth
 	 * @return List<Float> with all values calculated
 	 */
-	private List<Float> getIncrease(List<Quadro> scenes) {
+	private List<Float> getIncrease(List<Frame> scenes) {
 		// List for values of scenes
 		List<Float> values = new ArrayList<Float>();
 		float initialValue = 0, finalValue = 0;
 		for (int i = 0; i < scenes.size(); i++) {
 			if(i == 0) {
-				initialValue= scenes.get(i).getValor();
+				initialValue= scenes.get(i).getValue();
 				finalValue = initialValue;
 			} else {
 				initialValue = finalValue;
-				finalValue = scenes.get(i).getValor();
+				finalValue = scenes.get(i).getValue();
 			}
 			values.add(calculateIncrease(finalValue, initialValue));
 		}

@@ -3,19 +3,19 @@ package org.meg.model;
 import org.meg.dao.UtilDAO;
 import org.meg.exception.QuebraSistemaException;
 
-public class Descricao {
+public class Description {
 	private int id;
 	private String nome;
 
-	public Descricao() {
+	public Description() {
 		
 	}
 	
-	public Descricao(int id){
+	public Description(int id){
 		setId(id);
 	}
 	
-	public Descricao(String titulo){
+	public Description(String titulo){
 		setNome(titulo);
 	}
 

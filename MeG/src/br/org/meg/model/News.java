@@ -1,6 +1,6 @@
 package org.meg.model;
 
-public class Noticia {
+public class News {
 
 	private int id;
 	private String noticia;

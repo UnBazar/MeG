@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.meg.dao.UtilDAO;
-import org.meg.model.Erro;
+import org.meg.model.Error;
 
 /**
  * Servlet implementation class ErroServlet
@@ -31,7 +31,7 @@ public class ErrorServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilDAO dao = new UtilDAO();
-		List<Erro> listaErros = dao.obterErros();
+		List<Error> listaErros = dao.obterErros();
 		request.setAttribute("lista", listaErros);		
 		request.getRequestDispatcher("WEB-INF/jsp/tabela-erro.jsp").forward(request, response);
 	}

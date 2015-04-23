@@ -3,16 +3,16 @@ package org.meg.model;
 import org.meg.dao.UtilDAO;
 import org.meg.exception.QuebraSistemaException;
 
-public class Estado {
+public class State {
 	private int id;
 	private String nome;
 	private String sigla;
 	
-	public Estado() {
+	public State() {
 	
 	}
 
-	public Estado(int idEstado) {
+	public State(int idEstado) {
 		setId(idEstado);
 	}
 
