@@ -23,7 +23,7 @@ import org.meg.model.Section;
  * This class compares two states in same section and years
  */
 @WebServlet ("/compara")
-public class ComparaServlet extends HttpServlet {
+public class CompareServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -32,7 +32,7 @@ public class ComparaServlet extends HttpServlet {
 	private final String ATTRIBUTE_NAME_SECOND_LIST_DATA = "valores2";
 	private final String VIEW_NAME = "compara.jsp";
 	
-	public ComparaServlet(){
+	public CompareServlet(){
 		super();
 	}
 	
@@ -67,7 +67,7 @@ public class ComparaServlet extends HttpServlet {
 		int initalYear = Integer.parseInt(years.get(0));
 		int finalYear = Integer.parseInt(years.get(years.size()-1));
 		
-		// Instantiate DAO to get all scenes with the following parametters
+		// Instantiate DAO to get all frames with the following parametters
 		FrameDAO SceneDAO = new FrameDAO();
 		List<Frame> scenes = SceneDAO.getFramesList(initalYear, finalYear, state, section, descricao);
 		return scenes;

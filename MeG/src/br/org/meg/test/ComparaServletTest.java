@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.meg.controller.ComparaServlet;
+import org.meg.controller.CompareServlet;
 
 public class ComparaServletTest {
 	private HttpServletResponse response;
@@ -39,7 +39,7 @@ public class ComparaServletTest {
 		anos.add("2012");
 		when(request.getSession().getAttribute("anos")).thenReturn(anos);
 		when(request.getRequestDispatcher("compara.jsp")).thenReturn(mock(RequestDispatcher.class));
-		ComparaServlet servlet = new ComparaServlet();
+		CompareServlet servlet = new CompareServlet();
 		servlet.doPost(request, response);
 	}
 	
@@ -54,7 +54,7 @@ public class ComparaServletTest {
 		anos.add("2012");
 		when(request.getSession().getAttribute("anos")).thenReturn(anos);
 		when(request.getRequestDispatcher("compara.jsp")).thenReturn(mock(RequestDispatcher.class));
-		ComparaServlet servlet = new ComparaServlet();
+		CompareServlet servlet = new CompareServlet();
 		servlet.doPost(request, response);
 	}
 

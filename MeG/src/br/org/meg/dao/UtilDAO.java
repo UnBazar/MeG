@@ -233,30 +233,17 @@ public class UtilDAO {
 	 * 
 	 * @param id
 	 */
-	public void adicionaHistorico(int id) {
+	public void adicionaHistorico(String path) {
 		try {
-			String add = "";
-			switch (id) {
-			case 1:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'ranking'";
-				break;
-			case 2:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'compara'";
-				break;
-			case 3:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'projecao'";
-				break;
-			case 4:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'grafico'";
-				break;
-			}
+			String add = "UPDATE Historico SET acessos = acessos + 1 WHERE "
+					+ "nome = '"+path+"'";
 			PreparedStatement stmt = this.connection.prepareStatement(add);
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
-			throw new DAOException("Erro ao adicionar no historico!", this
-					.getClass().getName());
+			throw new DAOException("Erro ao adicionar no historico!", 
+					this.getClass().getName());
 		}
 	}
 

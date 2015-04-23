@@ -14,45 +14,52 @@ import javax.servlet.http.HttpServletRequest;
 import org.meg.dao.UtilDAO;
 
 /**
- * Servlet Filter implementation class HistoricoFiltro
+ * Record visits in an main action, the follow paths are counted:
+ * <ul>
+ * 	<li>/ranking</li>
+ * 	<li>/compara</li>
+ *  <li>/projecao</li>
+ *  <li>/grafico</li>
+ * </ul>
  */
 @WebFilter("/*")
 public class FilterHistory implements Filter {
-
-	UtilDAO dao = new UtilDAO();
-
-	/**
-	 * @see Filter#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
+	// All action mappings that need counted in historic
+	private final String[] ACTIONS = {"/ranking","/compara", "/projecao", "/grafico"};
 
 	/**
+	 * Method filter all requests, register visits only for specific actions
+	 * 
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response,
 		FilterChain chain) throws IOException, ServletException {
-		int idRanking = 1;
-		int idCompara = 2;
-		int idProjecao = 3;
-		int idGrafico = 4;
-		HttpServletRequest req = (HttpServletRequest) request;
-		if (req.getRequestURI().contains("/ranking")) {
-			dao.adicionaHistorico(idRanking);
+		// Converts ServletRequest in HttpServletRequest to use getRequestURI
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		// DAO used to register visit 
+		UtilDAO utilDAO = new UtilDAO();
+		/*
+		 *  All paths loaded by request action, include files and static path of
+		 *  html, css and javascript
+		 */
+		String path = httpServletRequest.getRequestURI();
+		// See if relevant action to be registered was called
+		for(String action : ACTIONS){
+			if(path.contains(action)){
+				utilDAO.adicionaHistorico(action.substring(1));
+			}
 		}
-		else if (req.getRequestURI().contains("/compara")) {
-			dao.adicionaHistorico(idCompara);
-		}
-		else if (req.getRequestURI().contains("/projecao")) {
-			dao.adicionaHistorico(idProjecao);
-		}
-		else if (req.getRequestURI().contains("/grafico")) {
-			dao.adicionaHistorico(idGrafico);
-		}
+		// Continue with request
 		chain.doFilter(request, response);
 	}
-
+	
+	/**
+	 * @see Filter#destroy()
+	 */
+	public void destroy() {
+		
+	}
+	
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
