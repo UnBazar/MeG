@@ -63,7 +63,7 @@ public class GrowthRankingServlet extends HttpServlet {
 	 * @param secondList
 	 * @return a list of frames containing the average growth for each state
 	 */
-	private ArrayList<Frame> getGrowthList(List<Frame> firstList, List<Frame> secondList){
+	private ArrayList<Frame> getGrowthList(List<Frame> firstList, List<Frame> secondList) {
 		ArrayList<Frame> growthList = new ArrayList<Frame>();
 		Frame frame;
 		float growth = 0.0f;
