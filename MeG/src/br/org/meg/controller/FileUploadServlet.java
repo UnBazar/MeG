@@ -107,13 +107,13 @@ public class FileUploadServlet extends HttpServlet {
 	 */
 	private void validaArquivo(List<FileItem> items, Parser parser, int anoInicial, 
 			int anoFinal, int numeroDeSecoes) throws FileNotFoundException {
-		parser.validarAno(anoInicial, anoFinal);
+		parser.validatesYear(anoInicial, anoFinal);
 		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
-				parser.validarSecao(items.get(i).getString());
+				parser.validatesSection(items.get(i).getString());
 			}
 		}
-		parser.validarQuantidadeDeLinhas(numeroDeSecoes);
+		parser.validatesLinesQuantity(numeroDeSecoes);
 	}
 	
 	/**

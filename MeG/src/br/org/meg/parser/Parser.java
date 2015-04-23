@@ -14,40 +14,44 @@ import org.meg.model.Section;
 
 public class Parser {
 	private Scanner scanner;
-	private int anoInicial;
-	private int anoFinal;
-	private int quantidadeEstados;
-	private int quantidadeSecoes;
-	private String arquivo;
+	private int initialYear;
+	private int finalYear;
+	private int statesQuantity;
+	private int sectionsQuantity;
+	private String filePath;
 
-	public Parser(String arquivo, int quantidadeEstados, int quantidadeSecoes,
-			int anoInicial, int anoFinal) {
+	public Parser(String filePath, int statesQuantity, int sectionsQuantity,
+			int initialYear, int finalYear) {
 
-		if (anoFinal <= anoInicial || quantidadeEstados == 0
-				|| quantidadeSecoes == 0) {
-			throw new IllegalArgumentException(
-					"Argumentos do parser inválidos!");
+		/*
+		 *  checks if final year is less than or equal initial year or quantity
+		 *  of states or sections are less than or equal zero
+		 */
+		if (finalYear <= initialYear || statesQuantity <= 0
+				|| sectionsQuantity <= 0) {
+			throw new IllegalArgumentException("Parser arguments invalid!");
 		}
-		this.arquivo = arquivo;
-		this.quantidadeEstados = quantidadeEstados;
-		this.quantidadeSecoes = quantidadeSecoes;
-		this.anoInicial = anoInicial;
-		this.anoFinal = anoFinal;
+		
+		this.filePath = filePath;
+		this.statesQuantity = statesQuantity;
+		this.sectionsQuantity = sectionsQuantity;
+		this.initialYear = initialYear;
+		this.finalYear = finalYear;
 	}
 
 	@SuppressWarnings("resource")
-	public void validarQuantidadeDeLinhas(int quantidadeDeSecoes)
+	public void validatesLinesQuantity(int sectionsQuantity)
 			throws FileNotFoundException {
-		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
+		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
 		int i = 0;
-		this.lerCabecalho();
+		this.readFileHeader();
 
 		do {
 			i++;
 			scanner.nextLine();
 		} while (scanner.hasNext());
 
-		if ((27 * this.quantidadeSecoes + 6) != i) {
+		if ((27 * this.sectionsQuantity + 6) != i) {
 			throw new UploadArquivoException(
 					"Dados de entrada incompatíveis com o arquivo! (Quantidade de linhas)");
 		}
@@ -56,9 +60,9 @@ public class Parser {
 	}
 
 	@SuppressWarnings("resource")
-	public void validarSecao(String secao) throws FileNotFoundException {
-		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
-		this.lerCabecalho();
+	public void validatesSection(String secao) throws FileNotFoundException {
+		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
+		this.readFileHeader();
 		boolean contemSecao = false;
 		String token;
 
@@ -80,10 +84,10 @@ public class Parser {
 	}
 
 	@SuppressWarnings("resource")
-	public void validarAno(int anoInicial, int anoFinal)
+	public void validatesYear(int anoInicial, int anoFinal)
 			throws FileNotFoundException {
-		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
-		this.lerCabecalho();
+		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
+		this.readFileHeader();
 		String[] tokens = scanner.nextLine().split(";");
 
 		if (tokens.length != ((anoFinal - anoInicial + 1) * 5) + 2) {
@@ -96,8 +100,8 @@ public class Parser {
 
 	@SuppressWarnings("resource")
 	public void persist() throws FileNotFoundException {
-		scanner = new Scanner(new FileReader(this.arquivo)).useDelimiter(";");
-		ArrayList<Frame> quadros = this.lerEstados();
+		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
+		ArrayList<Frame> quadros = this.readStates();
 		FrameDAO dao = new FrameDAO();
 		for (Frame quadro : quadros) {
 			dao.addFrame(quadro);
@@ -105,16 +109,16 @@ public class Parser {
 		scanner.close();
 	}
 
-	private ArrayList<Frame> lerEstados() {
+	private ArrayList<Frame> readStates() {
 		ArrayList<Frame> quadros = new ArrayList<>();
 		State estado;
 		Section secao;
 		String[] tokens;
-		int tempo = this.anoFinal - this.anoInicial + 1;
-		this.lerCabecalho();
+		int tempo = this.finalYear - this.initialYear + 1;
+		this.readFileHeader();
 
-		for (int j = 0; j < this.quantidadeEstados; j++) {
-			for (int i = 0; i < this.quantidadeSecoes; i++) {
+		for (int j = 0; j < this.statesQuantity; j++) {
+			for (int i = 0; i < this.sectionsQuantity; i++) {
 				tokens = scanner.nextLine().split(";");
 				estado = new State();
 				estado.setNome(tokens[0].substring(1, tokens[0].length() - 1));
@@ -125,7 +129,7 @@ public class Parser {
 					quadros.get(quadros.size() - 1).setState(estado);
 					quadros.get(quadros.size() - 1).setSection(secao);
 					quadros.get(quadros.size() - 1).setYear(
-							this.anoInicial + k % tempo);
+							this.initialYear + k % tempo);
 					Description descricao = new Description();
 					descricao.setId(1 + k / tempo);
 					quadros.get(quadros.size() - 1).setDescription(descricao);
@@ -137,7 +141,7 @@ public class Parser {
 						else
 							quadros.get(quadros.size() - 1)
 									.setValue(
-											Float.parseFloat(corrigirVirgula(tokens[2 + k])));
+											Float.parseFloat(correctCommasOnFloatingPointValues(tokens[2 + k])));
 					} else
 						quadros.get(quadros.size() - 1).setValue(-1.0f);
 				}
@@ -147,13 +151,14 @@ public class Parser {
 		return quadros;
 	}
 
-	private void lerCabecalho() {
-		for (int i = 0; i < 5; i++) {
+	private void readFileHeader() {
+		final int linesQuantityOfHeader = 5;
+		for (int i = 0; i < linesQuantityOfHeader; i++) {
 			scanner.nextLine();
 		}
 	}
 
-	private String corrigirVirgula(String expressao) {
+	private String correctCommasOnFloatingPointValues(String expressao) {
 		char[] string = new char[expressao.length()];
 		for (int i = 0; i < expressao.length() && expressao.charAt(i) != '\n'; i++) {
 			if (expressao.charAt(i) == ',') {

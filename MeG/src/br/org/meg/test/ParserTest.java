@@ -25,28 +25,28 @@ public class ParserTest {
 	@Test
 	public void testValidarQuantidadeDeLinhasShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url, 27, 4, 2006, 2012);
-		this.parser.validarQuantidadeDeLinhas(4);
+		this.parser.validatesLinesQuantity(4);
 	}
 	
 	@Test(expected = UploadArquivoException.class)
 	public void testValidarQuantidadeDeLinhasShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 5, 2006, 2012);
-		this.parser.validarQuantidadeDeLinhas(4);
+		this.parser.validatesLinesQuantity(4);
 	}
 
 	@Test
 	public void testValidarAnoShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 4, 2006, 2012);
-		this.parser.validarAno(2006, 2012);
+		this.parser.validatesYear(2006, 2012);
 	}
 	
 	@Test(expected = UploadArquivoException.class)
 	public void testValidarAnoShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 4, 2006, 2012);
-		this.parser.validarAno(2006, 2011);
+		this.parser.validatesYear(2006, 2011);
 	}
 	
 
@@ -54,16 +54,16 @@ public class ParserTest {
 	public void testValidarSecaoShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 4, 2006, 2012);
-		this.parser.validarSecao("A Agricultura, pecuária, produção florestal, pesca e aquicultura");
-		this.parser.validarSecao("B Indústrias extrativas");
-		this.parser.validarSecao("C Indústrias de transformação");
-		this.parser.validarSecao("D Eletricidade e gás");
+		this.parser.validatesSection("A Agricultura, pecuária, produção florestal, pesca e aquicultura");
+		this.parser.validatesSection("B Indústrias extrativas");
+		this.parser.validatesSection("C Indústrias de transformação");
+		this.parser.validatesSection("D Eletricidade e gás");
 	}
 	
 	@Test(expected = UploadArquivoException.class)
 	public void testValidarSecaoShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,27, 4, 2006, 2012);
-		this.parser.validarSecao("E Construção");
+		this.parser.validatesSection("E Construção");
 	}
 	
 	@Test
