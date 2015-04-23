@@ -40,34 +40,34 @@ public class AdministratorDAO {
 	}
 	
 	/**
-	 *	Metodo que realiza busca de administrador no banco, caso o nomeDeUsuario e a senha
-	 *	Estejam corretos o usuario é valido 
-	 * @param nomeDeUsuario	Nome a ser verificado como login
-	 * @param senha	Palavra a ser verificada como senha
-	 * @return	nulo caso nome ou senha estejam errados. 
-	 * 			Ou um administrador com seus dados
+	 *	Method which searches for an administrator in the database. It's a valid 
+	 *	Administrator if the userName and password are correct. 
+	 * @param userName	Name to be verified as login.
+	 * @param password	Word to be verified as password.
+	 * @return	null in case the userName or password might be wrong. 
+	 * 			Or an administrator with its data.
 	 */
-	public Administrator buscaAdministrador(String nomeDeUsuario, String senha){
+	public Administrator searchAdministrator(String userName, String password){
 		String sql = "SELECT * FROM Administrador where nome_de_usuario = ? AND senha = ?";
-		Administrator administrador = null;
+		Administrator administrator = null;
 		try{
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, nomeDeUsuario);
-			stmt.setString(2, senha);
+			stmt.setString(1, userName);
+			stmt.setString(2, password);
 			stmt.setMaxRows(1);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.first()) {
-				administrador = new Administrator();
-				administrador.setNome(rs.getString("nome"));
-				administrador.setSenha(rs.getString("senha"));
-				administrador.setEmail(rs.getString("email"));
-				administrador.setNomeDeUsuario(rs.getString("nome_de_usuario"));	
+				administrator = new Administrator();
+				administrator.setName(rs.getString("nome"));
+				administrator.setPassword(rs.getString("senha"));
+				administrator.setEmail(rs.getString("email"));
+				administrator.setUserName(rs.getString("nome_de_usuario"));	
 			}
 			rs.close();
 			stmt.close();
 		} catch (SQLException sqlException) {
 		}
-		return administrador;
+		return administrator;
 	}
 	
 	/**

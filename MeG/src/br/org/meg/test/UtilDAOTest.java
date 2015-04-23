@@ -70,6 +70,6 @@ public class UtilDAOTest {
 	@Test
 	public void getHistoricoTest(){
 		int id = 1;
-		assertNotNull(dao.getHistorico(id));
+		assertNotNull(dao.getHistory(id));
 	}
 }

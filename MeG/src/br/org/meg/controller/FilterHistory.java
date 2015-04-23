@@ -46,7 +46,7 @@ public class FilterHistory implements Filter {
 		// See if relevant action to be registered was called
 		for(String action : ACTIONS){
 			if(path.contains(action)){
-				utilDAO.adicionaHistorico(action.substring(1));
+				utilDAO.addHistory(action.substring(1));
 			}
 		}
 		// Continue with request
