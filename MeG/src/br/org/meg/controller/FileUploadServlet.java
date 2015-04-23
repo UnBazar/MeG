@@ -28,32 +28,33 @@ public class FileUploadServlet extends HttpServlet {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (isMultipart) {
 			try {
+				int maxFileSize = 100000; // max size in bytes
 				DiskFileItemFactory factory = new DiskFileItemFactory();
-				factory.setSizeThreshold(100000);
+				factory.setSizeThreshold(maxFileSize);
 				ServletFileUpload upload = new ServletFileUpload(factory);
 				List<FileItem> items = (List<FileItem>) upload.parseRequest(request);
-				boolean contemArquivo = false;
+				boolean containsFile = false;
 				for (FileItem item : items) {
 					if (!item.isFormField()) {
-						contemArquivo = true;
-						String url = criaCaminhoDoArquivo();
-						int anoInicial = Integer.parseInt(items.get(0).getString());
-						int anoFinal = Integer.parseInt(items.get(1).getString());;
-						int numeroDeSecoes = 0;
+						containsFile = true;
+						String url = createsFilePath();
+						int initialYear = Integer.parseInt(items.get(0).getString());
+						int finalYear = Integer.parseInt(items.get(1).getString());;
+						int numberOfSections = 0;
 						HttpSession sessao = request.getSession();
-						Administrator administrador = (Administrator) sessao.getAttribute("administrador");
-						String nomeAdm = new String(formatarNomeUsuario(administrador));
-						File uploadedFile = new File(url + nomeAdm + "_" + item.getName());
+						Administrator administrator = (Administrator) sessao.getAttribute("administrador");
+						String administratorName = new String(formatName(administrator));
+						File uploadedFile = new File(url + administratorName + "_" + item.getName());
 						item.write(uploadedFile);						
-						numeroDeSecoes = getNumeroDeSecoes(items);
-						Parser parser = new Parser(uploadedFile.getAbsolutePath(), 27, numeroDeSecoes, 
-								anoInicial, anoFinal);
-						validaArquivo(items, parser, anoInicial, anoFinal, numeroDeSecoes);
+						numberOfSections = getNumberOfSections(items);
+						Parser parser = new Parser(uploadedFile.getAbsolutePath(), 27, numberOfSections, 
+								initialYear, finalYear);
+						validatesFile(items, parser, initialYear, finalYear, numberOfSections);
 						parser.persist();
 						request.setAttribute("erro", false);
 					}
 				}
-				if (contemArquivo) {
+				if (containsFile) {
 					throw new RuntimeException("Nenhum arquivo foi enviado!");
 				}
 			} catch(Exception e) {
@@ -68,7 +69,7 @@ public class FileUploadServlet extends HttpServlet {
 	 * @param administrador
 	 * @return vetor de caracteres que contêm o nome do administrador formatado 
 	 */
-	private char[] formatarNomeUsuario(Administrator administrador) {
+	private char[] formatName(Administrator administrador) {
 		char[] aux = new char[administrador.getName().length()];
 		
 		for (int i = 0; i < administrador.getName().length(); i++) {
@@ -86,7 +87,7 @@ public class FileUploadServlet extends HttpServlet {
 	 * @param items
 	 * @return o número de campos do tipo seção lidos no formulário
 	 */
-	private int getNumeroDeSecoes(List<FileItem> items) {
+	private int getNumberOfSections(List<FileItem> items) {
 		int numeroDeSecoes = 0;
 		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
@@ -105,22 +106,22 @@ public class FileUploadServlet extends HttpServlet {
 	 * @param numeroDeSecoes 
 	 * @throws FileNotFoundException
 	 */
-	private void validaArquivo(List<FileItem> items, Parser parser, int anoInicial, 
+	private void validatesFile(List<FileItem> items, Parser parser, int anoInicial, 
 			int anoFinal, int numeroDeSecoes) throws FileNotFoundException {
-		parser.validarAno(anoInicial, anoFinal);
+		parser.validatesYear(anoInicial, anoFinal);
 		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
-				parser.validarSecao(items.get(i).getString());
+				parser.validatesSector(items.get(i).getString());
 			}
 		}
-		parser.validarQuantidadeDeLinhas(numeroDeSecoes);
+		parser.validatesLinesQuantity(numeroDeSecoes);
 	}
 	
 	/**
 	 * Este método cria o caminho onde o arquivo será salvo a partir da url do arquivo UploadArquivo.class
 	 * @param url
 	 */
-	private String criaCaminhoDoArquivo() {
+	private String createsFilePath() {
 		String url;
 		url = FileUploadServlet.class.getProtectionDomain().getCodeSource().getLocation()+"";
 		url = url.replaceAll("file:", "");

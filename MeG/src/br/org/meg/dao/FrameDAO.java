@@ -16,148 +16,155 @@ import org.meg.model.Section;
 public class FrameDAO {
 	private Connection connection;
 	/**
-	 * Cria uma conexão com o banco de dados através da classe ConnectionFactory. 
+	 * Creates a connection with the MYSQL database through ConnectionFactory 
 	 */
 	public FrameDAO() {
 		this.connection = ConnectionFactory.getConnection();
 	}
 	
 	/**
-	 * Adiciona um quadro ao banco de dados
+	 * Persists a frame in the database
 	 * 
-	 * @param quadro	Objeto a ser adicionado ao banco
+	 * @param frame	that will be saved in the database
 	 */
-	public void addFrame(Frame quadro) {
-		if(!frameExists(quadro)){
-			String sql = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
+	public void addFrame(Frame frame) {
+		if(!frameExists(frame)){
+			String sqlStatement = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
 			try {
-				PreparedStatement stmt = this.connection.prepareStatement(sql);
-				stmt.setInt(1, quadro.getYear());
-				stmt.setFloat(2, quadro.getValue());
-				stmt.setInt(3, quadro.getState().getId());
-				stmt.setInt(4, quadro.getSection().getId());
-				stmt.setInt(5, quadro.getDescription().getId());
+				PreparedStatement stmt = this.connection.prepareStatement(sqlStatement);
+				stmt.setInt(1, frame.getYear());
+				stmt.setFloat(2, frame.getValue());
+				stmt.setInt(3, frame.getState().getId());
+				stmt.setInt(4, frame.getSection().getId());
+				stmt.setInt(5, frame.getDescription().getId());
 				stmt.execute();
 				stmt.close();
 			} catch (SQLException sqlException) {
-				throw new DAOException("O sistema nao conseguiu adicionar um quadro. Excecao: " 
+				throw new DAOException("The system failed to persist a frame. Exception: " 
 											+ sqlException.getMessage(), this.getClass().getName());
 			}
 		}
 	}
 	
 	/**
-	 * Verifica se o quadro passado por parametro existe no banco de dados.
-	 * @param quadro	objeto a ser verificado no banco de dados
-	 * @return	true caso exista
+	 * Identify if the frame sent as argument exists in the database
+	 * @param frame
+	 * @return	true if the frame exists
 	 */
-	public boolean frameExists(Frame quadro){
-		String sql = "SELECT * FROM Quadro "
+	public boolean frameExists(Frame frame){
+		String sqlStatement = "SELECT * FROM Quadro "
 				+ "WHERE estado_id = ? "
 				+ "AND secao_id = ? "
 				+ "AND descricao_id = ? "
 				+ "AND ano = ? ";
 		try {
-			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1, quadro.getState().getId());
-			ps.setInt(2, quadro.getSection().getId());
-			ps.setInt(3, quadro.getDescription().getId());
-			ps.setInt(4, quadro.getYear());
-			ResultSet rs = ps.executeQuery();
-			boolean existeQuadro = rs.first();
-			rs.close();
-			ps.close();
-			return existeQuadro;
+			boolean exists = false;
+			ResultSet queryResult;
+			PreparedStatement sqlCompiledStatement = connection.prepareStatement(sqlStatement);
+			sqlCompiledStatement.setInt(1, frame.getState().getId());
+			sqlCompiledStatement.setInt(2, frame.getSection().getId());
+			sqlCompiledStatement.setInt(3, frame.getDescription().getId());
+			sqlCompiledStatement.setInt(4, frame.getYear());
+			queryResult = sqlCompiledStatement.executeQuery();
+			// returns true if a match is found
+			exists = queryResult.first();
+			queryResult.close();
+			sqlCompiledStatement.close();
+			return exists;
 		}catch(SQLException exception){
-			throw new DAOException("Erro em metodo existeQuadro. Causa:" 
+			throw new DAOException("An unexpected failure occurred while verifying existing frame. Exception: " 
 										+ exception.getMessage(), this.getClass().getClass().getName());
 		}
 	}
 	
 	
 	/**
-	 * Obtem uma lista de objetos do tipo Quadro que tem atributos relativos 
-	 * aos parametros passados.
+	 * Search in the database a list of frames corresponding to the values sent as argument.
 	 * 
-	 * @param anoInicial	tempo o qual o grafico começa a contar
-	 * @param anoFinal	tempo que o grafico para de contar
-	 * @param estado	refere-se a unidade federativa que sera usado no grafico
-	 * @param secao	relativo ao setor da economia
-	 * @param descricao	titulo do quadro
-	 * @return	uma Lista contendo quadros referentes aos parametros passados
+	 * @param initialYear
+	 * @param finalYear
+	 * @param state
+	 * @param section
+	 * @param description
+	 * @return a list of frames if found on database or null if not
 	 */
-	public List<Frame> getFramesList(int anoInicial, int anoFinal, State estado, Section secao, Description descricao) {
-		String sql = "SELECT * FROM Quadro "
+	public List<Frame> getFramesList(int initialYear, int finalYear, State state, Section section, Description description) {
+		String sqlStatement = "SELECT * FROM Quadro "
 				+ "WHERE estado_id = ? "
 				+ "AND secao_id = ? "
 				+ "AND descricao_id = ? "
 				+ "AND ano >= ? AND ano <= ? ";
 		try {
-			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1, estado.getId());
-			ps.setInt(2, secao.getId());
-			ps.setInt(3, descricao.getId());
-			ps.setInt(4, anoInicial);
-			ps.setInt(5, anoFinal);
-			ResultSet rs = ps.executeQuery();
-			List<Frame> quadros = new ArrayList<Frame>();
-			while(rs.next()){
-				Frame quadro = new Frame();
-				quadro.setDescription(descricao);
-				quadro.setState(estado);
-				quadro.setSection(secao);
-				quadro.setYear(rs.getInt("ano"));
-				quadro.setValue(rs.getFloat("valor"));
-				quadros.add(quadro);				
+			List<Frame> frames;
+			ResultSet queryResult;
+			PreparedStatement sqlCompiledStatement = connection.prepareStatement(sqlStatement);
+			sqlCompiledStatement.setInt(1, state.getId());
+			sqlCompiledStatement.setInt(2, section.getId());
+			sqlCompiledStatement.setInt(3, description.getId());
+			sqlCompiledStatement.setInt(4, initialYear);
+			sqlCompiledStatement.setInt(5, finalYear);
+			queryResult = sqlCompiledStatement.executeQuery();
+			frames = new ArrayList<Frame>();
+			while(queryResult.next()) {
+				Frame frame = new Frame();
+				frame.setDescription(description);
+				frame.setState(state);
+				frame.setSection(section);
+				frame.setYear(queryResult.getInt("ano"));
+				frame.setValue(queryResult.getFloat("valor"));
+				frames.add(frame);				
 			}
-			rs.close();
-			ps.close();
-			if(quadros.isEmpty()){
-				String mensagem = "Tentou obterLista dos anos de "+anoInicial+" - "+anoFinal+" e nada foi retornado.";
-				throw new DAOException(mensagem, this.getClass().getName());
+			queryResult.close();
+			sqlCompiledStatement.close();
+			if(frames.isEmpty()) {
+				String message = "Tried to get frames between " + initialYear + " - " + finalYear + " and nothing was found.";
+				throw new DAOException(message, this.getClass().getName());
 			}
-			return quadros;
-		}catch (SQLException sqlException) {
-			throw new DAOException("Em metodo obterLista, a seguinte excecao foi lancada: "
+			return frames;
+		} catch(SQLException sqlException) {
+			throw new DAOException("Failed while trying to search frames in the database. Exception:  "
 										+ sqlException.getMessage(), this.getClass().getName());
 		}
 	}
 	
 	/**
+	 * Queries database searching for a determined frame for each state.
 	 * 
-	 * @param ano 
-	 * @param secao
-	 * @param descricao
-	 * @return
+	 * @param year 
+	 * @param section
+	 * @param description
+	 * @return list of frames for each state
 	 */
-	public List<Frame> getFramesList(int ano, Section secao, Description descricao) {
-		String sql = "SELECT * FROM Quadro "
+	public List<Frame> getFramesList(int year, Section section, Description description) {
+		String sqlStatement = "SELECT * FROM Quadro "
 				+ "WHERE secao_id = ? "
 				+ "AND descricao_id = ? "
 				+ "AND ano = ?";
-		try{
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, secao.getId());
-			stmt.setInt(2, descricao.getId());
-			stmt.setInt(3, ano);
-			ResultSet rs = stmt.executeQuery();
-			List<Frame> lista = new ArrayList<>();
-			while(rs.next()){
-				Frame quadro = new Frame();
-				quadro.setYear(ano);
-				State estado = new State();
-				estado.setId(rs.getInt("estado_id"));
-				quadro.setState(estado);
-				quadro.setSection(secao);
-				quadro.setDescription(descricao);
-				quadro.setValue(rs.getFloat("valor"));
-				lista.add(quadro);
+		try {
+			List<Frame> frames;
+			ResultSet queryResult;
+			PreparedStatement sqlCompiledStatement = connection.prepareStatement(sqlStatement);
+			sqlCompiledStatement.setInt(1, section.getId());
+			sqlCompiledStatement.setInt(2, description.getId());
+			sqlCompiledStatement.setInt(3, year);
+			queryResult = sqlCompiledStatement.executeQuery();
+			frames = new ArrayList<>();
+			while(queryResult.next()) {
+				Frame frame = new Frame();
+				State state = new State();
+				state.setId(queryResult.getInt("estado_id"));
+				frame.setYear(year);
+				frame.setState(state);
+				frame.setSection(section);
+				frame.setDescription(description);
+				frame.setValue(queryResult.getFloat("valor"));
+				frames.add(frame);
 			}
-			rs.close();
-			stmt.close();
-			return lista;
-		}catch(SQLException exception){
-			throw new DAOException("No segundo metodo obterLista a seguinte excecao foi gerada: "
+			queryResult.close();
+			sqlCompiledStatement.close();
+			return frames;
+		} catch(SQLException exception) {
+			throw new DAOException("Failed while trying to search frames in the database. Exception: "
 										+ exception.getMessage(), this.getClass().getName());
 		}
 		
