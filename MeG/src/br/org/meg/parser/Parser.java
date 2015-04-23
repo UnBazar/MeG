@@ -39,11 +39,20 @@ public class Parser {
 		this.finalYear = finalYear;
 	}
 
+	/*
+	 * This method is responsible for the validating of the number of 
+	 * lines of a file based on the number of sectors to be read. It is
+	 * used primarily during a file upload. It identifies if the number 
+	 * of lines matches the actual number of lines of the file, if not, 
+	 * it throws a FileUploadException.
+	 */
 	@SuppressWarnings("resource")
-	public void validatesLinesQuantity(int sectionsQuantity)
+	public void validatesLinesQuantity(int sectorsQuantity)
 			throws FileNotFoundException {
 		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
 		int i = 0;
+		final int numberOfStates = 27;
+		final int numberOfExtraLines = 6;
 		this.readFileHeader();
 
 		do {
@@ -51,48 +60,63 @@ public class Parser {
 			scanner.nextLine();
 		} while (scanner.hasNext());
 
-		if ((27 * this.sectionsQuantity + 6) != i) {
+		// checks if the whole file was read correctly
+		if ((numberOfStates * this.sectionsQuantity + numberOfExtraLines) != i) {
 			throw new UploadArquivoException(
-					"Dados de entrada incompatíveis com o arquivo! (Quantidade de linhas)");
+					"Input data does not match the required file format! (Invalid number of lines)");
 		}
 
 		scanner.close();
 	}
-
+	
+	/*
+	 * This method is responsible for the validating of the sector sent as argument. It is
+	 * used primarily during a file upload. It identifies if a sector exists in the file, 
+	 * if not, it throws a FileUploadException.
+	 */
 	@SuppressWarnings("resource")
-	public void validatesSection(String secao) throws FileNotFoundException {
+	public void validatesSector(String sector) throws FileNotFoundException {
 		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
 		this.readFileHeader();
-		boolean contemSecao = false;
+		boolean containsSector = false;
+		final int minimumTokenLength = 2;
 		String token;
 
-		while (scanner.hasNext()) {
+		while(scanner.hasNext()) {
 			token = scanner.next();
-			if (token.length() > 2) {
+			// checks if the token read is not an empty token
+			if(token.length() > minimumTokenLength) {
+				// removes "" characters from the token read (Example: "token" becomes token)
 				token = token.substring(1, token.length() - 1);
 			}
-			if (token.equals(secao)) {
-				contemSecao = true;
+			
+			if(token.equals(sector)) {
+				containsSector = true;
 				break;
 			}
 		}
 		this.scanner.close();
-		if (!contemSecao) {
+		if(!containsSector) {
 			throw new UploadArquivoException(
-					"Dados de entrada incompatíveis com o arquivo! (Seções)");
+					"Input data does not match the required file format! (Sector not found)");
 		}
 	}
 
+	/*
+	 * 
+	 */
 	@SuppressWarnings("resource")
-	public void validatesYear(int anoInicial, int anoFinal)
+	public void validatesYear(int initialYear, int finalYear)
 			throws FileNotFoundException {
+		final int numberOfSectors = 5;
+		final int extraColumns = 2;
 		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
 		this.readFileHeader();
 		String[] tokens = scanner.nextLine().split(";");
 
-		if (tokens.length != ((anoFinal - anoInicial + 1) * 5) + 2) {
+		if (tokens.length != ((finalYear - initialYear + 1) * numberOfSectors) + extraColumns) {
 			throw new UploadArquivoException(
-					"Dados de entrada incompatíveis com o arquivo! (Ano)");
+					"Input data does not match the required file format! (Year)");
 		}
 
 		scanner.close();
@@ -101,37 +125,37 @@ public class Parser {
 	@SuppressWarnings("resource")
 	public void persist() throws FileNotFoundException {
 		scanner = new Scanner(new FileReader(this.filePath)).useDelimiter(";");
-		ArrayList<Frame> quadros = this.readStates();
+		ArrayList<Frame> frames = this.readStates();
 		FrameDAO dao = new FrameDAO();
-		for (Frame quadro : quadros) {
-			dao.addFrame(quadro);
+		for (Frame frame : frames) {
+			dao.addFrame(frame);
 		}
 		scanner.close();
 	}
 
 	private ArrayList<Frame> readStates() {
 		ArrayList<Frame> quadros = new ArrayList<>();
-		State estado;
-		Section secao;
+		State state;
+		Section section;
 		String[] tokens;
-		int tempo = this.finalYear - this.initialYear + 1;
+		int timeInterval = this.finalYear - this.initialYear + 1;
 		this.readFileHeader();
 
 		for (int j = 0; j < this.statesQuantity; j++) {
 			for (int i = 0; i < this.sectionsQuantity; i++) {
 				tokens = scanner.nextLine().split(";");
-				estado = new State();
-				estado.setNome(tokens[0].substring(1, tokens[0].length() - 1));
-				secao = new Section();
-				secao.setNome(tokens[1].substring(3, tokens[1].length() - 1));
-				for (int k = 0; k < 5 * tempo; k++) {
+				state = new State();
+				state.setNome(tokens[0].substring(1, tokens[0].length() - 1));
+				section = new Section();
+				section.setNome(tokens[1].substring(3, tokens[1].length() - 1));
+				for (int k = 0; k < 5 * timeInterval; k++) {
 					quadros.add(new Frame());
-					quadros.get(quadros.size() - 1).setState(estado);
-					quadros.get(quadros.size() - 1).setSection(secao);
+					quadros.get(quadros.size() - 1).setState(state);
+					quadros.get(quadros.size() - 1).setSection(section);
 					quadros.get(quadros.size() - 1).setYear(
-							this.initialYear + k % tempo);
+							this.initialYear + k % timeInterval);
 					Description descricao = new Description();
-					descricao.setId(1 + k / tempo);
+					descricao.setId(1 + k / timeInterval);
 					quadros.get(quadros.size() - 1).setDescription(descricao);
 					if (!tokens[2 + k].equals("-")
 							&& !tokens[2 + k].equals("X")) {
@@ -158,16 +182,16 @@ public class Parser {
 		}
 	}
 
-	private String correctCommasOnFloatingPointValues(String expressao) {
-		char[] string = new char[expressao.length()];
-		for (int i = 0; i < expressao.length() && expressao.charAt(i) != '\n'; i++) {
-			if (expressao.charAt(i) == ',') {
+	private String correctCommasOnFloatingPointValues(String expression) {
+		char[] string = new char[expression.length()];
+		for (int i = 0; i < expression.length() && expression.charAt(i) != '\n'; i++) {
+			if (expression.charAt(i) == ',') {
 				string[i] = '.';
 			} else {
-				string[i] = expressao.charAt(i);
+				string[i] = expression.charAt(i);
 			}
 		}
-		String expressaoCorrigida = new String(string);
-		return expressaoCorrigida;
+		String correctedExpression = new String(string);
+		return correctedExpression;
 	}
 }

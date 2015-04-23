@@ -54,16 +54,16 @@ public class ParserTest {
 	public void testValidarSecaoShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 4, 2006, 2012);
-		this.parser.validatesSection("A Agricultura, pecuária, produção florestal, pesca e aquicultura");
-		this.parser.validatesSection("B Indústrias extrativas");
-		this.parser.validatesSection("C Indústrias de transformação");
-		this.parser.validatesSection("D Eletricidade e gás");
+		this.parser.validatesSector("A Agricultura, pecuária, produção florestal, pesca e aquicultura");
+		this.parser.validatesSector("B Indústrias extrativas");
+		this.parser.validatesSector("C Indústrias de transformação");
+		this.parser.validatesSector("D Eletricidade e gás");
 	}
 	
 	@Test(expected = UploadArquivoException.class)
 	public void testValidarSecaoShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,27, 4, 2006, 2012);
-		this.parser.validatesSection("E Construção");
+		this.parser.validatesSector("E Construção");
 	}
 	
 	@Test
