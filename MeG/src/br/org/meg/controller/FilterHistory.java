@@ -37,16 +37,16 @@ public class FilterHistory implements Filter {
 		int idGrafico = 4;
 		HttpServletRequest req = (HttpServletRequest) request;
 		if (req.getRequestURI().contains("/ranking")) {
-			dao.adicionaHistorico(idRanking);
+			dao.addHistory(idRanking);
 		}
 		else if (req.getRequestURI().contains("/compara")) {
-			dao.adicionaHistorico(idCompara);
+			dao.addHistory(idCompara);
 		}
 		else if (req.getRequestURI().contains("/projecao")) {
-			dao.adicionaHistorico(idProjecao);
+			dao.addHistory(idProjecao);
 		}
 		else if (req.getRequestURI().contains("/grafico")) {
-			dao.adicionaHistorico(idGrafico);
+			dao.addHistory(idGrafico);
 		}
 		chain.doFilter(request, response);
 	}

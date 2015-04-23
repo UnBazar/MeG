@@ -20,10 +20,10 @@ public class AdministradorDAOTest {
 
 	@Test
 	public void testAdicionar() {
-		adm.setNome("Pedro de Lyra");
-		adm.setNomeDeUsuario("pedrodelyra10");
+		adm.setName("Pedro de Lyra");
+		adm.setUserName("pedrodelyra10");
 		adm.setEmail("plp_129@hotmail.com");
-		adm.setSenha("mudar123");
+		adm.setPassword("mudar123");
 		dao.addAdministrator(adm);
 	}
 	
@@ -39,12 +39,12 @@ public class AdministradorDAOTest {
 	
 	@Test
 	public void testBuscaAdministrador(){
-		dao.buscaAdministrador("pedrodelyra10", "mudar123");
+		dao.searchAdministrator("pedrodelyra10", "mudar123");
 	}
 	
 	@Test
 	public void testBuscaAdministradorShouldThrowException(){
-		assertNull(dao.buscaAdministrador("pedrodelyra10", "senhaInválida"));
+		assertNull(dao.searchAdministrator("pedrodelyra10", "senhaInválida"));
 	}
 
 }

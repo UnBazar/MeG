@@ -10,7 +10,7 @@ public class Administrator {
 		return name;
 	}
 	
-	public void setNome(String name) {
+	public void setName(String name) {
 		if (name == null || name.length() < 3){
 			throw new IllegalArgumentException("Nome inválido!");
 		}
@@ -21,7 +21,7 @@ public class Administrator {
 		return password;
 	}
 	
-	public void setSenha(String password) {
+	public void setPassword(String password) {
 		if (password == null || password.length() < 6 || password.length() > 20) {
 			throw new IllegalArgumentException("Senha inválida!");
 		}
@@ -52,7 +52,7 @@ public class Administrator {
 		return userName;
 	}
 
-	public void setNomeDeUsuario(String userName) {
+	public void setUserName(String userName) {
 		if (userName == null || userName.length() < 3) {
 			throw new IllegalArgumentException("Nome de usuário inválido!");
 		}

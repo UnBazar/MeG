@@ -233,7 +233,7 @@ public class UtilDAO {
 	 * 
 	 * @param id
 	 */
-	public void adicionaHistorico(int id) {
+	public void addHistory(int id) {
 		try {
 			String add = "";
 			switch (id) {
@@ -360,8 +360,8 @@ public class UtilDAO {
 		return erros;
 	}
 	
-	public int getHistorico(int id){
-		int acesso = 0;
+	public int getHistory(int id){
+		int access = 0;
 		try {
 			String sql = "Select * From Historico Where id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -369,12 +369,13 @@ public class UtilDAO {
 			stmt.execute();
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				acesso = rs.getInt("acessos");
+				access = rs.getInt("acessos");
 			}
 		} catch (SQLException sqlException) {
-			throw new DAOException("Erro ao buscar o numero de acessos no banco onde id = "+ id,this.getClass().getName());
+			throw new DAOException("Erro ao buscar o numero de acessos no banco onde id = "
+									+ id,this.getClass().getName());
 		}
 		
-		return acesso;
+		return access;
 	}
 }
