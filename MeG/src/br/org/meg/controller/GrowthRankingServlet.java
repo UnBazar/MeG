@@ -85,7 +85,7 @@ public class GrowthRankingServlet extends HttpServlet {
 	 * @param initialValue
 	 * @return the average growth of a frame in percentage
 	 */
-	private float getAverageGrowth(float initialValue, float finalValue){
+	private float getAverageGrowth(float initialValue, float finalValue) {
 		float average = ((finalValue / initialValue) - 1) * 100;
 		return average;
 	}
