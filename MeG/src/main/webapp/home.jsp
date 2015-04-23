@@ -18,7 +18,64 @@
 </script>
 </head>
 <body>
+	<%@include file='shared/navbar.html'%>
+	<!-- Header Carousel -->
+	<header id="myCarousel" class="carousel slide">
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+		</ol>
 
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			<%
+				NewsServlet noticiaServ = NewsServlet.getInstance();
+				ArrayList<News> noticias = noticiaServ.exibirNoticias();
+			%>
+			<div class="item active">
+				<div class="fill"
+					style="background-image: url(<%out.print(noticias.get(0).getImagem());%>);"></div>
+				<div class="carousel-caption">
+					<h2>
+						<%
+							out.print(noticias.get(0).getNoticia());
+						%>
+					</h2>
+				</div>
+			</div>
+			<div class="item">
+				<div class="fill"
+					style="background-image: url(<%out.print(noticias.get(1).getImagem());%>);"></div>
+				<div class="carousel-caption">
+					<h2>
+						<%
+							out.print(noticias.get(1).getNoticia());
+						%>
+					</h2>
+				</div>
+			</div>
+			<div class="item">
+				<div class="fill"
+					style="background-image: url(<%out.print(noticias.get(2).getImagem());%>);"></div>
+				<div class="carousel-caption">
+					<h2>
+						<%
+							out.print(noticias.get(2).getNoticia());
+						%>
+					</h2>
+				</div>
+			</div>
+		</div>
+
+		<!-- Controls -->
+		<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+			<span class="icon-prev"></span>
+		</a> <a class="right carousel-control" href="#myCarousel"
+			data-slide="next"> <span class="icon-next"></span>
+		</a>
+	</header>
 	<!-- Page Content -->
 	<div class="container">
 
