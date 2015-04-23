@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.meg.dao.FrameDAO;
 import org.meg.model.Description;
@@ -18,7 +19,7 @@ import org.meg.model.Frame;
 import org.meg.model.Section;
 
 /**
- * Servlet implementation class Login
+ * Responsable for plot an custom graphic
  */
 @WebServlet("/grafico")
 public class GraphicServlet extends HttpServlet{
@@ -32,53 +33,78 @@ public class GraphicServlet extends HttpServlet{
     }
     
 	/**
+	 * Redirect to the page that contain form that will generate graphic
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		// Redirect to an form
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("gerar-grafico.jsp");
+		requestDispatcher.forward(request, response);
 	}
 	
 	/**
-	 * Metodo que realiza o busca de dados para plotar grafico
+	 * Plot graphic, can be:
+	 * <list>
+	 * 	<ul>Normal data
+	 * 	<ul>Percentage data, calculate from normal
+	 * </list>
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Frame> quadros = new ArrayList<>();
-		int idDescricao = 0;
-		int idSetor = 0;
-		int idEstado = 0;
-		int anoInicial = 0;
-		int anoFinal = 0;
-		String opcao;
-		opcao = request.getParameter("grafico");
-		idDescricao = Integer.valueOf(request.getParameter("descricao"));
-		idSetor = Integer.valueOf(request.getParameter("setor"));
-		idEstado= Integer.valueOf(request.getParameter("estado"));
-		anoInicial = Integer.valueOf(request.getParameter("anoInicial"));
-		anoFinal = Integer.valueOf(request.getParameter("anoFinal"));
-		FrameDAO dao = new FrameDAO();
-		Description descricao = new Description(idDescricao);
-		Section secao = new Section(idSetor);
-		State estado = new State (idEstado);
-		quadros = dao.getFramesList(anoInicial, anoFinal, estado, secao, descricao);
-		if(opcao.equalsIgnoreCase("geral")){
-			request.getSession().setAttribute("valores", getValues(quadros));
-		}else if(opcao.equalsIgnoreCase("do crescimento")){
-			request.getSession().setAttribute("valores", listarCrescimento(quadros));
+	public void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		// List that will contain requested frames
+		List<Frame> frames = new ArrayList<>();
+		/* 
+		 * Get option of graphic, this can be:
+		 * -Normal data
+		 * -Growth in percentage, calculate from normal data
+		 */
+		String option = request.getParameter("grafico");
+		// Get description id by parameter
+		int idDescription = Integer.valueOf(request.getParameter("descricao"));
+		// Instantiate Description with idDescription
+		Description description = new Description(idDescription);
+		// Get setor id by parameter
+		int idSetor = Integer.valueOf(request.getParameter("setor"));
+		// Instantiate Section with idSector
+		Section section = new Section(idSetor);
+		// Get state id by parameter
+		int idState = Integer.valueOf(request.getParameter("estado"));
+		// Instantiate State with idState
+		State state = new State(idState);
+		// Two choice of custom graphic
+		int initialYear = Integer.valueOf(request.getParameter("anoInicial"));
+		int finalYear = Integer.valueOf(request.getParameter("anoFinal"));
+		// DAO used to get frames
+		FrameDAO frameDAO = new FrameDAO();
+		frames = frameDAO.getFramesList(initialYear, finalYear, state, section, description);
+		// Get session
+		HttpSession session = request.getSession();
+		// Select type of graphic from option
+		if(option.equalsIgnoreCase("geral")){
+			session.setAttribute("valores", getValues(frames));
+		}else if(option.equalsIgnoreCase("do crescimento")){
+			session.setAttribute("valores", listarCrescimento(frames));
 		}
-		request.getSession().setAttribute("anos", listarAnos(quadros));
-		request.getSession().setAttribute("tamanho", quadros.size());
-		request.getSession().setAttribute("titulo", descricao.getNome());
-		request.getSession().setAttribute("secao", secao.getNome());
-		request.getSession().setAttribute("estado", estado.getNome());
-		request.getSession().setAttribute("grafico", opcao);
+		// Set all atributes to plot graphic
+		session.setAttribute("anos", listarAnos(frames));
+		session.setAttribute("tamanho", frames.size());
+		session.setAttribute("titulo", description.getNome());
+		session.setAttribute("secao", section.getNome());
+		session.setAttribute("estado", state.getNome());
+		session.setAttribute("grafico", option);
+		// Redirect to grafico.jsp
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
 		requestDispatcher.forward(request, response);
 	}
+	
 	/**
 	 * Lista os valores dos Quadros contidos na lista global 'quadros'
 	 * 
-	 * @return	uma lista de floats contendo os valores
+	 * @return {@link List}	of Float that contain values extracted from frames
 	 */
 	public List<Float> getValues(List<Frame> quadros){
 		List<Float> valores = new ArrayList<Float>();
