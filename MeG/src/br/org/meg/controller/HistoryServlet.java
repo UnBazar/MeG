@@ -45,20 +45,25 @@ public class HistoryServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		UtilDAO dao = new UtilDAO();
 		
+		UtilDAO dao = new UtilDAO();
+	
+		// Id's are the same of the table on the database.
 		int idRanking = 1;
 		int idCompara = 2;
 		int idProjection = 3;
 		int idGraphic = 4;
 		
+		// Instantiates a new list of access
 		List<Integer> access = new ArrayList<Integer>();
 		
+		// Gets the access history directly from database.
 		int numberAccessRanking = dao.getHistory(idRanking);
 		int numberAccessCompara = dao.getHistory(idCompara);
 		int numberAccessProjection = dao.getHistory(idProjection);
 		int numberAccessGraphic = dao.getHistory(idGraphic);
 		
+		// Adds 
 		access.add(numberAccessRanking);
 		
 		request.setAttribute("lista", access);
