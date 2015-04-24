@@ -29,12 +29,12 @@ public class AdministradorDAOTest {
 	
 	@Test
 	public void testExisteNomeDeUsuario() {
-		dao.existeNomeDeUsuario("Novousuario");
+		dao.existsNameOfAdministrator("Novousuario");
 	}
 	
 	@Test
 	public void testExisteNomeDeUsuarioShouldThrowException() {
-		assertFalse(dao.existeNomeDeUsuario("usuarioInexistente"));
+		assertFalse(dao.existsNameOfAdministrator("usuarioInexistente"));
 	}
 	
 	@Test

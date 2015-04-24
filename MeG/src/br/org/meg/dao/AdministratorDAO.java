@@ -21,7 +21,7 @@ public class AdministratorDAO {
 	/**
 	 * Adds an administrator into the database.
 	 * 
-	 * @param adm Object to be added into the database.
+	 * @param administrator Object to be added into the database.
 	 */
 	public void addAdministrator(Administrator administrator) {
 		String sql = "INSERT INTO Administrador(nome, nome_de_usuario, email, senha)"
@@ -42,6 +42,7 @@ public class AdministratorDAO {
 	/**
 	 *	Method which searches for an administrator in the database. It's a valid 
 	 *	Administrator if the userName and password are correct. 
+	 *
 	 * @param userName	Name to be verified as login.
 	 * @param password	Word to be verified as password.
 	 * @return	null in case the userName or password might be wrong. 
@@ -71,22 +72,28 @@ public class AdministratorDAO {
 	}
 	
 	/**
-	 * Verifica existencia do nome de usuario
-	 * @param nomeDeUsuario
+	 * Verify if exists an name of administrator
+	 * 
+	 * @param nameOfAdministrator
 	 * @return booleano que verifica existencia do nome de usuario
 	 */
-	public boolean existeNomeDeUsuario(String nomeDeUsuario) {
+	public boolean existsNameOfAdministrator(String nameOfAdministrator) {
+		// Create sql command to get administrator with contraints
 		String sql = "SELECT * FROM Administrador WHERE nome_de_usuario = ?";
 		try {
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, nomeDeUsuario);
-			ResultSet rs = stmt.executeQuery();
-			boolean existeNome = rs.first();
-			rs.close();
-			stmt.close();
-			return existeNome;
+			// Set statement and execute to get possible results
+			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+			preparedStatement.setString(1, nameOfAdministrator);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			// Get true if exist an name
+			boolean nameExist = resultSet.first();
+			
+			resultSet.close();
+			preparedStatement.close();
+			
+			return nameExist;
 		} catch (SQLException sqlException) {
-			throw new DAOException("Erro ao acessar o banco!", this.getClass().getName());
+			throw new DAOException("Error accessing database", this.getClass().getName());
 		}
 	}
 	
