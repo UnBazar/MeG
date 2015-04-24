@@ -30,19 +30,25 @@ public class AdministratorLoginServlet extends HttpServlet {
 		
 		// Instantiate DAO to find an administrator
 		AdministratorDAO dao = new AdministratorDAO();
-		Administrator administrator = dao.searchAdministrator(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
+		Administrator administrator;
+		administrator = dao.searchAdministrator(request.getParameter("nomeDeUsuario"), 
+												request.getParameter("senha"));
 		
 		if (administrator != null) {
 			
-			
+			/*
+			 *  If searchAdministrator finds an administrator, 
+			 *  Request redirects to administrador.jsp 
+			 */
 			HttpSession sessao = request.getSession(true);
 			sessao.setAttribute("administrador", administrator);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
+			RequestDispatcher requestDispatcher;
+			requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
 			requestDispatcher.forward(request, response);
 			
 		} else{
 
-			
+			// Else redirects to the same page.
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(SAME_VIEW);
 			requestDispatcher.forward(request, response);
 		}
