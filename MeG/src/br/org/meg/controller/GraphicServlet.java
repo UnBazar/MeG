@@ -22,7 +22,7 @@ import org.meg.model.Section;
  * Responsable for plot an custom graphic
  */
 @WebServlet("/grafico")
-public class GraphicServlet extends HttpServlet{
+public class GraphicServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -84,10 +84,10 @@ public class GraphicServlet extends HttpServlet{
 		// Get session
 		HttpSession session = request.getSession();
 		// Select type of graphic from option
-		if(option.equalsIgnoreCase("geral")){
+		if(option.equalsIgnoreCase("geral")) {
 			session.setAttribute("valores", getValues(frames));
-		}else if(option.equalsIgnoreCase("do crescimento")){
-			session.setAttribute("valores", listarCrescimento(frames));
+		} else if(option.equalsIgnoreCase("do crescimento")) {
+			session.setAttribute("valores", listGrowth(frames));
 		}
 		// Set all atributes to plot graphic
 		session.setAttribute("anos", listarAnos(frames));
@@ -106,35 +106,34 @@ public class GraphicServlet extends HttpServlet{
 	 * 
 	 * @return {@link List}	of Float that contain values extracted from frames
 	 */
-	public List<Float> getValues(List<Frame> quadros){
+	public List<Float> getValues(List<Frame> quadros) {
 		List<Float> valores = new ArrayList<Float>();
-		for( Frame q: quadros){
+		for( Frame q: quadros) {
 			valores.add(q.getValue());
 		}
 		return valores;
 	}
+	
 	/**
-	 * Lista os valores dos quadros contidos na lista global 'quadros' mas fazendo o calculo do crescimento anual
-	 * @param quadros
-	 * @return uma lista de floats contendo os valores de crescimento
+	 * List values of frames in percentage of growth anual
+	 * @param frames is normal data listed by year
+	 * @return an {@link List} of Floats, with values in percentage
 	 */
-	private List<Float> listarCrescimento(List<Frame> quadros){
-		List<Float> valores = new ArrayList<Float>();
-		float valorInicial = 0,valorFinal = 0;
-		for(int i = 0; i < quadros.size(); i++){
-			if(i == 0){
-				valorInicial= quadros.get(i).getValue();
-				valorFinal = valorInicial;
-			}
-			else{
-				valorInicial = valorFinal;
-				valorFinal = quadros.get(i).getValue();
-			}
-			valores.add(calculaCrescimento(valorFinal,valorInicial));
+	private List<Float> listGrowth(List<Frame> frames) {
+		// That contains values calculated
+		List<Float> values = new ArrayList<Float>();
+		// Each iteration of repetition bellow set this variables
+		float initValue = frames.get(0).getValue();;
+		float finalValue = initValue;
+		// Runs list
+		for(int i = 1; i < frames.size(); i++) {
+			initValue = finalValue;
+			finalValue = frames.get(i).getValue();
+			values.add(calculateGrowth(finalValue, initValue));
 		}
-		
-		return valores;
+		return values;
 	}
+	
 	/**
 	 * Lista os anos dos Quadros contidos na lista global 'quadros'
 	 * 
@@ -147,13 +146,14 @@ public class GraphicServlet extends HttpServlet{
 		}
 		return anos;
 	}
+	
 	/**
 	 * Calcula o valor do crescimento percentual anual
 	 * @param valorFinal
 	 * @param valorInicial
 	 * @return float com o valor do crescimento
 	 */
-	private float calculaCrescimento(float valorFinal, float valorInicial){
+	private float calculateGrowth(float valorFinal, float valorInicial){
 		float crescimento = ((valorFinal/valorInicial)-1)* 100;
 		return crescimento;
 	}
