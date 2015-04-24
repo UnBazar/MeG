@@ -23,7 +23,10 @@ import org.meg.model.Section;
  */
 @WebServlet("/grafico")
 public class GraphicServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	// Weight to show values in percent
+	private static final float FACTOR_PERCENTAGE = 100;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -90,7 +93,7 @@ public class GraphicServlet extends HttpServlet {
 			session.setAttribute("valores", listGrowth(frames));
 		}
 		// Set all atributes to plot graphic
-		session.setAttribute("anos", listarAnos(frames));
+		session.setAttribute("anos", listYears(frames));
 		session.setAttribute("tamanho", frames.size());
 		session.setAttribute("titulo", description.getNome());
 		session.setAttribute("secao", section.getNome());
@@ -102,20 +105,21 @@ public class GraphicServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Lista os valores dos Quadros contidos na lista global 'quadros'
+	 * List all values in frames
 	 * 
 	 * @return {@link List}	of Float that contain values extracted from frames
 	 */
-	public List<Float> getValues(List<Frame> quadros) {
-		List<Float> valores = new ArrayList<Float>();
-		for( Frame q: quadros) {
-			valores.add(q.getValue());
+	public List<Float> getValues(List<Frame> frames) {
+		List<Float> values = new ArrayList<Float>();
+		for( Frame frame: frames) {
+			values.add(frame.getValue());
 		}
-		return valores;
+		return values;
 	}
 	
 	/**
 	 * List values of frames in percentage of growth anual
+	 * 
 	 * @param frames is normal data listed by year
 	 * @return an {@link List} of Floats, with values in percentage
 	 */
@@ -135,26 +139,27 @@ public class GraphicServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Lista os anos dos Quadros contidos na lista global 'quadros'
+	 * List of years intervals of frames
 	 * 
-	 * @return uma lista de Strings contendo os anos
+	 * @return {@link List} of {@link String} representing years
 	 */
-	private List<String> listarAnos(List<Frame> quadros){
-		List<String> anos = new ArrayList<String>();
-		for( Frame q: quadros){
-			anos.add(String.valueOf(q.getYear()));
+	private List<String> listYears(List<Frame> frames) {
+		List<String> years = new ArrayList<String>();
+		for( Frame frame: frames){
+			years.add(String.valueOf(frame.getYear()));
 		}
-		return anos;
+		return years;
 	}
 	
 	/**
-	 * Calcula o valor do crescimento percentual anual
-	 * @param valorFinal
-	 * @param valorInicial
-	 * @return float com o valor do crescimento
+	 * Calculate value of growth in percentage anual
+	 * 
+	 * @param finalValue first value
+	 * @param initValue  end value
+	 * @return float with calculate growth
 	 */
-	private float calculateGrowth(float valorFinal, float valorInicial){
-		float crescimento = ((valorFinal/valorInicial)-1)* 100;
-		return crescimento;
+	private float calculateGrowth(float initValue, float finalValue){
+		float growth = ((finalValue/initValue)-1) * FACTOR_PERCENTAGE;
+		return growth;
 	}
 }
