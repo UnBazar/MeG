@@ -89,17 +89,16 @@ public class CompareServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// Get session of request
 		HttpSession session = request.getSession();
-		
 		// Load scenes from session and request
 		List<Frame> scenes = getSelectedScenes(request);
-		
+		assert(scenes == null);
 		/* 
 		 * Type of chart data, can be:
 		 * - Normal, raw data
 		 * - Percentage increase
 		 */
 		String choiceTypeOfData = (String) session.getAttribute("grafico");
-		
+		assert(choiceTypeOfData==null);
 		// Instantiate method to use an method
 		GraphicServlet graphic = new GraphicServlet();
 		/*
@@ -114,7 +113,6 @@ public class CompareServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher(VIEW_NAME);
 		rd.forward(request, response);
 	}
-	
 	/**
 	 * List values with increase betwen two years
 	 * 

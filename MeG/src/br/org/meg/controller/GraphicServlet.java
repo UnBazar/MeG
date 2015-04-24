@@ -66,6 +66,8 @@ public class GraphicServlet extends HttpServlet {
 		 * -Growth in percentage, calculate from normal data
 		 */
 		String option = request.getParameter("grafico");
+		// Never be null
+		assert(option == null);
 		// Get description id by parameter
 		int idDescription = Integer.valueOf(request.getParameter("descricao"));
 		// Instantiate Description with idDescription
@@ -81,6 +83,8 @@ public class GraphicServlet extends HttpServlet {
 		// Two choice of custom graphic
 		int initialYear = Integer.valueOf(request.getParameter("anoInicial"));
 		int finalYear = Integer.valueOf(request.getParameter("anoFinal"));
+		// years don't be equals
+		assert(initialYear == finalYear);
 		// DAO used to get frames
 		FrameDAO frameDAO = new FrameDAO();
 		frames = frameDAO.getFramesList(initialYear, finalYear, state, section, description);
@@ -110,6 +114,7 @@ public class GraphicServlet extends HttpServlet {
 	 * @return {@link List}	of Float that contain values extracted from frames
 	 */
 	public List<Float> getValues(List<Frame> frames) {
+		assert(frames == null);
 		List<Float> values = new ArrayList<Float>();
 		for( Frame frame: frames) {
 			values.add(frame.getValue());
