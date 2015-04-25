@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.meg.exception.DAOException;
-import org.meg.model.News;
+import org.meg.model.Note;
 import java.util.List;
 import org.meg.model.Error;
 
@@ -246,36 +246,40 @@ public class UtilDAO {
 					this.getClass().getName());
 		}
 	}
-
-	public ArrayList<News> prepararNoticia() {
-
+	/**
+	 * Get 3 randomic notes
+	 * 
+	 * @return {@link ArrayList} of Note
+	 */
+	public ArrayList<Note> getNotes() {
+		// SQL command to get randomic notes
 		String sql = "SELECT * FROM Noticias ORDER BY RAND() LIMIT 3";
-
-		ArrayList<News> noticias = new ArrayList<News>();
-		PreparedStatement stmt;
+		// Create an arrayList of notes
+		ArrayList<Note> notes = new ArrayList<Note>();
+		PreparedStatement preparedStatement;
 		try {
-			stmt = this.connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				int db_id = rs.getInt("id");
-				String db_noticia = rs.getString("noticia");
-				String db_imagem = rs.getString("imagem");
-
-				News noticia = new News();
-				noticia.setNoticia(db_noticia);
-				noticia.setId(db_id);
-				noticia.setImagem(db_imagem);
-
-				noticias.add(noticia);
+			// Get global connection to prepare statement
+			preparedStatement = this.connection.prepareStatement(sql);
+			// Get result query
+			ResultSet resultSet = preparedStatement.executeQuery();
+			// Runs while exist to the next
+			while (resultSet.next()) {
+				// Get each data from note in the database
+				int noteID = resultSet.getInt("id");
+				String message = resultSet.getString("noticia");
+				String image = resultSet.getString("imagem");
+				// Create and set an new note
+				Note note = new Note();
+				note.setNoticia(message);
+				note.setId(noteID);
+				note.setImagem(image);
+				
+				notes.add(note);
 			}
-
 		} catch (SQLException e) {
-			System.err.println(e);
-			throw new DAOException("Erro ao obter noticias do banco de dados!", this.getClass().getName());
+			throw new DAOException("Error to obtain notes", this.getClass().getName());
 		}
-
-		return noticias;
+		return notes;
 	}
 
 	/**

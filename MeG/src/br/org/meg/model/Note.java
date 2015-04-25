@@ -1,10 +1,11 @@
 package org.meg.model;
 
-public class News {
+public class Note {
 
 	private int id;
 	private String noticia;
 	private String imagem;
+	
 	public int getId() {
 		return id;
 	}

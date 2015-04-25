@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page language="java" import="org.meg.controller.NewsServlet"%>
-<%@ page language="java" import="java.util.ArrayList"%>
-<%@ page language="java" import="org.meg.model.News"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file='shared/head.html'%>
 <!DOCTYPE html>
 <html>
@@ -30,43 +28,24 @@
 
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner">
-			<%
-				NewsServlet noticiaServ = NewsServlet.getInstance();
-				ArrayList<News> noticias = noticiaServ.exibirNoticias();
-			%>
 			<div class="item active">
-				<div class="fill"
-					style="background-image: url(<%out.print(noticias.get(0).getImagem());%>);"></div>
+				<div class="fill" style="background-image: url(${defaultNote.imagem});"></div>
 				<div class="carousel-caption">
 					<h2>
-						<%
-							out.print(noticias.get(0).getNoticia());
-						%>
+						${defaultNote.noticia}
 					</h2>
 				</div>
 			</div>
-			<div class="item">
-				<div class="fill"
-					style="background-image: url(<%out.print(noticias.get(1).getImagem());%>);"></div>
+			<c:forEach items="${observations}" var="notice">
+				<div class="item">
+				<div class="fill" style="background-image: url(${notice.imagem});"></div>
 				<div class="carousel-caption">
 					<h2>
-						<%
-							out.print(noticias.get(1).getNoticia());
-						%>
+						${notice.noticia}
 					</h2>
 				</div>
-			</div>
-			<div class="item">
-				<div class="fill"
-					style="background-image: url(<%out.print(noticias.get(2).getImagem());%>);"></div>
-				<div class="carousel-caption">
-					<h2>
-						<%
-							out.print(noticias.get(2).getNoticia());
-						%>
-					</h2>
 				</div>
-			</div>
+			</c:forEach>
 		</div>
 
 		<!-- Controls -->

@@ -23,7 +23,7 @@ public class ConnectionFactory {
 			// To populate with necessary data to set connection
 			Properties properties = new Properties();
 			// Get path of file config
-			String path = System.getProperty("user.home")+ "/mydb.cfg";
+			String path = System.getProperty("user.home")+"/mydb.cfg";
 			// Create an inputStream with path
 			FileInputStream inputStream = new FileInputStream(path);
 			
