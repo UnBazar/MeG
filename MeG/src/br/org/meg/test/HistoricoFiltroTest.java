@@ -1,6 +1,7 @@
 package org.meg.test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.FilterHistory;
 import org.meg.controller.FilterHistory;
 
 public class HistoricoFiltroTest {

@@ -1,15 +1,15 @@
 package org.meg.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.meg.dao.UtilDAO;
-import org.mockito.Mock;
 
 public class UtilDAOTest {
 	private UtilDAO dao;
-	private UtilDAO daoMock;
+	
 	@Before
 	public void setUp() throws Exception {
 		dao = new UtilDAO();

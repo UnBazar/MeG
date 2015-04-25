@@ -15,36 +15,57 @@ import org.meg.model.Administrator;
 /**
  * It's a Servlet class. Its function is called in /login
  * This class validates the login of an administrator
+ * or redirects to login
  */
 @WebServlet("/login")
 public class AdministratorLoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final String SAME_VIEW = "login-adm.jsp";
+	private final String TO_LOGIN = "login-adm.jsp";
 	private final String ADMINISTRATOR_VIEW = "WEB-INF/jsp/administrador.jsp";
 
 
+	/**
+	 * Redirects to view of login
+	 * 
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher requestDispatcher;
+		HttpSession session = request.getSession();
+		Administrator administrator = (Administrator) session.getAttribute("administrador");
+		if(administrator != null){
+			requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
+		}else{
+			requestDispatcher = request.getRequestDispatcher(TO_LOGIN);
+		}
+		requestDispatcher.forward(request, response);
+	}
+	
+	/**
+	 * 
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		
 		// Instantiate DAO to find an administrator
-		AdministratorDAO dao = new AdministratorDAO();
-		Administrator administrator = dao.searchAdministrator(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
-		
+		AdministratorDAO administratorDAO = new AdministratorDAO();
+		Administrator administrator = administratorDAO.searchAdministrator(request.getParameter("nomeDeUsuario"), request.getParameter("senha"));
+		// Create requestDispatcher
+		RequestDispatcher requestDispatcher;
+		// If authentication was an success
 		if (administrator != null) {
-			
-			
-			HttpSession sessao = request.getSession(true);
-			sessao.setAttribute("administrador", administrator);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
-			requestDispatcher.forward(request, response);
-			
-		} else{
-
-			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(SAME_VIEW);
-			requestDispatcher.forward(request, response);
+			// Gets session to put administrator
+			HttpSession session = request.getSession(true);
+			session.setAttribute("administrador", administrator);
+			// redirects to administrator's view
+			requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
+		} else {
+			// If authentication return error
+			requestDispatcher = request.getRequestDispatcher(TO_LOGIN);
 		}
+		requestDispatcher.forward(request, response);
 	}
 }
