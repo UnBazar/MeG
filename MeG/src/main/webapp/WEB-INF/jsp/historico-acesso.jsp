@@ -38,21 +38,12 @@
 			<br>
 			<h1>Histórico de acessos</h1>
 			<table border="1" class="tabelas">
-				<tr>
-					<th>Ranking</th>
-					<th>Compara</th>
-					<th>Projeção</th>
-					<th>Gráfico</th>
-				</tr>
-				<c:forEach var="quadro" items="${lista}" varStatus="id">
+				<c:forEach items="${histories}" var="history">
 					<tr>
-						<td>${ranking}</td>
-						<td>${compara}</td>
-						<td>${projecao}</td>
-						<td>${grafico}</td>
+						<th>${history.name}</th>
+						<td>${history.value}</td>
 					</tr>
 				</c:forEach>
-				
 			</table>
 		</div>
 	<br>

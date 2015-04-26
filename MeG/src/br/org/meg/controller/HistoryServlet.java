@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.meg.dao.UtilDAO;
+import org.meg.model.History;
 
 /**
  * It's a Servlet class Its function is called in /historico.
@@ -39,34 +41,30 @@ public class HistoryServlet extends HttpServlet {
 
 	/** Method post which modifies the table and redirects to the view page 
 	 * Getting the history through the database.
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		// Used to get numbers of access in functionalities
+		UtilDAO utilDAO = new UtilDAO();
+		// To get all Histories
+		List<History> access = new ArrayList<History>();
 		
-		UtilDAO dao = new UtilDAO();
-		
-		int idRanking = 1;
-		int idCompara = 2;
-		int idProjection = 3;
-		int idGraphic = 4;
-		
-		List<Integer> access = new ArrayList<Integer>();
-		
-		int numberAccessRanking = dao.getHistory(idRanking);
-		int numberAccessCompara = dao.getHistory(idCompara);
-		int numberAccessProjection = dao.getHistory(idProjection);
-		int numberAccessGraphic = dao.getHistory(idGraphic);
-		
-		access.add(numberAccessRanking);
-		
-		request.setAttribute("lista", access);
-		request.setAttribute("ranking", numberAccessRanking);
-		request.setAttribute("compara", numberAccessCompara);
-		request.setAttribute("projecao", numberAccessProjection);
-		request.setAttribute("grafico", numberAccessGraphic);
-		request.getRequestDispatcher(HISTORY_ACESS_VIEW).forward(request, response);
+		/*
+		 *  Run all ids possible of histories. 
+		 *  The initial value is one because first id in database is 1.
+		 *  The loop goes to the value for the length of the features attribute  
+		 */
+		for(int count = 1; count <= History.functionalities.length; count++){
+			access.add(utilDAO.getHistory(count));
+		}
+		// Put list of access in request
+		request.setAttribute("histories", access);
+		// Redirect to history view
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(HISTORY_ACESS_VIEW);
+		requestDispatcher.forward(request, response);
 	}
 
 }

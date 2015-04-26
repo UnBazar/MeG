@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.meg.exception.DAOException;
+import org.meg.model.History;
 import org.meg.model.Note;
+
 import java.util.List;
+
 import org.meg.model.Error;
 
 public class UtilDAO {
@@ -351,22 +354,22 @@ public class UtilDAO {
 		return erros;
 	}
 	
-	public int getHistory(int id){
-		int access = 0;
+	public History getHistory(int id){
+		History history = null;
 		try {
-			String sql = "Select * From Historico Where id = ?";
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, id);
-			stmt.execute();
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				access = rs.getInt("acessos");
+			String sql = "SELECT * FROM Historico WHERE id = ?";
+			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			preparedStatement.execute();
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				int access = resultSet.getInt("acessos");
+				history = new History(id, access);
 			}
 		} catch (SQLException sqlException) {
-			throw new DAOException("Erro ao buscar o numero de acessos no banco onde id = "
-									+ id,this.getClass().getName());
+			throw new DAOException("Error fetching the history of id 1 = "+id, 
+					this.getClass().getName());
 		}
-		
-		return access;
+		return history;
 	}
 }
