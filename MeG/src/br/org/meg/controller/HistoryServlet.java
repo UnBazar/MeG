@@ -51,7 +51,6 @@ public class HistoryServlet extends HttpServlet {
 		UtilDAO utilDAO = new UtilDAO();
 		// To get all Histories
 		List<History> access = new ArrayList<History>();
-		
 		/*
 		 *  Run all ids possible of histories. 
 		 *  The initial value is one because first id in database is 1.

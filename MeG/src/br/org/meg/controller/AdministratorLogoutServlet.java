@@ -17,13 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 public class AdministratorLogoutServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private final String LOGIN_VIEW = "login-adm.jsp";
 
 	public void service(HttpServletRequest request, HttpServletResponse response) {
 		
+		// Invalidates session to logout.
 		request.getSession().invalidate();
 		
 		try {
-			request.getRequestDispatcher("login-adm.jsp").forward(request, response);
+			request.getRequestDispatcher(LOGIN_VIEW).forward(request, response);
 			
 		} catch (ServletException | IOException servletException) {
 			throw new RuntimeException("Falha ao deslogar!");
