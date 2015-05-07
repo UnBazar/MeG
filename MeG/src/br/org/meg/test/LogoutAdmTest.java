@@ -29,7 +29,7 @@ public class LogoutAdmTest {
 		when(request.getRequestDispatcher("login-adm.jsp")).thenReturn(
 				mock(RequestDispatcher.class));
 		AdministratorLogoutServlet servlet = new AdministratorLogoutServlet();
-		servlet.service(request, response);
+		servlet.doGet(request, response);
 	}
 
 }

@@ -19,15 +19,18 @@ public class AdministratorLogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private final String LOGIN_VIEW = "login-adm.jsp";
-
-	public void service(HttpServletRequest request, HttpServletResponse response) {
-		
-		// Invalidates session to logout.
-		request.getSession().invalidate();
-		
+	
+	/**
+	 * Clean session to logout, after this, return to login
+	 * 
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			// Invalidates session to logout.
+			request.getSession().invalidate();
+			// Redirect to view of login
 			request.getRequestDispatcher(LOGIN_VIEW).forward(request, response);
-			
 		} catch (ServletException | IOException servletException) {
 			throw new RuntimeException("Falha ao deslogar!");
 		}

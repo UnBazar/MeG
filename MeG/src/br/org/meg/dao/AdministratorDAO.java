@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import org.meg.exception.DAOException;
 import org.meg.model.Administrator;
 
+/**
+ * Operate in data of table Administrator
+ * 
+ */
 public class AdministratorDAO {
 	private Connection connection;
 		
@@ -27,15 +31,17 @@ public class AdministratorDAO {
 		String sql = "INSERT INTO Administrador(nome, nome_de_usuario, email, senha)"
 				+ " values(?,?,?,?)";
 		try {
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, administrator.getName());
-			stmt.setString(2, administrator.getUserName());
-			stmt.setString(3, administrator.getEmail());
-			stmt.setString(4, administrator.getPassword());
-			stmt.execute();
-			stmt.close();
+			// Create statement from sql comand
+			PreparedStatement prepareStatement = this.connection.prepareStatement(sql);
+			prepareStatement.setString(1, administrator.getName());
+			prepareStatement.setString(2, administrator.getUserName());
+			prepareStatement.setString(3, administrator.getEmail());
+			prepareStatement.setString(4, administrator.getPassword());
+			// Execute and close statement
+			prepareStatement.execute();
+			prepareStatement.close();
 		} catch(SQLException sqlException) {
-			throw new DAOException("Erro ao adicionar um administrador!", this.getClass().getName());
+			throw new DAOException("catch an error while add an new administrator!", this.getClass().getName());
 		}
 	}
 	
@@ -52,21 +58,24 @@ public class AdministratorDAO {
 		String sql = "SELECT * FROM Administrador where nome_de_usuario = ? AND senha = ?";
 		Administrator administrator = null;
 		try{
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, userName);
-			stmt.setString(2, password);
-			stmt.setMaxRows(1);
-			ResultSet rs = stmt.executeQuery();
-			if(rs.first()) {
+			PreparedStatement prepareStatement = this.connection.prepareStatement(sql);
+			prepareStatement.setString(1, userName);
+			prepareStatement.setString(2, password);
+			prepareStatement.setMaxRows(1);
+			ResultSet resultSet = prepareStatement.executeQuery();
+			if(resultSet.first()) {
 				administrator = new Administrator();
-				administrator.setName(rs.getString("nome"));
-				administrator.setPassword(rs.getString("senha"));
-				administrator.setEmail(rs.getString("email"));
-				administrator.setUserName(rs.getString("nome_de_usuario"));	
+				administrator.setName(resultSet.getString("nome"));
+				administrator.setPassword(resultSet.getString("senha"));
+				administrator.setEmail(resultSet.getString("email"));
+				administrator.setUserName(resultSet.getString("nome_de_usuario"));	
+			}else{
+				// will return administrator like null
 			}
-			rs.close();
-			stmt.close();
+			resultSet.close();
+			prepareStatement.close();
 		} catch (SQLException sqlException) {
+			throw new DAOException("Catch an error while search an administrator!", this.getClass().getName());
 		}
 		return administrator;
 	}
@@ -93,7 +102,7 @@ public class AdministratorDAO {
 			
 			return nameExist;
 		} catch (SQLException sqlException) {
-			throw new DAOException("Error accessing database", this.getClass().getName());
+			throw new DAOException("Error to accessing database", this.getClass().getName());
 		}
 	}
 	

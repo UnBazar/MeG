@@ -1,7 +1,7 @@
 package org.meg.model;
 
 import org.meg.dao.UtilDAO;
-import org.meg.exception.QuebraSistemaException;
+import org.meg.exception.SystemBreakException;
 
 public class Description {
 	private int id;
@@ -25,7 +25,7 @@ public class Description {
 
 	public void setId(int id) {
 		if (id > 5 || id < 1) {
-			throw new QuebraSistemaException("Um id invalido da descricao foi inserido!");
+			throw new SystemBreakException("Um id invalido da descricao foi inserido!");
 		}
 		UtilDAO dao = new UtilDAO();
 		this.id = id;

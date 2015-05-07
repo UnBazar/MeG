@@ -29,16 +29,17 @@ public class FrameDAO {
 	 */
 	public void addFrame(Frame frame) {
 		if(!frameExists(frame)){
-			String sqlStatement = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) VALUES(?,?,?,?,?)";
+			String sqlStatement = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) "
+					+ "VALUES(?,?,?,?,?)";
 			try {
-				PreparedStatement stmt = this.connection.prepareStatement(sqlStatement);
-				stmt.setInt(1, frame.getYear());
-				stmt.setFloat(2, frame.getValue());
-				stmt.setInt(3, frame.getState().getId());
-				stmt.setInt(4, frame.getSection().getId());
-				stmt.setInt(5, frame.getDescription().getId());
-				stmt.execute();
-				stmt.close();
+				PreparedStatement preparedStatement = this.connection.prepareStatement(sqlStatement);
+				preparedStatement.setInt(1, frame.getYear());
+				preparedStatement.setFloat(2, frame.getValue());
+				preparedStatement.setInt(3, frame.getState().getId());
+				preparedStatement.setInt(4, frame.getSection().getId());
+				preparedStatement.setInt(5, frame.getDescription().getId());
+				preparedStatement.execute();
+				preparedStatement.close();
 			} catch (SQLException sqlException) {
 				throw new DAOException("The system failed to persist a frame. Exception: " 
 											+ sqlException.getMessage(), this.getClass().getName());
@@ -48,35 +49,41 @@ public class FrameDAO {
 	
 	/**
 	 * Identify if the frame sent as argument exists in the database
-	 * @param frame
+	 * 
+	 * @param frame that will be analysed
 	 * @return	true if the frame exists
 	 */
 	public boolean frameExists(Frame frame){
 		String sqlStatement = "SELECT * FROM Quadro "
-				+ "WHERE estado_id = ? "
-				+ "AND secao_id = ? "
-				+ "AND descricao_id = ? "
-				+ "AND ano = ? ";
+				+ "WHERE estado_id = ? AND secao_id = ? "
+				+ "AND descricao_id = ? AND ano = ?";
 		try {
 			boolean exists = false;
+			// A database of result set
 			ResultSet queryResult;
-			PreparedStatement sqlCompiledStatement = connection.prepareStatement(sqlStatement);
-			sqlCompiledStatement.setInt(1, frame.getState().getId());
-			sqlCompiledStatement.setInt(2, frame.getSection().getId());
-			sqlCompiledStatement.setInt(3, frame.getDescription().getId());
-			sqlCompiledStatement.setInt(4, frame.getYear());
-			queryResult = sqlCompiledStatement.executeQuery();
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
+			preparedStatement.setInt(1, frame.getState().getId());
+			preparedStatement.setInt(2, frame.getSection().getId());
+			preparedStatement.setInt(3, frame.getDescription().getId());
+			preparedStatement.setInt(4, frame.getYear());
+			// Get result set from preparedStatement
+			queryResult = preparedStatement.executeQuery();
 			// returns true if a match is found
 			exists = queryResult.first();
+			// If two frames are match, throw an exception
+			if(queryResult.next()){
+				throw new DAOException("Twice frame is catch in method frame exists", this.getClass().getName());
+			}else{
+				// do nothing
+			}
 			queryResult.close();
-			sqlCompiledStatement.close();
+			preparedStatement.close();
 			return exists;
 		}catch(SQLException exception){
 			throw new DAOException("An unexpected failure occurred while verifying existing frame. Exception: " 
 										+ exception.getMessage(), this.getClass().getClass().getName());
 		}
 	}
-	
 	
 	/**
 	 * Search in the database a list of frames corresponding to the values sent as argument.
@@ -88,14 +95,14 @@ public class FrameDAO {
 	 * @param description
 	 * @return a list of frames if found on database or null if not
 	 */
-	public List<Frame> getFramesList(int initialYear, int finalYear, State state, Section section, Description description) {
+	public List<Frame> getFramesList(int initialYear, int finalYear, State state, 
+			Section section, Description description) {
 		String sqlStatement = "SELECT * FROM Quadro "
-				+ "WHERE estado_id = ? "
-				+ "AND secao_id = ? "
-				+ "AND descricao_id = ? "
-				+ "AND ano >= ? AND ano <= ? ";
+				+ "WHERE estado_id = ?  AND secao_id = ? "
+				+ "AND descricao_id = ? AND ano >= ? AND ano <= ? ";
 		try {
-			List<Frame> frames;
+			List<Frame> frames = new ArrayList<Frame>();;
+			// A database result set
 			ResultSet queryResult;
 			PreparedStatement sqlCompiledStatement = connection.prepareStatement(sqlStatement);
 			sqlCompiledStatement.setInt(1, state.getId());
@@ -103,26 +110,31 @@ public class FrameDAO {
 			sqlCompiledStatement.setInt(3, description.getId());
 			sqlCompiledStatement.setInt(4, initialYear);
 			sqlCompiledStatement.setInt(5, finalYear);
+			// Get an result from database
 			queryResult = sqlCompiledStatement.executeQuery();
-			frames = new ArrayList<Frame>();
 			while(queryResult.next()) {
+				// Row catch, populate new frames
 				Frame frame = new Frame();
 				frame.setDescription(description);
 				frame.setState(state);
 				frame.setSection(section);
 				frame.setYear(queryResult.getInt("ano"));
 				frame.setValue(queryResult.getFloat("valor"));
+				// Add frame created to list
 				frames.add(frame);				
 			}
 			queryResult.close();
 			sqlCompiledStatement.close();
+			// If none frame is catch, throw an Exception
 			if(frames.isEmpty()) {
-				String message = "Tried to get frames between " + initialYear + " - " + finalYear + " and nothing was found.";
+				String message = "Tried to get frames between " + initialYear 
+						+ " - " + finalYear + " and nothing was found.";
 				throw new DAOException(message, this.getClass().getName());
 			}
+			// Treat to throw an checked exception
 			return frames;
 		} catch(SQLException sqlException) {
-			throw new DAOException("Failed while trying to search frames in the database. Exception:  "
+			throw new DAOException("Failed while trying to list frames in the database. Exception:  "
 										+ sqlException.getMessage(), this.getClass().getName());
 		}
 	}

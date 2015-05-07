@@ -5,7 +5,7 @@ import java.sql.Date;
 import org.meg.dao.UtilDAO;
 import org.meg.model.Error;
 
-public class QuebraSistemaException extends RuntimeException{
+public class SystemBreakException extends RuntimeException{
 	/**
 	 * 
 	 */
@@ -13,7 +13,7 @@ public class QuebraSistemaException extends RuntimeException{
 	private final String tipoExcecao = "QuebraDeSistema>>";
 	private String mensagem;
 	
-	public QuebraSistemaException(String mensagem) {
+	public SystemBreakException(String mensagem) {
 		this.mensagem = mensagem;
 		printStackTrace();
 	}
