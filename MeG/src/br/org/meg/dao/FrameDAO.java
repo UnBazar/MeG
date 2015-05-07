@@ -88,11 +88,11 @@ public class FrameDAO {
 	/**
 	 * Search in the database a list of frames corresponding to the values sent as argument.
 	 * 
-	 * @param initialYear
-	 * @param finalYear
-	 * @param state
-	 * @param section
-	 * @param description
+	 * @param initialYear first year of frame
+	 * @param finalYear final year of frame
+	 * @param state is a federal unit
+	 * @param section Frame's search area
+	 * @param description type of search
 	 * @return a list of frames if found on database or null if not
 	 */
 	public List<Frame> getFramesList(int initialYear, int finalYear, State state, 
@@ -142,9 +142,9 @@ public class FrameDAO {
 	/**
 	 * Queries database searching for a determined frame for each state.
 	 * 
-	 * @param year 
-	 * @param section
-	 * @param description
+	 * @param year of occurrence the frame
+	 * @param section belong to frame
+	 * @param description belong to frame
 	 * @return list of frames for each state
 	 */
 	public List<Frame> getFramesList(int year, Section section, Description description) {
