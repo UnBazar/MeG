@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.meg.dao.EnumTable;
 import org.meg.dao.FrameDAO;
+import org.meg.dao.GenericModelDAO;
 import org.meg.model.Description;
 import org.meg.model.State;
 import org.meg.model.Frame;
@@ -42,11 +44,16 @@ public class GraphicServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		// List options of fields programatically
+		session.setAttribute("descriptions", listModel(EnumTable.DESCRIPTION));
+		session.setAttribute("sections", listModel(EnumTable.SECTION));
+		session.setAttribute("states", listModel(EnumTable.STATE));
 		// Redirect to an form
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("gerar-grafico.jsp");
 		requestDispatcher.forward(request, response);
 	}
-	
+
 	/**
 	 * Plot graphic, can be:
 	 * <list>
@@ -69,7 +76,7 @@ public class GraphicServlet extends HttpServlet {
 		// Never be null
 		assert(option == null);
 		// Get description id by parameter
-		int idDescription = Integer.valueOf(request.getParameter("descricao"));
+		int idDescription = Integer.valueOf(request.getParameter("description"));
 		// Instantiate Description with idDescription
 		Description description = new Description(idDescription);
 		// Get setor id by parameter
@@ -99,7 +106,7 @@ public class GraphicServlet extends HttpServlet {
 		// Set all atributes to plot graphic
 		session.setAttribute("anos", listYears(frames));
 		session.setAttribute("tamanho", frames.size());
-		session.setAttribute("titulo", description.getNome());
+		session.setAttribute("titulo", description.getContent());
 		session.setAttribute("secao", section.getNome());
 		session.setAttribute("estado", state.getNome());
 		session.setAttribute("grafico", option);
@@ -166,5 +173,17 @@ public class GraphicServlet extends HttpServlet {
 	private float calculateGrowth(float initValue, float finalValue){
 		float growth = ((finalValue/initValue)-1) * FACTOR_PERCENTAGE;
 		return growth;
+	}	
+	/**
+	 * List all models in an table
+	 * 
+	 * @param typeOfModel type that will be listed
+	 * 
+	 * @return list found
+	 */
+	private List<Object> listModel(EnumTable typeOfModel) {
+		GenericModelDAO DAO = new GenericModelDAO(typeOfModel);
+		List<Object> list = DAO.listAll();
+		return list;
 	}
 }

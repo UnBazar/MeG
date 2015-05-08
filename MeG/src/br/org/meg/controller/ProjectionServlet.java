@@ -82,7 +82,7 @@ public class ProjectionServlet extends HttpServlet {
 		session.setAttribute("valores", getValuesList(frames));
 		session.setAttribute("anos", getYearsList(frames));
 		session.setAttribute("tamanho", frames.size());
-		session.setAttribute("titulo", description.getNome());
+		session.setAttribute("titulo", description.getContent());
 		session.setAttribute("secao", section.getNome());
 		session.setAttribute("estado", state.getNome());
 		

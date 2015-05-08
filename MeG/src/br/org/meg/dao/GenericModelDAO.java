@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.meg.exception.DAOException;
+import org.meg.model.Description;
+import org.meg.model.Section;
+import org.meg.model.State;
 
 /**
  * This implementation is responsible for some generic operations 
@@ -15,7 +19,7 @@ import org.meg.exception.DAOException;
 public class GenericModelDAO {
 	private Connection connection;
 	/*	Table name that will operate */
-	private String tableName;
+	private final String tableName;
 	
 	/**
 	 * Unique constructor 
@@ -83,6 +87,50 @@ public class GenericModelDAO {
 		} catch (SQLException sqlException) {
 			throw new DAOException("An failure occurred while getIDFromName of"
 							+ tableName + "model", this.getClass().getName());
+		}
+	}
+	
+	/**
+	 * This method list all registers in an table of database.
+	 * Therefore, it just work to follow models:
+	 * <ul>
+	 * 	<li>Description</li>
+	 *	<li>Section</li>
+	 *	<li>State</li>
+	 * </ul>
+	 * @return an {@link ArrayList} with values founded
+	 */
+	public ArrayList<Object> listAll() {
+		String sql = "SELECT * FROM " + tableName;
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			ArrayList<Object> genericList = new ArrayList<Object>();
+			while(resultSet.next()){
+				switch(tableName){
+					case "Descricao":
+						Description description = new Description();
+						description.setId(resultSet.getInt("id"));
+						genericList.add(description);
+						break;
+					case "Secao":
+						Section section = new Section();
+						section.setId(resultSet.getInt("id"));
+						genericList.add(section);
+						break;
+					case "Estado":
+						State state = new State();
+						state.setId(resultSet.getInt("id"));
+						genericList.add(state);
+						break;
+					default :
+						throw new RuntimeException("Exception throw in listAll of GenericDAO...");
+				}
+			}
+			return genericList;
+		} catch (SQLException sqlException) {
+			throw new DAOException("An failure occurred while list all registers of"
+					+ tableName + "model", this.getClass().getName());
 		}
 	}
 }

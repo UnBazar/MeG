@@ -29,19 +29,19 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner">
 			<div class="item active">
-				<div class="fill" style="background-image: url(${defaultNote.imagem});"></div>
+				<div class="fill" style="background-image: url(${defaultNote.imageURL});"></div>
 				<div class="carousel-caption">
 					<h2>
-						${defaultNote.noticia}
+						${defaultNote.message}
 					</h2>
 				</div>
 			</div>
 			<c:forEach items="${observations}" var="notice">
 				<div class="item">
-				<div class="fill" style="background-image: url(${notice.imagem});"></div>
+				<div class="fill" style="background-image: url(${notice.imageURL});"></div>
 				<div class="carousel-caption">
 					<h2>
-						${notice.noticia}
+						${notice.message}
 					</h2>
 				</div>
 				</div>
@@ -73,7 +73,7 @@
 					<div class="panel-body">
 						<p>Clique aqui para gerar um gráfico de diferentes setores da
 							economia</p>
-						<a href="gerar-grafico.jsp" class="btn btn-default">GO!</a>
+						<a href="grafico" class="btn btn-default">GO!</a>
 					</div>
 				</div>
 			</div>

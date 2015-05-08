@@ -3,31 +3,38 @@ package org.meg.model;
 public class Note {
 
 	private int id;
-	private String noticia;
-	private String imagem;
-	
+	private String message;
+	private String imageURL;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNoticia() {
-		return noticia;
+
+	public String getMessage() {
+		return message;
 	}
-	public void setNoticia(String noticia) {
-		if (noticia == null || noticia.length() > 200) {
-			throw new IllegalArgumentException("Noticia inválida!");
+
+	public void setMessage(String message) {
+		if (message != null && message.length() < 255) {
+			this.message = message;
+		}else{
+			throw new IllegalArgumentException("Invalid note!");
 		}
-		this.noticia = noticia;
 	}
-	public String getImagem() {
-		return imagem;
+
+	public String getImageURL() {
+		return imageURL;
 	}
-	public void setImagem(String imagem) {
-		if (imagem == null || imagem.length() > 255) {
-			throw new IllegalArgumentException("Url da Imagem inválida!");
+
+	public void setImageURL(String imageURL) {
+		if (imageURL != null) {
+			this.imageURL = imageURL;
+		} else {
+			throw new IllegalArgumentException("URL of image is invalid :" + imageURL);			
 		}
-		this.imagem = imagem;
-	}	
+	}
 }

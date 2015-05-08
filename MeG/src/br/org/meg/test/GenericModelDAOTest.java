@@ -35,4 +35,9 @@ public class GenericModelDAOTest {
 	public void testGetIDException(){
 		sectionDao.getIDFromName("Inexist");
 	}
+	
+	@Test
+	public void testListAll(){
+		assertEquals(21, sectionDao.listAll().size());
+	}
 }

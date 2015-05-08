@@ -116,9 +116,9 @@ public class UtilDAO {
 				String image = resultSet.getString("imagem");
 				// Create and set an new note
 				Note note = new Note();
-				note.setNoticia(message);
+				note.setMessage(message);
 				note.setId(noteID);
-				note.setImagem(image);
+				note.setImageURL(image);
 				
 				notes.add(note);
 			}
