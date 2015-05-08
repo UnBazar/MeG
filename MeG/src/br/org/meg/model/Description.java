@@ -1,14 +1,16 @@
 package org.meg.model;
 
-import org.meg.dao.UtilDAO;
+import org.meg.dao.EnumTable;
+import org.meg.dao.GenericModelDAO;
 import org.meg.exception.SystemBreakException;
 
 public class Description {
 	private int id;
 	private String nome;
+	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.DESCRIPTION);
 
 	public Description() {
-		
+		// Default constructor
 	}
 	
 	public Description(int id){
@@ -24,15 +26,15 @@ public class Description {
 	}
 
 	public void setId(int id) {
-		if (id > 5 || id < 1) {
-			throw new SystemBreakException("Um id invalido da descricao foi inserido!");
+		// fixed interval id
+		if (id >= 1 && id <= 5) {
+			this.id = id;
+			this.nome = DAO.getNameFromID(id);
+		} else {
+			throw new SystemBreakException("An invalid id was inserted in " 
+						+ this.getClass().getName());
 		}
-		UtilDAO dao = new UtilDAO();
-		this.id = id;
-		nome = dao.getNomeDescricao(id);
 	}
-	
-	
 
 	public String getNome() {
 		return nome;
@@ -40,8 +42,6 @@ public class Description {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-		UtilDAO dao = new UtilDAO();
-		id = dao.getIdDescricao(nome);
+		this.id = DAO.getIDFromName(nome);
 	}
-
 }

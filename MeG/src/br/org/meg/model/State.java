@@ -1,5 +1,7 @@
 package org.meg.model;
 
+import org.meg.dao.EnumTable;
+import org.meg.dao.GenericModelDAO;
 import org.meg.dao.UtilDAO;
 import org.meg.exception.SystemBreakException;
 
@@ -7,6 +9,7 @@ public class State {
 	private int id;
 	private String nome;
 	private String sigla;
+	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.STATE);
 	
 	public State() {
 	
@@ -21,13 +24,18 @@ public class State {
 	}
 
 	public void setId(int id) {
-		if (id < 1 || id > 27){
-			throw new SystemBreakException("Um id invalido de Estado foi inserido!");
+		// fixed interval id
+		if (id >= 1 && id <= 27){		
+			this.id = id;
+			// Deprecated
+			UtilDAO utilDAO = new UtilDAO();
+			this.sigla = utilDAO.getSiglaEstado(id);
+			
+			this.nome = DAO.getNameFromID(id);
+		}else{
+			throw new SystemBreakException("An invalid id of state was inserted!");
 		}
-		this.id = id;
-		UtilDAO dao = new UtilDAO();
-		sigla = dao.getSiglaEstado(id);
-		nome = dao.getNomeEstado(id);
+
 	}
 
 	public String getNome() {
@@ -35,12 +43,12 @@ public class State {
 	}
 
 	public void setNome(String nome) {
-		if (nome == null) {
-			throw new IllegalArgumentException("Nome do estado inválido!");
+		if (nome != null) {
+			this.nome = nome;
+			this.id = DAO.getIDFromName(nome);
+		}else{
+			throw new IllegalArgumentException("Name of state is null");
 		}
-		UtilDAO dao = new UtilDAO();
-		this.nome = nome;
-		id = dao.getIdEstado(nome);
 	}
 
 	public String getSigla() {

@@ -1,9 +1,11 @@
-package org.meg.dao;
+package org.meg.test;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.meg.dao.EnumTable;
+import org.meg.dao.GenericModelDAO;
 import org.meg.exception.DAOException;
 
 public class GenericModelDAOTest {

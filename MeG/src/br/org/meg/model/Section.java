@@ -1,14 +1,16 @@
 package org.meg.model;
 
-import org.meg.dao.UtilDAO;
+import org.meg.dao.EnumTable;
+import org.meg.dao.GenericModelDAO;
 import org.meg.exception.SystemBreakException;
 
 public class Section {
 	private int id;
 	private String nome;
+	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.SECTION);
 	
 	public Section() {
-		
+		// Default Constructor
 	}
 	
 	public Section(int id) {
@@ -24,12 +26,14 @@ public class Section {
 	}
 	
 	public void setId(int id) {
-		if (id < 1 || id > 21) {
-			throw new SystemBreakException("Um id invalido de Secao foi inserido!");
+		// fixed interval id
+		if (id >= 1 && id <= 21) {
+			this.id = id;
+			this.nome = DAO.getNameFromID(id);
+		} else {
+			throw new SystemBreakException("An invalid id was inserted in" 
+					+ this.getClass().getName());
 		}
-		UtilDAO dao = new UtilDAO();
-		this.id = id;
-		nome = dao.getNomeSecao(id);
 	}
 	
 	public String getNome() {
@@ -37,11 +41,11 @@ public class Section {
 	}
 	
 	public void setNome(String nome) {
-		if (nome == null){
-			throw new IllegalArgumentException("Nome da seção inválido!");
+		if (nome != null) {
+			this.nome = nome;
+			this.id = DAO.getIDFromName(nome);
+		} else {
+			throw new IllegalArgumentException("Name of section is invalid!");
 		}
-		UtilDAO dao = new UtilDAO();
-		this.nome = nome;
-		id = dao.getIdSecao(nome);
 	}	
 }

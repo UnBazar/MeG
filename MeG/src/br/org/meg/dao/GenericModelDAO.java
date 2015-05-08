@@ -7,15 +7,32 @@ import java.sql.SQLException;
 
 import org.meg.exception.DAOException;
 
+/**
+ * This implementation is responsible for some generic operations 
+ * present in State, Description and Section.
+ * 
+ */
 public class GenericModelDAO {
 	private Connection connection;
+	/*	Table name that will operate */
 	private String tableName;
-
+	
+	/**
+	 * Unique constructor 
+	 * 
+	 * @param modelName	Type of model that will operate
+	 */
 	public GenericModelDAO(EnumTable modelName) {
 		this.connection = ConnectionFactory.getConnection();
 		this.tableName = modelName.toString();
 	}
-
+	
+	/**
+	 * Get an name or title from an id
+	 * 
+	 * @param id of register
+	 * @return name found
+	 */
 	public String getNameFromID(int id) {
 		try {
 			String sql = "SELECT nome FROM " + tableName + " WHERE id = ?";
@@ -23,9 +40,11 @@ public class GenericModelDAO {
 			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
+			// In the case of search find something
 			if (resultSet.next()) {
 				name = resultSet.getString("nome");
 			}else{
+				// Exception throw, bd must be invalid
 				throw new DAOException("Don't exist register of "
 						+ tableName + " with id " + id, this.getClass().getName());
 			}
@@ -38,6 +57,12 @@ public class GenericModelDAO {
 		}
 	}
 	
+	/**
+	 * Get an id from an name or title
+	 * 
+	 * @param name of register
+	 * @return id found
+	 */
 	public int getIDFromName(String name) {
 		try {
 			String sql = "SELECT id FROM " + tableName + " WHERE nome = ?";
@@ -48,6 +73,7 @@ public class GenericModelDAO {
 			if (resultSet.next()) {
 				foundID = resultSet.getInt("id");
 			}else{
+				// Exception throw, bd must be invalid
 				throw new DAOException("Don't exist register of "
 						+ tableName + " with name equals " + name, this.getClass().getName());
 			}
