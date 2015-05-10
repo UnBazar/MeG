@@ -70,9 +70,10 @@ public class FileUploadServlet extends HttpServlet {
 		requestDispatcher.forward(request, response);
 	}		
 	/**
-	 * O método substitui os espaços em branco do nome de usuário por underlines
+	 * This method formats the administrator name that uploaded the file in a specific format:
+	 * it changes any blank spaces into underlines. e.g: "super admin" becomes super_admin
 	 * @param administrator
-	 * @return vetor de caracteres que contêm o nome do administrador formatado 
+	 * @return array of characters that contains the administrator's name formatted 
 	 */
 	private char[] formatName(Administrator administrator) {
 		char[] aux = new char[administrator.getName().length()];
@@ -84,6 +85,7 @@ public class FileUploadServlet extends HttpServlet {
 				aux[i] = administrator.getName().charAt(i);
 			}
 		}
+		
 		return aux;
 	}
 	
@@ -123,7 +125,7 @@ public class FileUploadServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Este método cria o caminho onde o arquivo será salvo a partir da url do arquivo UploadArquivo.class
+	 * This method creates the absolute path in which the uploaded file will be stored
 	 * @param url
 	 */
 	private String createFilePath() {
