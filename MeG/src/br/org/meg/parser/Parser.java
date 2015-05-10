@@ -23,14 +23,12 @@ public class Parser {
 	public Parser(String filePath, int statesQuantity, int sectionsQuantity,
 			int initialYear, int finalYear) {
 
-		/*
-		 *  checks if final year is less than or equal initial year or quantity
-		 *  of states or sections are less than or equal zero
-		 */
-		if (finalYear <= initialYear || statesQuantity <= 0
-				|| sectionsQuantity <= 0) {
-			throw new IllegalArgumentException("Parser arguments invalid!");
-		}
+		
+		   
+		// Checks if arguments sent are valid, otherwise, interrupts programs execution.
+		assert(finalYear <= initialYear) : "Parser: Invalid year's interval.";
+		assert(statesQuantity <= 0) : "Parser: Quantity of states less than zero.";
+		assert(sectionsQuantity <= 0) : "Parser: Invalid quantity of sections.";
 		
 		this.filePath = filePath;
 		this.statesQuantity = statesQuantity;
@@ -134,7 +132,7 @@ public class Parser {
 	}
 
 	private ArrayList<Frame> readStates() {
-		ArrayList<Frame> quadros = new ArrayList<>();
+		ArrayList<Frame> frames = new ArrayList<>();
 		State state;
 		Section section;
 		String[] tokens;
@@ -149,30 +147,30 @@ public class Parser {
 				section = new Section();
 				section.setNome(tokens[1].substring(3, tokens[1].length() - 1));
 				for (int k = 0; k < 5 * timeInterval; k++) {
-					quadros.add(new Frame());
-					quadros.get(quadros.size() - 1).setState(state);
-					quadros.get(quadros.size() - 1).setSection(section);
-					quadros.get(quadros.size() - 1).setYear(
+					frames.add(new Frame());
+					frames.get(frames.size() - 1).setState(state);
+					frames.get(frames.size() - 1).setSection(section);
+					frames.get(frames.size() - 1).setYear(
 							this.initialYear + k % timeInterval);
 					Description descricao = new Description();
 					descricao.setId(1 + k / timeInterval);
-					quadros.get(quadros.size() - 1).setDescription(descricao);
+					frames.get(frames.size() - 1).setDescription(descricao);
 					if (!tokens[2 + k].equals("-")
 							&& !tokens[2 + k].equals("X")) {
 						if (k < 28)
-							quadros.get(quadros.size() - 1).setValue(
+							frames.get(frames.size() - 1).setValue(
 									Float.parseFloat(tokens[2 + k]));
 						else
-							quadros.get(quadros.size() - 1)
+							frames.get(frames.size() - 1)
 									.setValue(
 											Float.parseFloat(correctCommasOnFloatingPointValues(tokens[2 + k])));
 					} else
-						quadros.get(quadros.size() - 1).setValue(-1.0f);
+						frames.get(frames.size() - 1).setValue(-1.0f);
 				}
 			}
 		}
 
-		return quadros;
+		return frames;
 	}
 
 	private void readFileHeader() {

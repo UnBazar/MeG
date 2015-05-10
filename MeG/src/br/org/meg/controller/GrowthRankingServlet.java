@@ -104,7 +104,7 @@ public class GrowthRankingServlet extends HttpServlet {
 	 */
 	private HashMap<String, Integer> getHash(HttpServletRequest request) {
 		HashMap<String, Integer> hash = new HashMap<>();
-		String[] attributesFrame = {"anoInicial", "anoFinal", "setor", "descricao"};
+		String[] attributesFrame = {"initialYear", "finalYear", "section", "description"};
 		
 		for(String iterator : attributesFrame) {
 			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));

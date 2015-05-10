@@ -36,9 +36,9 @@ public class AdministratorLoginServlet extends HttpServlet {
 		RequestDispatcher requestDispatcher;
 		HttpSession session = request.getSession();
 		Administrator administrator = (Administrator) session.getAttribute("administrador");
-		if(administrator != null){
+		if(administrator != null) {
 			requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
-		}else{
+		} else {
 			requestDispatcher = request.getRequestDispatcher(TO_LOGIN);
 		}
 		requestDispatcher.forward(request, response);
