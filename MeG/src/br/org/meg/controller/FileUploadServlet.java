@@ -26,20 +26,25 @@ public class FileUploadServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		if (isMultipart) {
+		if(isMultipart) {
 			try {
-				int maxFileSize = 100000; // max size in bytes
+				// max size in bytes
+				int maxFileSize = 100000;
 				DiskFileItemFactory factory = new DiskFileItemFactory();
 				factory.setSizeThreshold(maxFileSize);
+				// Responsible for abstracting file uploads processes
 				ServletFileUpload upload = new ServletFileUpload(factory);
+				// This is a list that stores a file or a form item that was received within a multipart/form-data POST request
 				List<FileItem> items = (List<FileItem>) upload.parseRequest(request);
+				// Variable responsible for checking if the itens sent contains an uploaded file
 				boolean containsFile = false;
-				for (FileItem item : items) {
-					if (!item.isFormField()) {
+				for(FileItem item : items) {
+					// Checks if file item instance represents an uploaded file
+					if(!item.isFormField()) {
 						containsFile = true;
-						String url = createsFilePath();
+						String url = createFilePath();
 						int initialYear = Integer.parseInt(items.get(0).getString());
-						int finalYear = Integer.parseInt(items.get(1).getString());;
+						int finalYear = Integer.parseInt(items.get(1).getString());
 						int numberOfSections = 0;
 						HttpSession sessao = request.getSession();
 						Administrator administrator = (Administrator) sessao.getAttribute("administrador");
@@ -54,7 +59,7 @@ public class FileUploadServlet extends HttpServlet {
 						request.setAttribute("erro", false);
 					}
 				}
-				if (containsFile) {
+				if(containsFile) {
 					throw new RuntimeException("Nenhum arquivo foi enviado!");
 				}
 			} catch(Exception e) {
@@ -66,17 +71,17 @@ public class FileUploadServlet extends HttpServlet {
 	}		
 	/**
 	 * O método substitui os espaços em branco do nome de usuário por underlines
-	 * @param administrador
+	 * @param administrator
 	 * @return vetor de caracteres que contêm o nome do administrador formatado 
 	 */
-	private char[] formatName(Administrator administrador) {
-		char[] aux = new char[administrador.getName().length()];
+	private char[] formatName(Administrator administrator) {
+		char[] aux = new char[administrator.getName().length()];
 		
-		for (int i = 0; i < administrador.getName().length(); i++) {
-			if (administrador.getName().charAt(i) == ' ') {
+		for (int i = 0; i < administrator.getName().length(); i++) {
+			if (administrator.getName().charAt(i) == ' ') {
 				aux[i] = '_';
 			} else {
-				aux[i] = administrador.getName().charAt(i);
+				aux[i] = administrator.getName().charAt(i);
 			}
 		}
 		return aux;
@@ -88,40 +93,40 @@ public class FileUploadServlet extends HttpServlet {
 	 * @return o número de campos do tipo seção lidos no formulário
 	 */
 	private int getNumberOfSections(List<FileItem> items) {
-		int numeroDeSecoes = 0;
+		int numberOfSections = 0;
 		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
-				numeroDeSecoes++;
+				numberOfSections++;
 			}
 		}
-		return numeroDeSecoes;
+		return numberOfSections;
 	}
 	
 	/**
-	 * Este método realiza a validação do arquivo chamando os métodos de validação da classe Parser
+	 * This method is responsible for evaluating if the file sent is in the correct format. 
 	 * @param items
 	 * @param parser
-	 * @param anoInicial
-	 * @param anoFinal
-	 * @param numeroDeSecoes 
+	 * @param initialYear
+	 * @param finalYear
+	 * @param numberOfSections 
 	 * @throws FileNotFoundException
 	 */
-	private void validatesFile(List<FileItem> items, Parser parser, int anoInicial, 
-			int anoFinal, int numeroDeSecoes) throws FileNotFoundException {
-		parser.validatesYear(anoInicial, anoFinal);
+	private void validatesFile(List<FileItem> items, Parser parser, int initialYear, 
+			int finalYear, int numberOfSections) throws FileNotFoundException {
+		parser.validatesYear(initialYear, finalYear);
 		for (int i = 2; i < items.size() - 1; i++) {
 			if (items.get(i).getFieldName().equals("secao")) {
 				parser.validatesSector(items.get(i).getString());
 			}
 		}
-		parser.validatesLinesQuantity(numeroDeSecoes);
+		parser.validatesLinesQuantity(numberOfSections);
 	}
 	
 	/**
 	 * Este método cria o caminho onde o arquivo será salvo a partir da url do arquivo UploadArquivo.class
 	 * @param url
 	 */
-	private String createsFilePath() {
+	private String createFilePath() {
 		String url;
 		url = FileUploadServlet.class.getProtectionDomain().getCodeSource().getLocation()+"";
 		url = url.replaceAll("file:", "");
