@@ -25,6 +25,12 @@ public class GrowthRankingServlet extends HttpServlet {
 	 * two years sent in the request, then renders the page that displays the table with
 	 * all state's growth.
 	 */
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+	}
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// maps user's request from String format to its corresponding values in Integer format

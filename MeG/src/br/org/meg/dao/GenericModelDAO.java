@@ -1,5 +1,6 @@
 package org.meg.dao;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,12 @@ import org.meg.model.State;
  * present in State, Description and Section.
  * 
  */
-public class GenericModelDAO {
+public class GenericModelDAO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Connection connection;
 	/*	Table name that will operate */
 	private final String tableName;

@@ -1,10 +1,16 @@
 package org.meg.model;
 
+import java.io.Serializable;
+
 import org.meg.dao.EnumTable;
 import org.meg.dao.GenericModelDAO;
 import org.meg.exception.SystemBreakException;
 
-public class Section {
+public class Section implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nome;
 	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.SECTION);

@@ -1,11 +1,17 @@
 package org.meg.model;
 
+import java.io.Serializable;
+
 import org.meg.dao.EnumTable;
 import org.meg.dao.GenericModelDAO;
 import org.meg.dao.UtilDAO;
 import org.meg.exception.SystemBreakException;
 
-public class State {
+public class State implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nome;
 	private String sigla;

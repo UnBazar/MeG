@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.meg.dao.EnumTable;
 import org.meg.dao.FrameDAO;
+import org.meg.dao.GenericModelDAO;
 import org.meg.model.Description;
 import org.meg.model.State;
 import org.meg.model.Frame;
@@ -40,12 +42,21 @@ public class ProjectionServlet extends HttpServlet {
 	}
 
 	/**
+	 * Redirect to form that will generate projection
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-
+	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		// List options of fields programatically
+		session.setAttribute("descriptions", listModel(EnumTable.DESCRIPTION));
+		session.setAttribute("sections", listModel(EnumTable.SECTION));
+		session.setAttribute("states", listModel(EnumTable.STATE));
+		// Redirect to an form
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("gerar-projecao.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 	/**
@@ -59,7 +70,10 @@ public class ProjectionServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		final int initialProjectionYear = 2013, finalProjectionYear, initialYear = 2006, finalYear = 2012;
+		final int initialProjectionYear = 2013;
+		final int finalProjectionYear;
+		final int initialYear = 2006;
+		final int finalYear = 2012;
 		
 		List<Frame> frames = new ArrayList<>();
 		
@@ -68,12 +82,12 @@ public class ProjectionServlet extends HttpServlet {
 		
 		FrameDAO dao = new FrameDAO();
 		
-		Description description = new Description(hash.get("descricao"));
-		Section section = new Section(hash.get("setor"));
-		State state = new State(hash.get("estado"));
+		Description description = new Description(hash.get("description"));
+		Section section = new Section(hash.get("section"));
+		State state = new State(hash.get("state"));
 		frames = dao.getFramesList(initialYear, finalYear, state, section, description);
 		
-		finalProjectionYear = hash.get("anoFinal");
+		finalProjectionYear = hash.get("finalYear");
 		
 		for (int i = initialProjectionYear; i <= finalProjectionYear; i++) {
 			createProjection(frames);
@@ -206,7 +220,7 @@ public class ProjectionServlet extends HttpServlet {
 	 */
 	private HashMap<String, Integer> getHash(HttpServletRequest request) {
 		HashMap<String, Integer> hash = new HashMap<>();
-		String[] attributesFrame = {"descricao", "setor", "estado", "anoFinal"};
+		final String[] attributesFrame = {"description", "section", "state", "finalYear"};
 		
 		for(String iterator : attributesFrame) {
 			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
@@ -225,4 +239,9 @@ public class ProjectionServlet extends HttpServlet {
 		return lastElement;
 	}
 	
+	private List<Object> listModel(EnumTable typeOfModel) {
+		GenericModelDAO DAO = new GenericModelDAO(typeOfModel);
+		List<Object> list = DAO.listAll();
+		return list;
+	}
 }

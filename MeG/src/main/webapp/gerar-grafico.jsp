@@ -30,7 +30,7 @@
 				</c:forEach>
 			</select>
 			<label id="setor">Setor:</label>
-			<select name="setor">
+			<select name="section">
 				<c:forEach items="${sections}" var="section">
 					<option value="${section.id}">${section.nome}</option>
 				</c:forEach>
@@ -38,13 +38,13 @@
 			<br/>
 			<br/>
 			<label>Estado:</label>
-			<select name="estado">
+			<select name="state">
 				<c:forEach items="${states}" var="state">
 					<option value="${state.id}">${state.sigla}</option>
 				</c:forEach>
 			</select>
 			<label id="anoInicial">De</label>
-			<select name="anoInicial">
+			<select name="initialYear">
 				<option value="2006" selected="selected">2006</option>
 				<option value="2007">2007</option>
 				<option value="2008">2008</option>
@@ -55,7 +55,7 @@
 				
 			</select>
 			<label id="anoFinal">até </label>
-			<select name="anoFinal">
+			<select name="finalYear">
 				<option value="2007">2007</option>
 				<option value="2008">2008</option>
 				<option value="2009">2009</option>

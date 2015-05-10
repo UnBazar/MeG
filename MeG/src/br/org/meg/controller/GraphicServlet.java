@@ -42,7 +42,7 @@ public class GraphicServlet extends HttpServlet {
 	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+	public void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		// List options of fields programatically
@@ -80,18 +80,22 @@ public class GraphicServlet extends HttpServlet {
 		// Instantiate Description with idDescription
 		Description description = new Description(idDescription);
 		// Get setor id by parameter
-		int idSetor = Integer.valueOf(request.getParameter("setor"));
+		int idSetor = Integer.valueOf(request.getParameter("section"));
 		// Instantiate Section with idSector
 		Section section = new Section(idSetor);
 		// Get state id by parameter
-		int idState = Integer.valueOf(request.getParameter("estado"));
+		int idState = Integer.valueOf(request.getParameter("state"));
 		// Instantiate State with idState
 		State state = new State(idState);
 		// Two choice of custom graphic
-		int initialYear = Integer.valueOf(request.getParameter("anoInicial"));
-		int finalYear = Integer.valueOf(request.getParameter("anoFinal"));
+		int initialYear = Integer.valueOf(request.getParameter("initialYear"));
+		int finalYear = Integer.valueOf(request.getParameter("finalYear"));
 		// years don't be equals
-		assert(initialYear == finalYear);
+		if(initialYear == finalYear){
+			throw new RuntimeException("Years don't be equals");
+		}else{
+			// Continue
+		}
 		// DAO used to get frames
 		FrameDAO frameDAO = new FrameDAO();
 		frames = frameDAO.getFramesList(initialYear, finalYear, state, section, description);

@@ -14,6 +14,10 @@
 	//changes the speed
 	});
 </script>
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
 </head>
 <body>
 	<%@include file='shared/navbar.html'%>
@@ -36,12 +40,12 @@
 					</h2>
 				</div>
 			</div>
-			<c:forEach items="${observations}" var="notice">
+			<c:forEach items="${notes}" var="note">
 				<div class="item">
-				<div class="fill" style="background-image: url(${notice.imageURL});"></div>
+				<div class="fill" style="background-image: url(${note.imageURL});"></div>
 				<div class="carousel-caption">
 					<h2>
-						${notice.message}
+						${note.message}
 					</h2>
 				</div>
 				</div>
@@ -58,69 +62,56 @@
 	<!-- Page Content -->
 	<div class="container">
 
-		<!-- Marketing Icons Section -->
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class="page-header">Bem Vindo ao Mercado em Gráfico</h1>
-			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4>
-							<i class="fa fa-fw fa-headphones"></i> Gerar Gráfico
-						</h4>
-					</div>
-					<div class="panel-body">
-						<p>Clique aqui para gerar um gráfico de diferentes setores da
-							economia</p>
-						<a href="grafico" class="btn btn-default">GO!</a>
-					</div>
+	<!-- Marketing Icons Section -->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Bem Vindo ao Mercado em Gráfico</h1>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>
+						<i class="fa fa-fw fa-headphones"></i> Gerar Gráfico
+					</h4>
+				</div>
+				<div class="panel-body">
+					<p>Clique aqui para gerar um gráfico de diferentes setores da
+						economia</p>
+					<a href="grafico" class="btn btn-default">GO!</a>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4>
-							<i class="fa fa-fw fa-table"></i> Gerar Tabela de Ranking
-						</h4>
-					</div>
-					<div class="panel-body">
-						<p>Clique aqui para gerar uma tabela de diferentes setores da
-							economia</p>
-						<a href="gerar-tabela.jsp" class="btn btn-default">GO!</a>
-					</div>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>
+						<i class="fa fa-fw fa-table"></i> Gerar Tabela de Ranking
+					</h4>
+				</div>
+				<div class="panel-body">
+					<p>Clique aqui para gerar uma tabela de diferentes setores da
+						economia</p>
+					<a href="gerar-tabela.jsp" class="btn btn-default">GO!</a>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4>
-							<i class="fa fa-fw fa-fire"></i> Gerar Projeção
-						</h4>
-					</div>
-					<div class="panel-body">
-						<p>Clique aqui para gera uma projeção de diferentes setores da
-							economia</p>
-						<a href="gerar-projecao.jsp" class="btn btn-default">GO!</a>
-					</div>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>
+						<i class="fa fa-fw fa-fire"></i> Gerar Projeção
+					</h4>
+				</div>
+				<div class="panel-body">
+					<p>Clique aqui para gera uma projeção de diferentes setores da
+						economia</p>
+					<a href="projecao" class="btn btn-default">GO!</a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- /.container -->
-	<%@include file='shared/footer.html'%>
-	<!-- jQuery -->
-	<script src="js/jquery.js"></script>
-
-	<!-- Bootstrap Core JavaScript -->
-	<script src="js/bootstrap.min.js"></script>
-
-	<!-- Script to Activate the Carousel -->
-	<script>
-		$('.carousel').carousel({
-			interval : 15000
-		//changes the speed
-		});
-	</script>
+</div>
+<!-- /.container -->
+<%@include file='shared/footer.html'%>
 </body>
 </html>
