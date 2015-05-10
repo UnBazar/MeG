@@ -22,9 +22,9 @@
 		<section id="gerador">
 			<h2>Gerar ranking de crescimento</h2>
 			<br>
-			<form action="crescimento" method="post">
+			<form action="growth-servlet" method="post">
 
-				<label id="descricao">Tipo de pesquisa:</label> <select name="descricao">
+				<label id="description">Tipo de pesquisa:</label> <select name="description">
 					<option value="1">Número de empresas e outras organizações
 						(Unidades)</option>
 					<option value="2">Pessoal ocupado total (Pessoas)</option>
@@ -34,7 +34,7 @@
 					<option value="5">Salário médio mensal (Salários mínimos)</option>
 				</select>
 
-				<label id="secao">Setor:</label> <select name="setor">
+				<label id="section">Setor:</label> <select name="section">
 					<option value="1">Agricultura, pecuária, produção
 						florestal, pesca e aquicultura</option>
 					<option value="2">Indústrias extrativas</option>
@@ -66,7 +66,7 @@
 						instituições extraterritoriais</option>
 				</select> <br>
 
-				<label id="anoInicial">Ano inicial:</label> <select name="anoInicial">
+				<label id="initialYear">Ano inicial:</label> <select name="initialYear">
 					<option value="2007" selected="selected">2007</option>
 					<option value="2008">2008</option>
 					<option value="2009">2009</option>
@@ -75,7 +75,7 @@
 					<option value="2012">2012</option>
 				</select>
 
-				<label id="anoFinal">Ano Final:</label> <select name="anoFinal">
+				<label id="finalYear">Ano Final:</label> <select name="finalYear">
 					<option value="2007">2007</option>
 					<option value="2008">2008</option>
 					<option value="2009">2009</option>

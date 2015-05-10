@@ -16,7 +16,7 @@ import org.meg.model.Description;
 import org.meg.model.Frame;
 import org.meg.model.Section;
 
-@WebServlet("/crescimento")
+@WebServlet("/growth-servlet")
 public class GrowthRankingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,23 +41,23 @@ public class GrowthRankingServlet extends HttpServlet {
 		FrameDAO dao = new FrameDAO();
 		Section section = new Section();
 		Description description = new Description();
-		section.setId(hash.get("setor"));
-		description.setId(hash.get("descricao"));
+		section.setId(hash.get("sector"));
+		description.setId(hash.get("description"));
 		
 		// get list of all frames of initial and final year
-		firstList = dao.getFramesList(hash.get("anoInicial"), section, description);
-		secondList = dao.getFramesList(hash.get("anoFinal"), section, description);
+		firstList = dao.getFramesList(hash.get("initialYear"), section, description);
+		secondList = dao.getFramesList(hash.get("finalYear"), section, description);
 		growthList = getGrowthList(firstList, secondList);
 		
 		RankingServlet ranking = new RankingServlet();
 		ranking.selectionSort(growthList);
 		
-		request.setAttribute("listaCrescimento", growthList);
-		request.setAttribute("anoInicial", hash.get("anoInicial"));
-		request.setAttribute("anoFinal", hash.get("anoFinal"));
-		request.setAttribute("descricao", description);
-		request.setAttribute("setor", section.getNome());
-		request.getRequestDispatcher("tabela-crescimento.jsp").forward(request, response);
+		request.setAttribute("growthList", growthList);
+		request.setAttribute("initialYear", hash.get("initialYear"));
+		request.setAttribute("finalYear", hash.get("finalYear"));
+		request.setAttribute("description", description);
+		request.setAttribute("section", section.getNome());
+		request.getRequestDispatcher("growth-table.jsp").forward(request, response);
 	}
 	
 	/**

@@ -57,19 +57,19 @@
 			</ul>
 		</section>
 		<br>
-		<h1 style="color: #000000">Ranking de ${descricao.nome} na área
-			de ${setor} - ${anoInicial} - ${anoFinal}</h1>
+		<h1 style="color: #000000">Ranking de ${description.nome} na área
+			de ${section} - ${initialYear} - ${finalYear}</h1>
 		<table border="1" style="width: 30%; border: 2px solid #3366FF">
 			<tr>
 				<th style="text-align: center">Ranking</th>
 				<th style="text-align: center">Estado</th>
-				<th style="text-align: center">${descricao.nome}</th>
+				<th style="text-align: center">${description.nome}</th>
 			</tr>
-			<c:forEach var="quadro" items="${listaCrescimento}" varStatus="id">
+			<c:forEach var="frame" items="${growthList}" varStatus="id">
 				<tr>
 					<td>${id.count}º</td>
-					<td>${quadro.estado.nome}</td>
-					<td class="dado">${quadro.valor}%</td>
+					<td>${frame.estado.nome}</td>
+					<td class="dado">${frame.valor}%</td>
 				</tr>
 			</c:forEach>
 		</table>
