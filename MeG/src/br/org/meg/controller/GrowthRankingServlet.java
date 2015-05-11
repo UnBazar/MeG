@@ -33,7 +33,7 @@ public class GrowthRankingServlet extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// maps user's request from String format to its corresponding values in Integer format
+		// Maps user's request from String format to its corresponding values in Integer format.
 		HashMap<String, Integer> hash = getHash(request);
 		List<Frame> firstList;
 		List<Frame> secondList;
@@ -65,9 +65,11 @@ public class GrowthRankingServlet extends HttpServlet {
 	 * for a initial and a final year. It accepts as argument two lists of
 	 * frames, which contains all state frames for the initial and final year, 
 	 * respectively.
-	 * @param firstList
-	 * @param secondList
-	 * @return a list of frames containing the average growth for each state
+	 * 
+	 * @param firstList list including all the first values of a specific state.
+	 * @param secondList list including all the last values of a specific state.
+	 * 
+	 * @return a list of frames containing the average growth for each state.
 	 */
 	private ArrayList<Frame> getGrowthList(List<Frame> firstList, List<Frame> secondList) {
 		ArrayList<Frame> growthList = new ArrayList<Frame>();
@@ -76,7 +78,7 @@ public class GrowthRankingServlet extends HttpServlet {
 		final int numberOfStates = 27;
 		for(int i = 0; i < numberOfStates; i++){
 			growth = getAverageGrowth(firstList.get(i).getValue(), secondList.get(i).getValue());
-			// takes advantage of existing frame object and overwrites value with the corresponding growth
+			// Takes advantage of existing frame object and overwrites value with the corresponding growth.
 			frame = firstList.get(i);
 			frame.setValue(growth);
 			growthList.add(frame);
@@ -86,10 +88,12 @@ public class GrowthRankingServlet extends HttpServlet {
 
 	/**
 	 * Calculates the average growth of a frame based on its initial
-	 * and final value in a period of time
-	 * @param finalValue
-	 * @param initialValue
-	 * @return the average growth of a frame in percentage
+	 * and final value in a period of time.
+	 * 
+	 * @param finalValue the last value of the growth in a specific state.
+	 * @param initialValue the first value of the growth in a specific state.
+	 * 
+	 * @return the average growth of a frame in percentage.
 	 */
 	private float getAverageGrowth(float initialValue, float finalValue) {
 		float average = ((finalValue / initialValue) - 1) * 100;
@@ -112,5 +116,4 @@ public class GrowthRankingServlet extends HttpServlet {
 		
 		return hash;
 	}
-	
 }

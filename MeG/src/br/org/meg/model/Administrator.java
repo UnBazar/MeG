@@ -6,12 +6,17 @@ public class Administrator {
 	private String userName;
 	private String password;
 	
+	static final int MIN_PASS_LENGTH = 6;
+	static final int MAX_PASS_LENGTH = 20;
+	static final int MIN_USER_LENGTH = 3;
+	static final int MIN_NAME_LENGTH = 3;
+	
 	public String getName() {
 		return name;
 	}
 	
 	public void setName(String name) {
-		if (name == null || name.length() < 3){
+		if (name == null || name.length() < MIN_NAME_LENGTH){
 			throw new IllegalArgumentException("Nome inválido!");
 		}
 		this.name = name;
@@ -22,7 +27,7 @@ public class Administrator {
 	}
 	
 	public void setPassword(String password) {
-		if (password == null || password.length() < 6 || password.length() > 20) {
+		if (password == null || password.length() < MIN_PASS_LENGTH || password.length() > MAX_PASS_LENGTH) {
 			throw new IllegalArgumentException("Senha inválida!");
 		}
 		this.password = password;
@@ -53,10 +58,9 @@ public class Administrator {
 	}
 
 	public void setUserName(String userName) {
-		if (userName == null || userName.length() < 3) {
+		if (userName == null || userName.length() < MIN_USER_LENGTH) {
 			throw new IllegalArgumentException("Nome de usuário inválido!");
 		}
 		this.userName = userName;
-	}
-	
+	}	
 }

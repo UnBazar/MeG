@@ -14,18 +14,15 @@ import org.meg.dao.UtilDAO;
 import org.meg.model.Note;
 
 /**
- * Set notices in initial page
+ * Set notices in initial page.
  */
 @WebServlet(urlPatterns = {"/index.html"})
 public class NoteServlet extends HttpServlet {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Set some observations extracted of system to view in index page
+	 * Set some observations extracted of system to view in index page.
 	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -47,5 +44,4 @@ public class NoteServlet extends HttpServlet {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("home.jsp");
 		requestDispatcher.forward(request, response);
 	}
-
 }

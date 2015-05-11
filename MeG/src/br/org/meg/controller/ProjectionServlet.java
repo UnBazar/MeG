@@ -22,7 +22,7 @@ import org.meg.model.Frame;
 import org.meg.model.Section;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Login.
  */
 @WebServlet("/projecao")
 public class ProjectionServlet extends HttpServlet {
@@ -42,7 +42,7 @@ public class ProjectionServlet extends HttpServlet {
 	}
 
 	/**
-	 * Redirect to form that will generate projection
+	 * Redirect to form that will generate projection.
 	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -108,7 +108,7 @@ public class ProjectionServlet extends HttpServlet {
 	 * Each frame is associated with a value. This method return a list of values
 	 * corresponding to the list of frames sent as argument.
 	 * 
-	 * @return a list of values corresponding to the frames sent as argument
+	 * @return a list of values corresponding to the frames sent as argument.
 	 */
 	private List<Float> getValuesList(List<Frame> frames) {
 		List<Float> valuesList = new ArrayList<Float>();
@@ -133,7 +133,7 @@ public class ProjectionServlet extends HttpServlet {
 	}
 
 	/**
-	 * This method is based on the moving average statistics technic to calculate a frame's projection.
+	 * This method is based on the moving average statistics technique to calculate a frame's projection.
 	 * It calculates the projection of the next year after the last frame in the List sent as argument.
 	 * It also adds to the list the projection frame that was created.
 	 * 
