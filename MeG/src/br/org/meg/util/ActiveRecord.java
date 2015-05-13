@@ -10,14 +10,18 @@ public abstract class ActiveRecord {
 	private Connection databaseConnection = ConnectionFactory.getConnection();;
 	
 	public final <T> boolean set(String columnName, T value) {
-		String sqlStatement = "UPDATE ? SET ? = ?";
-		String tableName = this.getClass().toString();
+		String sqlStatement = "UPDATE table_name SET column_name = ?";
+		String tableName = this.getClass().getSimpleName();
 		boolean sqlQueryResult = false;
+		
+		sqlStatement = sqlStatement.replace("table_name", tableName);
+		sqlStatement = sqlStatement.replace("column_name", columnName);
+		
 		try {
 			PreparedStatement compiledStatement = databaseConnection.prepareStatement(sqlStatement);
-			setSqlStatement(compiledStatement, tableName, 1);
-			setSqlStatement(compiledStatement, columnName, 2);
-			setSqlStatement(compiledStatement, value, 3);
+			System.out.printf("Table name: %s Column Name: %s Value: %s\n", tableName, columnName, value);
+			setSqlStatement(1, compiledStatement, value);
+			System.out.println(compiledStatement);
 			sqlQueryResult = compiledStatement.execute();
 			compiledStatement.close();
 			return sqlQueryResult;			
@@ -28,7 +32,7 @@ public abstract class ActiveRecord {
 		return false;
 	}
 	
-	private <T> void setSqlStatement(PreparedStatement sqlStatement, T sqlArgument, int parameterIndex) {
+	private <T> void setSqlStatement(int parameterIndex, PreparedStatement sqlStatement, T sqlArgument) {
 		try {
 			if(sqlArgument.getClass() == Integer.class) {
 				sqlStatement.setInt(parameterIndex, (Integer) sqlArgument);
