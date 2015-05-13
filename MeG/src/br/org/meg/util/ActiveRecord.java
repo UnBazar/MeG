@@ -2,26 +2,40 @@ package org.meg.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.meg.dao.ConnectionFactory;
 
 public abstract class ActiveRecord {
-	private Connection databaseConnection = ConnectionFactory.getConnection();;
+	private Connection databaseConnection = ConnectionFactory.getConnection();
+	private final String tableName = this.getClass().getSimpleName();
+	private int id = 2;
 	
-	public final <T> boolean set(String columnName, T value) {
-		String sqlStatement = "UPDATE table_name SET column_name = ?";
-		String tableName = this.getClass().getSimpleName();
-		boolean sqlQueryResult = false;
-		
-		sqlStatement = sqlStatement.replace("table_name", tableName);
-		sqlStatement = sqlStatement.replace("column_name", columnName);
+	public final Object get(String columnName) {
+		String sqlStatement = String.format("SELECT %s FROM %s WHERE id = %d", columnName, this.tableName, this.id);
 		
 		try {
 			PreparedStatement compiledStatement = databaseConnection.prepareStatement(sqlStatement);
-			System.out.printf("Table name: %s Column Name: %s Value: %s\n", tableName, columnName, value);
+			ResultSet queryResult = compiledStatement.executeQuery();
+			if(queryResult.next()) {
+				return queryResult.getObject(columnName);
+			} else {
+				throw new IllegalArgumentException("Inexisting column name passed as argument");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public final <T> boolean set(String columnName, T value) {
+		String sqlStatement = String.format("UPDATE %s SET %s = ? WHERE id = %d", this.tableName, columnName, this.id);
+		boolean sqlQueryResult = false;
+
+		try {
+			PreparedStatement compiledStatement = databaseConnection.prepareStatement(sqlStatement);
 			setSqlStatement(1, compiledStatement, value);
-			System.out.println(compiledStatement);
 			sqlQueryResult = compiledStatement.execute();
 			compiledStatement.close();
 			return sqlQueryResult;			
