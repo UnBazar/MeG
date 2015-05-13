@@ -7,21 +7,39 @@ import java.sql.SQLException;
 
 import org.meg.dao.ConnectionFactory;
 
-public abstract class ActiveRecord {
+public class ActiveRecord {
 	private Connection databaseConnection = ConnectionFactory.getConnection();
 	private final String tableName = this.getClass().getSimpleName();
-	private int id = 2;
+	private int id;
 	
+	public <T> ActiveRecord(String columnName, T value) {
+		String sqlStatement = String.format("SELECT * FROM %s WHERE %s = ?", this.tableName, columnName);
+		
+		try {
+			ResultSet queryResult;
+			PreparedStatement compiledStatement = databaseConnection.prepareStatement(sqlStatement);
+			setSqlStatement(1, compiledStatement, value);
+			queryResult = compiledStatement.executeQuery();
+			if(queryResult.next()) {
+				this.id = queryResult.getInt("id");
+			} else {
+				throw new IllegalArgumentException("Inexisting register passed as argument on ActiveRecord Constructor");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
 	public final Object get(String columnName) {
 		String sqlStatement = String.format("SELECT %s FROM %s WHERE id = %d", columnName, this.tableName, this.id);
-		
+		System.out.println(sqlStatement);
 		try {
 			PreparedStatement compiledStatement = databaseConnection.prepareStatement(sqlStatement);
 			ResultSet queryResult = compiledStatement.executeQuery();
 			if(queryResult.next()) {
 				return queryResult.getObject(columnName);
 			} else {
-				throw new IllegalArgumentException("Inexisting column name passed as argument");
+				throw new IllegalArgumentException("Inexisting column name passed as argument on ActiveRecord get method");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
