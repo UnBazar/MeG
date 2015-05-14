@@ -4,7 +4,8 @@
 <%@ page isELIgnored="false"%>
 <html>
 <head>
-	<%@include file='shared/head.html'%>
+	<%@include file='../../shared/head.html'%>
+	<title>Relatório de Erros</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -14,10 +15,9 @@
 	<script src="js/tabela.js" type="text/javascript"></script>
 	<!-- Style geral -->
 	<link rel="stylesheet" href="css/style.css">
-	<title>Tabela de Erros</title>
 </head>
 <body>
-	<%@include file='shared/navbar.html'%>
+	<%@include file='../../shared/navbar.html'%>
 	<div class="container">
 		<div id="imprimir">
 			<br>
@@ -43,5 +43,5 @@
 	</div>
 	<br>
 </body>
-<%@include file='shared/footer.html'%>
+<%@include file='../../shared/footer.html'%>
 </html>
