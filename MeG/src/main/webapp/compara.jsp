@@ -58,7 +58,8 @@
 		var data = google.visualization
 				.arrayToDataTable(listarValoresporAnos());
 		var options = {
-			title : "Setor: ${secao} / ${titulo} / Gráfico ${grafico}"
+			title : "Comparação do ${titulo} na área de ${secao}",
+			legend: { position: 'bottom' }
 		};
 
 		var chart_div = document.getElementById("chart_div");
@@ -85,7 +86,7 @@
 <body>
 	<%@include file='shared/navbar.html'%>
 	<div class="container">
-		<div id="chart_div" style="width: 900px; height: 500px;"></div>
+	<div id="chart_div" style="width: 100%; height: 600px;"></div>
 		<button onclick="javascript:generatePDF()" class="btn btn-primary"
 			id="btn-submit">Export PDF</button>
 	</div>

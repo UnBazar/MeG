@@ -23,7 +23,7 @@
 			<h2>Gerar ranking</h2>
 			<br>
 			<form action="ranking" method="post">
-				<label> Tipo de pesquisa</label> <select name="descricao">
+				<label> Tipo de pesquisa: </label> <select name="descricao">
 					<option value="1">Número de empresas e outras organizações
 						(Unidades)</option>
 					<option value="2">Pessoal ocupado total (Pessoas)</option>
@@ -61,7 +61,9 @@
 					<option value="20">Serviços domésticos</option>
 					<option value="21">Organismos internacionais e outras
 						instituições extraterritoriais</option>
-				</select> <br>
+				</select> 
+				<br>
+				<br>
 				<label id="ano">Ano:</label> <select name="ano">
 					<option value="2007" selected="selected">2007</option>
 					<option value="2008">2008</option>
