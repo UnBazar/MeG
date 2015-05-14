@@ -63,11 +63,12 @@
 				<option value="2011">2011</option>
 				<option value="2012" selected="selected">2012</option>
 			</select>
-			<br/><br/>
+			<br/>
+			<br/>
 			<button type="submit" class="btn btn-primary" id="btn-submit">Montar Gráfico</button>
 		</form>
 	</section>
 	</div>
-		<%@include file='shared/footer.html'%>
+	<%@include file='shared/footer.html'%>
 </body>
 </html>

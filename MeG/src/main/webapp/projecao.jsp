@@ -35,7 +35,10 @@ function listarValoresporAnos(){
 
 function drawChart() {
   var data = google.visualization.arrayToDataTable(listarValoresporAnos());
-  var options = {title: "Estado: ${estado} / Setor: ${secao} / Gráfico ${grafico}"};
+  var options = {
+		  title: "Gráfico de projeção do estado ${estado} na área de ${secao}", 
+		  legend: { position: 'bottom' }
+		  };
 
   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
@@ -46,7 +49,7 @@ function drawChart() {
 <body>
 <%@include file='shared/navbar.html'%>
 <div class="container">
-	<div id="chart_div" style="width: 900px; height: 500px;"></div>
+	<div id="chart_div" style="width: 100%; height: 600px;"></div>
 	<%@include file='shared/footer.html'%>
 </div>
 </body>
