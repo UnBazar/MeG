@@ -13,7 +13,7 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- Style geral -->
 <link rel="stylesheet" href="css/style.css">
-<title>Meg | Gráfico</title>
+<title>Meg | Projeção</title>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 google.load("visualization", "1", {packages:["corechart"]});
@@ -48,5 +48,6 @@ function drawChart() {
 <div class="container">
 	<div id="chart_div" style="width: 900px; height: 500px;"></div>
 	<%@include file='shared/footer.html'%>
+</div>
 </body>
 </html>

@@ -85,10 +85,23 @@ a:HOVER{
 
 .tabelas th{
 	text-align: center;	
-	padding: 5px;
+	padding: 10px;
 }
 
 .tabelas td{
 	text-align: center;
-	padding: 5px;
+	padding: 10px;
+}
+
+.footer{
+	border-top: 1px solid #DCDCDC;
+	padding-top: 20px;
+    bottom: 0px;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+}
+
+#sobre{
+	text-align:  justify;
 }
