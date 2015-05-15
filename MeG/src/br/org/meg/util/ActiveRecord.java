@@ -1,9 +1,12 @@
 package org.meg.util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import org.meg.dao.ConnectionFactory;
 
@@ -28,6 +31,7 @@ public class ActiveRecord {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
 		
 	public final Object get(String columnName) {
@@ -78,6 +82,33 @@ public class ActiveRecord {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void getCurrentClass() {
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		String currentFileName = stackTraceElements[stackTraceElements.length - 1].getFileName();
+		int callerLine = stackTraceElements[stackTraceElements.length - 1].getLineNumber();
+		System.out.println(stackTraceElements[stackTraceElements.length - 1].getFileName());
+		readClassFile(currentFileName, callerLine);
+	}
+	
+	@SuppressWarnings("resource")
+	private static String readClassFile(String fileName, int lineNumber) {
+		File classFile = new File("/home/pedro/workspace/MeG/MeG/src/br/org/meg/util/" + fileName);
+		Scanner s;
+		try {
+			s = new Scanner(classFile);
+			String caller = null;
+			for(int i = 0; i < lineNumber; i++) {
+				caller = s.nextLine();
+			}
+			caller = caller.split(".")[0];
+			System.out.println(caller);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }
