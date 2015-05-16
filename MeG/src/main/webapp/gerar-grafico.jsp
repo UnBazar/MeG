@@ -23,7 +23,9 @@
 		<form action="grafico" method="POST">
 			<input type="radio" name="grafico" value="geral" checked> Gráfico geral
 			<input type="radio" name="grafico" value="do crescimento"> Gráfico do crescimento
-			<br><br><label>Tipo de pesquisa:</label>
+			<br/>
+			<br/>
+			<label>Tipo de pesquisa:</label>
 			<select name="description">
 				<c:forEach items="${descriptions}" var="description">
 					<option value="${description.id}">${description.content}</option>

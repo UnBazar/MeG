@@ -19,26 +19,19 @@ a:HOVER{
 }
 
 #login{
-		text-align: center;
-}
-
-#toLogin{
-	position: absolute;
-	top:25%;
-	left: 50%;
-	width: 200px;
-	margin-left: -100px;
 	line-height: 30px;
-	
 }
 
-#toLogin input{
+#login form{
 	text-align: center;
-	width: 100%;
 }
 
-#toLogin button{
-	width: 100%;
+#login button, #login input{
+	border: 1px solid #DCDCDC;
+	text-align: center;
+	color: #000;
+	font-weight: bold;
+	width: 200px;
 }
 
 #menu{
