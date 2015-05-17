@@ -15,16 +15,18 @@ public class ActiveRecord {
 	private final String tableName = this.getClass().getSimpleName();
 	private int id;
 	
-	public <T> ActiveRecord(String columnName, T value) {
-		String sqlStatement = String.format("SELECT * FROM %s WHERE %s = ?", this.tableName, columnName);
+	public static final ActiveRecord find(int id) {
+		String sqlStatement = String.format("SELECT * FROM %s WHERE id = ?", getCurrentClass());
+		ActiveRecord newObject = new ActiveRecord();
+		Connection staticDatabaseConnection = ConnectionFactory.getConnection();
 		
 		try {
 			ResultSet queryResult;
-			PreparedStatement compiledStatement = databaseConnection.prepareStatement(sqlStatement);
-			setSqlStatement(1, compiledStatement, value);
+			PreparedStatement compiledStatement = staticDatabaseConnection.prepareStatement(sqlStatement);
+			setSqlStatement(1, compiledStatement, id);
 			queryResult = compiledStatement.executeQuery();
 			if(queryResult.next()) {
-				this.id = queryResult.getInt("id");
+				((ActiveRecord) newObject).id = queryResult.getInt("id");
 			} else {
 				throw new IllegalArgumentException("Inexisting register passed as argument on ActiveRecord Constructor");
 			}
@@ -32,6 +34,7 @@ public class ActiveRecord {
 			e.printStackTrace();
 		}
 		
+		return newObject;
 	}
 		
 	public final Object get(String columnName) {
@@ -68,7 +71,7 @@ public class ActiveRecord {
 		return false;
 	}
 	
-	private <T> void setSqlStatement(int parameterIndex, PreparedStatement sqlStatement, T sqlArgument) {
+	private static <T> void setSqlStatement(int parameterIndex, PreparedStatement sqlStatement, T sqlArgument) {
 		try {
 			if(sqlArgument.getClass() == Integer.class) {
 				sqlStatement.setInt(parameterIndex, (Integer) sqlArgument);
@@ -84,12 +87,12 @@ public class ActiveRecord {
 		}
 	}
 	
-	public static void getCurrentClass() {
+	public static String getCurrentClass() {
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 		String currentFileName = stackTraceElements[stackTraceElements.length - 1].getFileName();
 		int callerLine = stackTraceElements[stackTraceElements.length - 1].getLineNumber();
 		System.out.println(stackTraceElements[stackTraceElements.length - 1].getFileName());
-		readClassFile(currentFileName, callerLine);
+		return readClassFile(currentFileName, callerLine);
 	}
 	
 	@SuppressWarnings("resource")
@@ -102,8 +105,8 @@ public class ActiveRecord {
 			for(int i = 0; i < lineNumber; i++) {
 				caller = s.nextLine();
 			}
-			caller = caller.split(".")[0];
-			System.out.println(caller);
+			caller = caller.split("\\.")[0];
+			return caller;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
