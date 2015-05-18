@@ -2,6 +2,7 @@ package org.meg.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,10 +16,11 @@ import javax.servlet.http.HttpSession;
 import org.meg.dao.EnumTable;
 import org.meg.dao.FrameDAO;
 import org.meg.dao.GenericModelDAO;
+import org.meg.exception.SystemBreakException;
 import org.meg.model.Description;
-import org.meg.model.State;
 import org.meg.model.Frame;
 import org.meg.model.Section;
+import org.meg.model.State;
 
 /**
  * Responsable for plot an custom graphic
@@ -67,6 +69,8 @@ public class GraphicServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// List that will contain requested frames
 		List<Frame> frames = new ArrayList<>();
+		HashMap<EnumAttribute, Object> hashOfAttributes = getAttributes(request);
+		
 		/* 
 		 * Get option of graphic, this can be:
 		 * -Normal data
@@ -75,48 +79,67 @@ public class GraphicServlet extends HttpServlet {
 		String option = request.getParameter("grafico");
 		// Never be null
 		assert(option == null);
-		// Get description id by parameter
-		int idDescription = Integer.valueOf(request.getParameter("description"));
-		// Instantiate Description with idDescription
-		Description description = new Description(idDescription);
-		// Get setor id by parameter
-		int idSetor = Integer.valueOf(request.getParameter("section"));
-		// Instantiate Section with idSector
-		Section section = new Section(idSetor);
-		// Get state id by parameter
-		int idState = Integer.valueOf(request.getParameter("state"));
-		// Instantiate State with idState
-		State state = new State(idState);
-		// Two choice of custom graphic
-		int initialYear = Integer.valueOf(request.getParameter("initialYear"));
-		int finalYear = Integer.valueOf(request.getParameter("finalYear"));
+		
+		// DAO used to get frames
+		FrameDAO frameDAO = new FrameDAO();
+		frames = frameDAO.getFramesList((Integer)hashOfAttributes.get(EnumAttribute.INITIAL_YEAR),
+										(Integer)hashOfAttributes.get(EnumAttribute.FINAL_YEAR),
+										(State)hashOfAttributes.get(EnumAttribute.STATE),
+										(Section)hashOfAttributes.get(EnumAttribute.SECTION),
+										(Description)hashOfAttributes.get(EnumAttribute.DESCRIPTION));
+		
+		// Get session
+		HttpSession session = request.getSession();
+		
+		// Select type of graphic from option
+		if(option.equalsIgnoreCase("geral")) {
+			session.setAttribute("valores", getValues(frames));
+		} else if (option.equalsIgnoreCase("do crescimento")) {
+			session.setAttribute("valores", listGrowth(frames));
+		} else {
+			SystemBreakException breakException = new SystemBreakException(
+					"Value option is invalid in GraphicServlet.doPost");
+			System.err.print(breakException);
+			throw breakException;
+		}
+		
+		// Set all atributes to plot graphic
+		session.setAttribute("anos", listYears(frames));
+		session.setAttribute("tamanho", frames.size());
+		session.setAttribute("titulo", ((Description) hashOfAttributes.get(EnumAttribute.DESCRIPTION)).getContent());
+		session.setAttribute("secao",  ((Section) hashOfAttributes.get(EnumAttribute.SECTION)).getNome());
+		session.setAttribute("estado", ((State) hashOfAttributes.get(EnumAttribute.STATE)).getNome());
+		session.setAttribute("grafico", option);
+		
+		// Redirect to grafico.jsp
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
+		requestDispatcher.forward(request, response);
+	}
+	
+	private HashMap<EnumAttribute, Object> getAttributes(HttpServletRequest request){
+		HashMap<EnumAttribute, Integer> hashOfparameters = getHashOfParameters(request);
+		
+		State state = new State(hashOfparameters.get(EnumAttribute.STATE));
+		Section section = new Section(hashOfparameters.get(EnumAttribute.SECTION));
+		Description description = new Description(hashOfparameters.get(EnumAttribute.DESCRIPTION));
+		int initialYear = hashOfparameters.get(EnumAttribute.INITIAL_YEAR);
+		int finalYear = hashOfparameters.get(EnumAttribute.FINAL_YEAR);
+		
+		HashMap<EnumAttribute, Object> hashOfAttributes = new HashMap<EnumAttribute, Object>();
+		hashOfAttributes.put(EnumAttribute.STATE, state);
+		hashOfAttributes.put(EnumAttribute.SECTION, section);
+		hashOfAttributes.put(EnumAttribute.DESCRIPTION, description);
+		hashOfAttributes.put(EnumAttribute.INITIAL_YEAR, initialYear);
+		hashOfAttributes.put(EnumAttribute.FINAL_YEAR, finalYear);
+		
 		// years don't be equals
 		if(initialYear == finalYear){
 			throw new RuntimeException("Years don't be equals");
 		}else{
 			// Continue
 		}
-		// DAO used to get frames
-		FrameDAO frameDAO = new FrameDAO();
-		frames = frameDAO.getFramesList(initialYear, finalYear, state, section, description);
-		// Get session
-		HttpSession session = request.getSession();
-		// Select type of graphic from option
-		if(option.equalsIgnoreCase("geral")) {
-			session.setAttribute("valores", getValues(frames));
-		} else if(option.equalsIgnoreCase("do crescimento")) {
-			session.setAttribute("valores", listGrowth(frames));
-		}
-		// Set all atributes to plot graphic
-		session.setAttribute("anos", listYears(frames));
-		session.setAttribute("tamanho", frames.size());
-		session.setAttribute("titulo", description.getContent());
-		session.setAttribute("secao", section.getNome());
-		session.setAttribute("estado", state.getNome());
-		session.setAttribute("grafico", option);
-		// Redirect to grafico.jsp
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
-		requestDispatcher.forward(request, response);
+		
+		return hashOfAttributes;
 	}
 	
 	/**
@@ -189,5 +212,26 @@ public class GraphicServlet extends HttpServlet {
 		GenericModelDAO DAO = new GenericModelDAO(typeOfModel);
 		List<Object> list = DAO.listAll();
 		return list;
+	}
+	
+	/**
+	 * Creates a hash that maps the attributes name sent in the request
+	 * into its respective values in Integer format.
+	 * 
+	 * @return a hash mapping String keys into Integer values.
+	 */
+	private HashMap<EnumAttribute, Integer> getHashOfParameters(HttpServletRequest request) {
+		HashMap<EnumAttribute, Integer> hashOfParameters = new HashMap<>();
+		
+		for(EnumAttribute attribute : EnumAttribute.values()) {
+			String atributeValue = request.getParameter(attribute.toString());
+			if(atributeValue != null){
+				hashOfParameters.put(attribute, Integer.valueOf(atributeValue));
+			}else{
+				// Discard EnumAttribute
+			}
+		}
+		
+		return hashOfParameters;
 	}
 }
