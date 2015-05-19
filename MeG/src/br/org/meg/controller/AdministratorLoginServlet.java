@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.AdministratorDAO;
 import org.meg.model.Administrator;
 /**
@@ -19,6 +20,8 @@ import org.meg.model.Administrator;
  */
 @WebServlet("/login")
 public class AdministratorLoginServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("AdministratorLogin");
 
 	private static final long serialVersionUID = 1L;
 	
@@ -62,9 +65,11 @@ public class AdministratorLoginServlet extends HttpServlet {
 			session.setAttribute("administrador", administrator);
 			// redirects to administrator's view
 			requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
+			logger.info("Logged in as administrator.");
 		} else {
 			// If authentication return error
 			requestDispatcher = request.getRequestDispatcher(TO_LOGIN);
+			logger.error("Administrator null.");
 		}
 		requestDispatcher.forward(request, response);
 	}
