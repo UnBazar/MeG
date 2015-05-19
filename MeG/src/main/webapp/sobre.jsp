@@ -26,11 +26,11 @@
 			<img src="img/Logo.png" alt="" width="550" height="340" />
 		</div>
 		<div class="col-md-6" id="sobre">
-			<p>Mercado em Gráfico (MeG) é uma aplicação web desenvolvida por
+			<p>Mercado em Gráfico (MeG) é uma aplicação web inicialmente desenvolvida por
 				alunos da disciplina de Métodos de Desenvolvimento de Software(MDS)
 				e Gestão de Portifólios e Projetos de Software(GPP) da Universidade
 				de Brasília (UnB) – FGA.</p>
-			<p>O sistema consiste em uma aplicação web que tem como
+			<p>O sistema consiste em uma aplicação web de código aberto, que tem como
 				principal objetivo facilitar a procura de informações referentes ao
 				mercado de trabalho no Brasil. O site utiliza como principal
 				subsídio os dados abertos disponibilizados pelo IBGE. Os dados

@@ -24,31 +24,47 @@ public class GraficoServletTest {
 	public void setUp() throws Exception {
 		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
+		when(request.getParameter("description")).thenReturn("1");
+		when(request.getParameter("section")).thenReturn("1");
+		when(request.getParameter("state")).thenReturn("1");
+		when(request.getRequestDispatcher("grafico.jsp")).thenReturn(
+				mock(RequestDispatcher.class));
 		when(request.getSession()).thenReturn(mock(HttpSession.class));
 	}
 	@Test
 	public void test1() throws ServletException, IOException {
 		when(request.getParameter("grafico")).thenReturn("geral");
-		when(request.getParameter("description")).thenReturn("1");
-		when(request.getParameter("section")).thenReturn("1");
-		when(request.getParameter("state")).thenReturn("1");
 		when(request.getParameter("initialYear")).thenReturn("2007");
 		when(request.getParameter("finalYear")).thenReturn("2012");
-		when(request.getRequestDispatcher("grafico.jsp")).thenReturn(
-				mock(RequestDispatcher.class));
 		GraphicServlet servlet = new GraphicServlet();
 		servlet.doPost(request, response);
 	}
 	@Test
 	public void test2() throws ServletException, IOException {
 		when(request.getParameter("grafico")).thenReturn("do crescimento");
-		when(request.getParameter("description")).thenReturn("1");
-		when(request.getParameter("section")).thenReturn("1");
-		when(request.getParameter("state")).thenReturn("1");
 		when(request.getParameter("initialYear")).thenReturn("2007");
 		when(request.getParameter("finalYear")).thenReturn("2012");
-		when(request.getRequestDispatcher("grafico.jsp")).thenReturn(
-				mock(RequestDispatcher.class));
+		GraphicServlet servlet = new GraphicServlet();
+		servlet.doPost(request, response);
+		
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testInvalidOptionException() throws ServletException, IOException{
+		when(request.getParameter("grafico")).thenReturn("INVALID");
+		when(request.getParameter("initialYear")).thenReturn("2007");
+		when(request.getParameter("finalYear")).thenReturn("2012");
+		GraphicServlet servlet = new GraphicServlet();
+		servlet.doPost(request, response);
+		when(request.getParameter("initialYear")).thenReturn("2012");
+		servlet.doPost(request, response);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testEqualsDateException() throws ServletException, IOException{
+		when(request.getParameter("grafico")).thenReturn("INVALID");
+		when(request.getParameter("initialYear")).thenReturn("2012");
+		when(request.getParameter("finalYear")).thenReturn("2012");
 		GraphicServlet servlet = new GraphicServlet();
 		servlet.doPost(request, response);
 	}

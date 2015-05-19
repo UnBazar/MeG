@@ -21,7 +21,8 @@ public class RankingServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	public void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
 		final int minimumWageId = 5;
 		// maps user's request from String format to its corresponding values in Integer format
 		HashMap<String, Integer> hash = getHash(request);

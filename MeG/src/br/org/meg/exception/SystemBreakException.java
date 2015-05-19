@@ -10,20 +10,22 @@ public class SystemBreakException extends RuntimeException{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String tipoExcecao = "QuebraDeSistema>>";
-	private String mensagem;
 	
-	public SystemBreakException(String mensagem) {
-		this.mensagem = mensagem;
-		printStackTrace();
+	public SystemBreakException(String message) {
+		super(message);
+		recordException(message);
 	}
 	
-	@Override
-	public void printStackTrace() {
+	/**
+	 * Record error in database
+	 * 
+	 * @param message description of error
+	 */
+	private void recordException(String message) {
 		Error erro = new Error();
 		erro.setData(new Date(System.currentTimeMillis()));
 		erro.setStatus(0);
-		erro.setDescricao(tipoExcecao + mensagem);
+		erro.setDescricao(message);
 		UtilDAO dao = new UtilDAO();
 		dao.registraErro(erro);
 	}
