@@ -31,6 +31,8 @@ public class GraphicServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Graphic");
 	
+	private final String GENERATE_GRAPHIC_VIEW = "generate-graphic.jsp";
+	private final String GRAPHIC_VIEW = "graphic.jsp";
 	private static final long serialVersionUID = 1L;
 	// Weight to show values in percent
 	private static final float FACTOR_PERCENTAGE = 100;
@@ -55,7 +57,7 @@ public class GraphicServlet extends HttpServlet {
 		session.setAttribute("sections", listModel(EnumTable.SECTION));
 		session.setAttribute("states", listModel(EnumTable.STATE));
 		// Redirect to an form
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("gerar-grafico.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(GENERATE_GRAPHIC_VIEW);
 		requestDispatcher.forward(request, response);
 	}
 
@@ -115,7 +117,7 @@ public class GraphicServlet extends HttpServlet {
 		session.setAttribute("grafico", option);
 		
 		// Redirect to grafico.jsp
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(GRAPHIC_VIEW);
 		requestDispatcher.forward(request, response);
 		logger.info("Created graphic");
 	}

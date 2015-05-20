@@ -22,6 +22,7 @@ public class NoteServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Note");
 	
+	private final String HOME_VIEW = "home.jsp";
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -45,7 +46,7 @@ public class NoteServlet extends HttpServlet {
 		request.setAttribute("notes", observations);
 		request.setAttribute("defaultNote", defaultNote);
 		// Redirect to home.jsp
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("home.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOME_VIEW);
 		requestDispatcher.forward(request, response);
 	}
 }

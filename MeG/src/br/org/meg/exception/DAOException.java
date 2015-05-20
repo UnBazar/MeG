@@ -33,6 +33,6 @@ public class DAOException extends RuntimeException {
 		error.setDescricao(message);
 		error.setStatus(0);
 		UtilDAO dao = new UtilDAO();
-		dao.registraErro(error);
+		dao.registerError(error);
 	}
 }

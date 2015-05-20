@@ -22,6 +22,7 @@ public class RankingServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Ranking");
 	
+	private final String TABLE_VIEW = "table.jsp";
 	private static final long serialVersionUID = 1L;
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
@@ -48,7 +49,7 @@ public class RankingServlet extends HttpServlet {
 		request.setAttribute("ano", hash.get("ano"));
 		request.setAttribute("setor", section.getNome());
 		request.setAttribute("descricao", description);
-		request.getRequestDispatcher("tabela.jsp").forward(request, response);
+		request.getRequestDispatcher(TABLE_VIEW).forward(request, response);
 		logger.info("Ranking created.");
 		
 	}
@@ -99,14 +100,14 @@ public class RankingServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Seleciona o valor do salário mínimo de acordo com o ano especificado
-	 * @param ano
-	 * @return o valor do salário mínimo no ano especificado
+	 * Selects the value of minimum wage according to a specific year
+	 * @param year
+	 * @return the minimum wage in the specified year
 	 */
-	private float getMinimumWage(int ano) {
+	private float getMinimumWage(int year) {
 		UtilDAO dao = new UtilDAO();
-		float salarioMinimo = dao.getSalarioMinimo(ano);
-		return salarioMinimo;
+		float minimumWage = dao.getMinimumWage(year);
+		return minimumWage;
 	}
 	
 	/**

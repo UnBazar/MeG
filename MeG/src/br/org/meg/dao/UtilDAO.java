@@ -22,12 +22,12 @@ public class UtilDAO {
 	}
 
 	/**
-	 * Método que pega a sigla do estado pelo id no banco de dados
+	 * Method that takes the state abbreviation through the id of the database
 	 * 
 	 * @param id
-	 * @return String com a sigla do estado
+	 * @return String with the state abbreviation
 	 */
-	public String getSiglaEstado(int id) {
+	public String getStateAbbreviation(int id) {
 		try {
 			String sql = "SELECT sigla FROM Estado WHERE id = ?";
 			String siglaDoEstado = null;
@@ -50,24 +50,24 @@ public class UtilDAO {
 	}
 
 	/**
-	 * Método que pega o salario minimo do banco de dados
+	 * Method that takes the minimum wage of the database
 	 * 
-	 * @param ano
-	 * @return float com o salario minimo
+	 * @param year
+	 * @return float with the minimum wage
 	 */
-	public float getSalarioMinimo(int ano) {
+	public float getMinimumWage(int ano) {
 		try {
-			float salarioMinimo = 0;
+			float minimumWage = 0;
 			String sql = "SELECT valor FROM SalarioMinimo WHERE ano = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, ano);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				salarioMinimo = rs.getFloat("valor");
+				minimumWage = rs.getFloat("valor");
 			}
 			stmt.close();
 			rs.close();
-			return salarioMinimo;
+			return minimumWage;
 		} catch (SQLException sqlException) {
 			throw new DAOException("Erro ao buscar o ano no banco de dados",
 					this.getClass().getName());
@@ -75,7 +75,7 @@ public class UtilDAO {
 	}
 
 	/**
-	 * Método que adiciona o histórico de uso das servlets do banco de dados
+	 * Method which adds the history of use of the servlets in the database
 	 * 
 	 * @param id
 	 */
@@ -129,33 +129,33 @@ public class UtilDAO {
 	}
 
 	/**
-	 * Registra uma excecao no banco de dados
+	 * Register an exception in the database
 	 * 
-	 * @param erro
-	 *            contém informacoes
+	 * @param error
+	 *            contains information
 	 */
-	public void registraErro(Error erro) {
+	public void registerError(Error error) {
 		String sql = "INSERT INTO Erro(descricao, nomeDaClasseReferente, data, status) values(?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, erro.getDescricao());
-			stmt.setString(2, erro.getNomeDaClasseReferente());
-			stmt.setDate(3, erro.getData());
-			stmt.setInt(4, erro.getStatus());
+			stmt.setString(1, error.getDescricao());
+			stmt.setString(2, error.getNomeDaClasseReferente());
+			stmt.setDate(3, error.getData());
+			stmt.setInt(4, error.getStatus());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			// Impossivel salvar excecao
+			// Impossible to save exception
 		}
 	}
 
 	/**
-	 * Remove um certo registro
+	 * Removes a certain register
 	 * 
 	 * @param id
-	 *            Identificador do registro
+	 *            Identifier of register
 	 */
-	public void removeRegistroErro(int id) {
+	public void removeErrorRegister(int id) {
 		String sql = "DELETE FROM Erro WHERE id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -168,25 +168,25 @@ public class UtilDAO {
 	}
 
 	/**
-	 * Obtem a lista de erros registrados
+	 * Gets a list of recorded errors
 	 * 
-	 * @return Uma lista todos erros
+	 * @return One list of errors
 	 */
-	public List<Error> obterErros() {
+	public List<Error> getErrors() {
 		String sql = "SELECT * FROM Erro";
-		List<Error> erros = new ArrayList<Error>();
+		List<Error> errors = new ArrayList<Error>();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Error erro = new Error();
-				erro.setData(rs.getDate("data"));
-				erro.setNomeDaClasseReferente(rs
+				Error error = new Error();
+				error.setData(rs.getDate("data"));
+				error.setNomeDaClasseReferente(rs
 						.getString("nomeDaClasseReferente"));
-				erro.setId(rs.getInt("id"));
-				erro.setStatus(rs.getInt("status"));
-				erro.setDescricao(rs.getString("descricao"));
-				erros.add(erro);
+				error.setId(rs.getInt("id"));
+				error.setStatus(rs.getInt("status"));
+				error.setDescricao(rs.getString("descricao"));
+				errors.add(error);
 			}
 			rs.close();
 			stmt.close();
@@ -194,7 +194,7 @@ public class UtilDAO {
 			// Impossivel testar
 			e.printStackTrace();
 		}
-		return erros;
+		return errors;
 	}
 	
 	public History getHistory(int id){

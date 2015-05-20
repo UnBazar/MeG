@@ -30,6 +30,8 @@ public class ProjectionServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Projection");
 	
+	private final String PROJECTION_VIEW = "projection.jsp";
+	private final String GENERATE_PROJECTION_VIEW = "generate-projection.jsp";
 	private static final long serialVersionUID = 1L;
 	
 	// Stores the number of hits the projections got.
@@ -59,7 +61,7 @@ public class ProjectionServlet extends HttpServlet {
 		session.setAttribute("sections", listModel(EnumTable.SECTION));
 		session.setAttribute("states", listModel(EnumTable.STATE));
 		// Redirect to an form
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("gerar-projecao.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(GENERATE_PROJECTION_VIEW);
 		requestDispatcher.forward(request, response);
 		
 	}
@@ -105,7 +107,7 @@ public class ProjectionServlet extends HttpServlet {
 		session.setAttribute("secao", section.getNome());
 		session.setAttribute("estado", state.getNome());
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("projecao.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROJECTION_VIEW);
 		requestDispatcher.forward(request, response);
 		logger.info("Projection created.");
 	}

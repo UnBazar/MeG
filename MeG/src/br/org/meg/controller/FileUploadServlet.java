@@ -25,7 +25,7 @@ public class FileUploadServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Upload");
 
-
+	private final String ADMINISTRATOR_VIEW = "/WEB-INF/jsp/administrator.jsp";
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -70,7 +70,7 @@ public class FileUploadServlet extends HttpServlet {
 				request.setAttribute("erro", true);
 			} 
 		}
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/administrador.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);
 		requestDispatcher.forward(request, response);
 		logger.info("Requested a file upload.");
 	}		

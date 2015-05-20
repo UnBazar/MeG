@@ -33,7 +33,7 @@ public class CompareServlet extends HttpServlet {
 	private final String TYPE_NORMAL_CHOICE = "geral";
 	private final String TYPE_PERCENTAGE_CHOICE = "do crescimento";
 	private final String ATTRIBUTE_NAME_SECOND_LIST_DATA = "valores2";
-	private final String VIEW_NAME = "compara.jsp";
+	private final String COMPARE_VIEW = "compare.jsp";
 	
 	public CompareServlet(){
 		super();
@@ -113,7 +113,7 @@ public class CompareServlet extends HttpServlet {
 		} else if (choiceTypeOfData.equalsIgnoreCase(TYPE_PERCENTAGE_CHOICE)) {
 			session.setAttribute(ATTRIBUTE_NAME_SECOND_LIST_DATA, getIncrease(scenes));
 		}
-		RequestDispatcher rd = request.getRequestDispatcher(VIEW_NAME);
+		RequestDispatcher rd = request.getRequestDispatcher(COMPARE_VIEW);
 		rd.forward(request, response);
 		logger.info("Created comparison.");
 	}

@@ -23,7 +23,7 @@ public class UploadArquivoException extends RuntimeException {
 		erro.setDescricao(mensagem);
 		erro.setStatus(0);
 		UtilDAO dao = new UtilDAO();
-		dao.registraErro(erro);
+		dao.registerError(erro);
 	}
 
 }

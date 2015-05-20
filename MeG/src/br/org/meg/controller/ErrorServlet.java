@@ -21,7 +21,7 @@ public class ErrorServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Error");
 
-	
+	private final String ERROR_TABLE_VIEW = "WEB-INF/jsp/error-table.jsp";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -36,9 +36,9 @@ public class ErrorServlet extends HttpServlet {
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilDAO dao = new UtilDAO();
-		List<Error> listaErros = dao.obterErros();
+		List<Error> listaErros = dao.getErrors();
 		request.setAttribute("lista", listaErros);		
-		request.getRequestDispatcher("WEB-INF/jsp/tabela-erro.jsp").forward(request, response);
+		request.getRequestDispatcher(ERROR_TABLE_VIEW).forward(request, response);
 		logger.info("Generated error table.");
 	}
 

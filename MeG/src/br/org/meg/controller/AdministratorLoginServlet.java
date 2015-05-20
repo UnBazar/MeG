@@ -26,7 +26,7 @@ public class AdministratorLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private final String TO_LOGIN = "login-adm.jsp";
-	private final String ADMINISTRATOR_VIEW = "WEB-INF/jsp/administrador.jsp";
+	private final String ADMINISTRATOR_VIEW = "WEB-INF/jsp/administrator.jsp";
 
 
 	/**

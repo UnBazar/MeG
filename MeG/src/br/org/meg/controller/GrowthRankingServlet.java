@@ -22,6 +22,7 @@ public class GrowthRankingServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("GrowthRanking");
 	
+	private final String GROWTH_TABLE_VIEW = "growth-table.jsp";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -61,7 +62,7 @@ public class GrowthRankingServlet extends HttpServlet {
 		request.setAttribute("finalYear", hash.get("finalYear"));
 		request.setAttribute("description", description);
 		request.setAttribute("section", section.getNome());
-		request.getRequestDispatcher("growth-table.jsp").forward(request, response);
+		request.getRequestDispatcher(GROWTH_TABLE_VIEW).forward(request, response);
 		logger.info("Created growth ranking.");
 	}
 	

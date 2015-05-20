@@ -35,7 +35,7 @@ public class State implements Serializable{
 			this.id = id;
 			// Deprecated
 			UtilDAO utilDAO = new UtilDAO();
-			this.sigla = utilDAO.getSiglaEstado(id);
+			this.sigla = utilDAO.getStateAbbreviation(id);
 			
 			this.nome = DAO.getNameFromID(id);
 		}else{

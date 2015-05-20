@@ -26,7 +26,7 @@ public class HistoryServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private final String HISTORY_ACESS_VIEW =  "WEB-INF/jsp/historico-acesso.jsp";
+	private final String HISTORY_ACESS_VIEW =  "WEB-INF/jsp/access-history.jsp";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
