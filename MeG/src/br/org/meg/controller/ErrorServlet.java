@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.UtilDAO;
 import org.meg.model.Error;
 
@@ -17,6 +18,10 @@ import org.meg.model.Error;
  */
 @WebServlet("/erro")
 public class ErrorServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("Error");
+
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -34,6 +39,7 @@ public class ErrorServlet extends HttpServlet {
 		List<Error> listaErros = dao.obterErros();
 		request.setAttribute("lista", listaErros);		
 		request.getRequestDispatcher("WEB-INF/jsp/tabela-erro.jsp").forward(request, response);
+		logger.info("Generated error table.");
 	}
 
 }

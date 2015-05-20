@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.UtilDAO;
 
 /**
@@ -24,6 +25,10 @@ import org.meg.dao.UtilDAO;
  */
 @WebFilter("/*")
 public class FilterHistory implements Filter {
+	
+	Logger logger = Logger.getLogger("Filter");
+
+	
 	// All action mappings that need counted in historic
 	private final String[] ACTIONS = {"/ranking","/compara", "/projecao", "/grafico"};
 
@@ -47,6 +52,7 @@ public class FilterHistory implements Filter {
 		for(String action : ACTIONS){
 			if(path.contains(action)){
 				utilDAO.addHistory(action.substring(1));
+				logger.info("History counter increased by 1");
 			}
 		}
 		// Continue with request

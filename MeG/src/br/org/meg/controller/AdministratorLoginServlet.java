@@ -69,7 +69,7 @@ public class AdministratorLoginServlet extends HttpServlet {
 		} else {
 			// If authentication return error
 			requestDispatcher = request.getRequestDispatcher(TO_LOGIN);
-			logger.error("Administrator null.");
+			logger.info("Couldn't log in. Administrator null.");
 		}
 		requestDispatcher.forward(request, response);
 	}

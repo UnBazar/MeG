@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.FrameDAO;
 import org.meg.model.Description;
 import org.meg.model.State;
@@ -24,6 +25,8 @@ import org.meg.model.Section;
  */
 @WebServlet ("/compara")
 public class CompareServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("Compare");
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -112,6 +115,7 @@ public class CompareServlet extends HttpServlet {
 		}
 		RequestDispatcher rd = request.getRequestDispatcher(VIEW_NAME);
 		rd.forward(request, response);
+		logger.info("Created comparison.");
 	}
 	/**
 	 * List values with increase betwen two years

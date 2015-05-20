@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.EnumTable;
 import org.meg.dao.FrameDAO;
 import org.meg.dao.GenericModelDAO;
@@ -26,6 +27,9 @@ import org.meg.model.Section;
  */
 @WebServlet("/projecao")
 public class ProjectionServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("Projection");
+	
 	private static final long serialVersionUID = 1L;
 	
 	// Stores the number of hits the projections got.
@@ -57,6 +61,7 @@ public class ProjectionServlet extends HttpServlet {
 		// Redirect to an form
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("gerar-projecao.jsp");
 		requestDispatcher.forward(request, response);
+		
 	}
 
 	/**
@@ -102,6 +107,7 @@ public class ProjectionServlet extends HttpServlet {
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("projecao.jsp");
 		requestDispatcher.forward(request, response);
+		logger.info("Projection created.");
 	}
 
 	/**

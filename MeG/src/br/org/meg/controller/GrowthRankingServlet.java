@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.FrameDAO;
 import org.meg.model.Description;
 import org.meg.model.Frame;
@@ -18,6 +19,9 @@ import org.meg.model.Section;
 
 @WebServlet("/growth-servlet")
 public class GrowthRankingServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("GrowthRanking");
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -58,6 +62,7 @@ public class GrowthRankingServlet extends HttpServlet {
 		request.setAttribute("description", description);
 		request.setAttribute("section", section.getNome());
 		request.getRequestDispatcher("growth-table.jsp").forward(request, response);
+		logger.info("Created growth ranking.");
 	}
 	
 	/**

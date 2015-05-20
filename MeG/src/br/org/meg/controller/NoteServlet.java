@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.UtilDAO;
 import org.meg.model.Note;
 
@@ -18,6 +19,8 @@ import org.meg.model.Note;
  */
 @WebServlet(urlPatterns = {"/index.html"})
 public class NoteServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("Note");
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -32,6 +35,7 @@ public class NoteServlet extends HttpServlet {
 		UtilDAO utilDAO = new UtilDAO();
 		// Get randomic notes
 		List<Note> observations = utilDAO.getNotes();
+		logger.info("Random note selected.");
 		// Set an initial note
 		Note defaultNote = new Note();
 		defaultNote = observations.get(0);

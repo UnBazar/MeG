@@ -16,11 +16,15 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 import org.meg.model.Administrator;
 import org.meg.parser.Parser;
 
 @WebServlet("/upload")
 public class FileUploadServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("Upload");
+
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,6 +72,7 @@ public class FileUploadServlet extends HttpServlet {
 		}
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/administrador.jsp");
 		requestDispatcher.forward(request, response);
+		logger.info("Requested a file upload.");
 	}		
 	/**
 	 * This method formats the administrator name that uploaded the file in a specific format:

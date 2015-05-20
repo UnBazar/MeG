@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.FrameDAO;
 import org.meg.dao.UtilDAO;
 import org.meg.model.Description;
@@ -18,6 +19,8 @@ import org.meg.model.Section;
 
 @WebServlet("/ranking")
 public class RankingServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("Ranking");
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -46,6 +49,8 @@ public class RankingServlet extends HttpServlet {
 		request.setAttribute("setor", section.getNome());
 		request.setAttribute("descricao", description);
 		request.getRequestDispatcher("tabela.jsp").forward(request, response);
+		logger.info("Ranking created.");
+		
 	}
 	
 	/**

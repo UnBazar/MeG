@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.EnumTable;
 import org.meg.dao.FrameDAO;
 import org.meg.dao.GenericModelDAO;
@@ -27,6 +28,8 @@ import org.meg.model.State;
  */
 @WebServlet("/grafico")
 public class GraphicServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("Graphic");
 	
 	private static final long serialVersionUID = 1L;
 	// Weight to show values in percent
@@ -78,7 +81,7 @@ public class GraphicServlet extends HttpServlet {
 		 */
 		String option = request.getParameter("grafico");
 		// Never be null
-		assert(option == null);
+		assert(option != null);
 		
 		// DAO used to get frames
 		FrameDAO frameDAO = new FrameDAO();
@@ -114,6 +117,7 @@ public class GraphicServlet extends HttpServlet {
 		// Redirect to grafico.jsp
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("grafico.jsp");
 		requestDispatcher.forward(request, response);
+		logger.info("Created graphic");
 	}
 	
 	private HashMap<EnumAttribute, Object> getAttributes(HttpServletRequest request){

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.UtilDAO;
 import org.meg.model.History;
 
@@ -20,6 +21,9 @@ import org.meg.model.History;
  */
 @WebServlet("/historico")
 public class HistoryServlet extends HttpServlet {
+	
+	Logger logger = Logger.getLogger("History");
+	
 	private static final long serialVersionUID = 1L;
 	
 	private final String HISTORY_ACESS_VIEW =  "WEB-INF/jsp/historico-acesso.jsp";
@@ -64,6 +68,8 @@ public class HistoryServlet extends HttpServlet {
 		// Redirect to history view
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(HISTORY_ACESS_VIEW);
 		requestDispatcher.forward(request, response);
+		logger.info("Generated history table.");
+		
 	}
 
 }
