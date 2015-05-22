@@ -4,13 +4,13 @@ import java.sql.Date;
 
 public class Error {
 	private int id;
-	private String descricao;
-	private String nomeDaClasseReferente;
-	private Date data;
-	/* Codigo de status do erro 
-	 * 0 para não verificado
-	 * 1 para verificacao em progresso 
-	 * 2 para verificado
+	private String description;
+	private String referringClassName;
+	private Date date;
+	/* Status code of the errror 
+	 * 0 for not verified
+	 * 1 for verification in progress 
+	 * 2 for verified
 	 */
 	private int status;
 
@@ -22,28 +22,28 @@ public class Error {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getNomeDaClasseReferente() {
-		return nomeDaClasseReferente;
+	public String getReferringClassName() {
+		return referringClassName;
 	}
 
-	public void setNomeDaClasseReferente(String nomeDaClasseReferente) {
-		this.nomeDaClasseReferente = nomeDaClasseReferente;
+	public void setReferringClassName(String referringClassName) {
+		this.referringClassName = referringClassName;
 	}
 
-	public Date getData() {
-		return data;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public int getStatus() {

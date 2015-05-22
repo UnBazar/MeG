@@ -31,7 +31,7 @@
 					<label id="secao">Setor:</label>
 					<select name="section">
 						<c:forEach items="${sections}" var="section">
-							<option value="${section.id}">${section.nome}</option>
+							<option value="${section.id}">${section.name}</option>
 						</c:forEach>
 					</select>
 					<br/>
@@ -39,7 +39,7 @@
 					<label>Estado:</label>
 					<select name="state">
 						<c:forEach items="${states}" var="state">
-							<option value="${state.id}">${state.sigla}</option>
+							<option value="${state.id}">${state.stateAbbreviation}</option>
 						</c:forEach>
 					</select>
 					<label id="anoFinal"> Até </label>

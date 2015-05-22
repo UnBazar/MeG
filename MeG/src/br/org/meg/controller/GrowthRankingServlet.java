@@ -61,7 +61,7 @@ public class GrowthRankingServlet extends HttpServlet {
 		request.setAttribute("initialYear", hash.get("initialYear"));
 		request.setAttribute("finalYear", hash.get("finalYear"));
 		request.setAttribute("description", description);
-		request.setAttribute("section", section.getNome());
+		request.setAttribute("section", section.getName());
 		request.getRequestDispatcher(GROWTH_TABLE_VIEW).forward(request, response);
 		logger.info("Created growth ranking.");
 	}

@@ -53,7 +53,7 @@
 	<div class="container">
 		<div id="imprimir">
 			<br>
-			<h3>Ranking de ${descricao.content} no setor de ${setor} - ${ano} </h3>
+			<h3>Ranking de ${descricao.content} no setor de ${secao} - ${ano} </h3>
 			<table border="1" class="tabelas">
 				<tr>
 					<th>Ranking</th>
@@ -63,7 +63,7 @@
 				<c:forEach var="quadro" items="${lista}" varStatus="id">
 					<tr>
 						<td>${id.count}º</td>
-						<td>${quadro.state.nome}</td>
+						<td>${quadro.state.name}</td>
 						<td class="dado"><c:if
 								test="${descricao.id == 4 || descricao.id == 5}">	
 									R$ ${quadro.value} 

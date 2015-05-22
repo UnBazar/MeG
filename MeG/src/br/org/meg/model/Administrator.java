@@ -17,7 +17,7 @@ public class Administrator {
 	
 	public void setName(String name) {
 		if (name == null || name.length() < MIN_NAME_LENGTH){
-			throw new IllegalArgumentException("Nome inválido!");
+			throw new IllegalArgumentException("Invalid name!");
 		}
 		this.name = name;
 	}
@@ -28,7 +28,7 @@ public class Administrator {
 	
 	public void setPassword(String password) {
 		if (password == null || password.length() < MIN_PASS_LENGTH || password.length() > MAX_PASS_LENGTH) {
-			throw new IllegalArgumentException("Senha inválida!");
+			throw new IllegalArgumentException("Invalid password!");
 		}
 		this.password = password;
 	}
@@ -39,7 +39,7 @@ public class Administrator {
 
 	public void setEmail(String email) {
 		if (email == null){
-			throw new IllegalArgumentException("Email inválido!");
+			throw new IllegalArgumentException("Invalid email");
 		}
 		int numberOfSpecialCharacter = 0;
 		for (int i = 0; i < email.length(); i++) {
@@ -48,7 +48,7 @@ public class Administrator {
 			}
 		}
 		if (numberOfSpecialCharacter != 1){
-			throw new IllegalArgumentException("Email inválido!");
+			throw new IllegalArgumentException("Invalid email!");
 		}
 		this.email = email;
 	}
@@ -59,7 +59,7 @@ public class Administrator {
 
 	public void setUserName(String userName) {
 		if (userName == null || userName.length() < MIN_USER_LENGTH) {
-			throw new IllegalArgumentException("Nome de usuário inválido!");
+			throw new IllegalArgumentException("Invalid username!");
 		}
 		this.userName = userName;
 	}	

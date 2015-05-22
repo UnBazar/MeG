@@ -143,9 +143,9 @@ public class Parser {
 			for (int i = 0; i < this.sectionsQuantity; i++) {
 				tokens = scanner.nextLine().split(";");
 				state = new State();
-				state.setNome(tokens[0].substring(1, tokens[0].length() - 1));
+				state.setName(tokens[0].substring(1, tokens[0].length() - 1));
 				section = new Section();
-				section.setNome(tokens[1].substring(3, tokens[1].length() - 1));
+				section.setName(tokens[1].substring(3, tokens[1].length() - 1));
 				for (int k = 0; k < 5 * timeInterval; k++) {
 					frames.add(new Frame());
 					frames.get(frames.size() - 1).setState(state);

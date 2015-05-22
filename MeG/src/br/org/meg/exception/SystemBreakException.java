@@ -23,9 +23,9 @@ public class SystemBreakException extends RuntimeException{
 	 */
 	private void recordException(String message) {
 		Error erro = new Error();
-		erro.setData(new Date(System.currentTimeMillis()));
+		erro.setDate(new Date(System.currentTimeMillis()));
 		erro.setStatus(0);
-		erro.setDescricao(message);
+		erro.setDescription(message);
 		UtilDAO dao = new UtilDAO();
 		dao.registerError(erro);
 	}

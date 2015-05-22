@@ -112,8 +112,8 @@ public class GraphicServlet extends HttpServlet {
 		session.setAttribute("anos", listYears(frames));
 		session.setAttribute("tamanho", frames.size());
 		session.setAttribute("titulo", ((Description) hashOfAttributes.get(EnumAttribute.DESCRIPTION)).getContent());
-		session.setAttribute("secao",  ((Section) hashOfAttributes.get(EnumAttribute.SECTION)).getNome());
-		session.setAttribute("estado", ((State) hashOfAttributes.get(EnumAttribute.STATE)).getNome());
+		session.setAttribute("secao",  ((Section) hashOfAttributes.get(EnumAttribute.SECTION)).getName());
+		session.setAttribute("estado", ((State) hashOfAttributes.get(EnumAttribute.STATE)).getName());
 		session.setAttribute("grafico", option);
 		
 		// Redirect to grafico.jsp

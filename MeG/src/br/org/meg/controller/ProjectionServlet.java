@@ -104,8 +104,8 @@ public class ProjectionServlet extends HttpServlet {
 		session.setAttribute("anos", getYearsList(frames));
 		session.setAttribute("tamanho", frames.size());
 		session.setAttribute("titulo", description.getContent());
-		session.setAttribute("secao", section.getNome());
-		session.setAttribute("estado", state.getNome());
+		session.setAttribute("secao", section.getName());
+		session.setAttribute("estado", state.getName());
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROJECTION_VIEW);
 		requestDispatcher.forward(request, response);

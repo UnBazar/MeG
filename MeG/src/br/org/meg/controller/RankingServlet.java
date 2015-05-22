@@ -47,7 +47,7 @@ public class RankingServlet extends HttpServlet {
 		
 		request.setAttribute("lista", list);
 		request.setAttribute("ano", hash.get("ano"));
-		request.setAttribute("setor", section.getNome());
+		request.setAttribute("setor", section.getName());
 		request.setAttribute("descricao", description);
 		request.getRequestDispatcher(TABLE_VIEW).forward(request, response);
 		logger.info("Ranking created.");

@@ -12,7 +12,7 @@ public class Section implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String nome;
+	private String name;
 	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.SECTION);
 	
 	public Section() {
@@ -23,8 +23,8 @@ public class Section implements Serializable{
 		this.setId(id);
 	}
 	
-	public Section(String nome){
-		this.setNome(nome);
+	public Section(String name){
+		this.setName(name);
 	}
 	
 	public int getId() {
@@ -35,21 +35,21 @@ public class Section implements Serializable{
 		// fixed interval id
 		if (id >= 1 && id <= 21) {
 			this.id = id;
-			this.nome = DAO.getNameFromID(id);
+			this.name = DAO.getNameFromID(id);
 		} else {
 			throw new SystemBreakException("An invalid id was inserted in" 
 					+ this.getClass().getName());
 		}
 	}
 	
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 	
-	public void setNome(String nome) {
-		if (nome != null) {
-			this.nome = nome;
-			this.id = DAO.getIDFromName(nome);
+	public void setName(String name) {
+		if (name != null) {
+			this.name = name;
+			this.id = DAO.getIDFromName(name);
 		} else {
 			throw new IllegalArgumentException("Name of section is invalid!");
 		}

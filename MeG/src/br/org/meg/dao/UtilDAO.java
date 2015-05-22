@@ -43,8 +43,7 @@ public class UtilDAO {
 			return siglaDoEstado;
 
 		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar a sigla do estado no banco de dados", this
+			throw new DAOException("Error getting the state abbreviation in the database", this
 							.getClass().getName());
 		}
 	}
@@ -69,7 +68,7 @@ public class UtilDAO {
 			rs.close();
 			return minimumWage;
 		} catch (SQLException sqlException) {
-			throw new DAOException("Erro ao buscar o ano no banco de dados",
+			throw new DAOException("Error searching year in the database",
 					this.getClass().getName());
 		}
 	}
@@ -88,7 +87,7 @@ public class UtilDAO {
 			stmt.close();
 		} catch (SQLException sqlException) {
 			System.err.println(sqlException);
-			throw new DAOException("Erro ao adicionar no historico!", 
+			throw new DAOException("Error adding to history", 
 					this.getClass().getName());
 		}
 	}
@@ -138,9 +137,9 @@ public class UtilDAO {
 		String sql = "INSERT INTO Erro(descricao, nomeDaClasseReferente, data, status) values(?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, error.getDescricao());
-			stmt.setString(2, error.getNomeDaClasseReferente());
-			stmt.setDate(3, error.getData());
+			stmt.setString(1, error.getDescription());
+			stmt.setString(2, error.getReferringClassName());
+			stmt.setDate(3, error.getDate());
 			stmt.setInt(4, error.getStatus());
 			stmt.execute();
 			stmt.close();
@@ -180,12 +179,12 @@ public class UtilDAO {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Error error = new Error();
-				error.setData(rs.getDate("data"));
-				error.setNomeDaClasseReferente(rs
+				error.setDate(rs.getDate("data"));
+				error.setReferringClassName(rs
 						.getString("nomeDaClasseReferente"));
 				error.setId(rs.getInt("id"));
 				error.setStatus(rs.getInt("status"));
-				error.setDescricao(rs.getString("descricao"));
+				error.setDescription(rs.getString("descricao"));
 				errors.add(error);
 			}
 			rs.close();

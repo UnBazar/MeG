@@ -31,9 +31,9 @@
 				</tr>
 				<c:forEach var="erro" items="${lista}" varStatus="id">
 					<tr>
-						<td>${erro.descricao}</td>
-						<td>${erro.nomeDaClasseReferente}</td>
-						<td>${erro.data}</td>
+						<td>${erro.description}</td>
+						<td>${erro.referringClassName}</td>
+						<td>${erro.date}</td>
 						<td>${erro.status}</td>
 					</tr>
 				</c:forEach>

@@ -28,9 +28,9 @@ public class DAOException extends RuntimeException {
 	 * Record error in database
 	 */
 	public void recordError() {
-		error.setData(new Date(System.currentTimeMillis()));
-		error.setNomeDaClasseReferente(nameOfClass);
-		error.setDescricao(message);
+		error.setDate(new Date(System.currentTimeMillis()));
+		error.setReferringClassName(nameOfClass);
+		error.setDescription(message);
 		error.setStatus(0);
 		UtilDAO dao = new UtilDAO();
 		dao.registerError(error);

@@ -52,7 +52,7 @@ public class CompareServlet extends HttpServlet {
 		int stateId = Integer.parseInt(request.getParameter("estado"));
 		State state = new State(stateId);
 		// Put second state name in session
-		session.setAttribute("secondStateName", state.getNome());
+		session.setAttribute("secondStateName", state.getName());
 		// Get the name of section of scene stored in session object
 		String sectionName = (String) session.getAttribute("secao"); 
 		// Instantiate an Section from your name

@@ -13,16 +13,16 @@ public class State implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
-	private String nome;
-	private String sigla;
+	private String name;
+	private String stateAbbreviation;
 	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.STATE);
 	
 	public State() {
 	
 	}
 
-	public State(int idEstado) {
-		setId(idEstado);
+	public State(int stateId) {
+		setId(stateId);
 	}
 
 	public int getId() {
@@ -35,34 +35,34 @@ public class State implements Serializable{
 			this.id = id;
 			// Deprecated
 			UtilDAO utilDAO = new UtilDAO();
-			this.sigla = utilDAO.getStateAbbreviation(id);
+			this.stateAbbreviation = utilDAO.getStateAbbreviation(id);
 			
-			this.nome = DAO.getNameFromID(id);
+			this.name = DAO.getNameFromID(id);
 		}else{
 			throw new SystemBreakException("An invalid id of state was inserted!");
 		}
 
 	}
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
-	public void setNome(String nome) {
-		if (nome != null) {
-			this.nome = nome;
-			this.id = DAO.getIDFromName(nome);
+	public void setName(String name) {
+		if (name != null) {
+			this.name = name;
+			this.id = DAO.getIDFromName(name);
 		}else{
 			throw new IllegalArgumentException("Name of state is null");
 		}
 	}
 
-	public String getSigla() {
-		return sigla;
+	public String getStateAbbreviation() {
+		return stateAbbreviation;
 	}
 
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
+	public void setStateAbbreviation(String stateAbbreviation) {
+		this.stateAbbreviation = stateAbbreviation;
 	}
 
 }
