@@ -16,24 +16,24 @@ public class UtilDAOTest {
 	}
 
 	@Test
-	public void getSiglaEstadoTest(){
-		String sigla = "AC";
-		assertEquals(dao.getStateAbbreviation(1), sigla);
+	public void getStateAbbreviationTest(){
+		String stateAbbreviation = "AC";
+		assertEquals(dao.getStateAbbreviation(1), stateAbbreviation);
 	}
 	
 	@Test
-	public void getSalarioMinimoTest(){
-		int ano = 2008;
-		assertEquals(dao.getMinimumWage(ano), 415.00 , 0.001);
+	public void getMinimumWageTest(){
+		int year = 2008;
+		assertEquals(dao.getMinimumWage(year), 415.00 , 0.001);
 	}
 	
 	@Test
-	public void obterErrosTest(){
+	public void getErrorsTest(){
 		assertNotNull(dao.getErrors());
 	}
 
 	@Test
-	public void getHistoricoTest(){
+	public void getHistoryTest(){
 		int id = 1;
 		assertNotNull(dao.getHistory(id));
 	}

@@ -12,27 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.RankingServlet;
+import org.meg.controller.HistoryServlet;
 
-public class RankingServletTest {
-
+public class HistoryServletTest {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
-
+	private HistoryServlet servlet;
+	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception{
 		this.request = mock(HttpServletRequest.class);
 		this.response = mock(HttpServletResponse.class);
+		this.servlet = new HistoryServlet();
+	}
+	
+	@Test
+	public void doPostTest() throws ServletException, IOException{
+		when(request.getRequestDispatcher("WEB-INF/jsp/access-history.jsp")).thenReturn(mock(RequestDispatcher.class));
+		servlet.doPost(request, response);
 	}
 
-	@Test
-	public void doPostTest() throws ServletException, IOException {
-			when(request.getParameter("ano")).thenReturn("2012");
-			when(request.getParameter("setor")).thenReturn("3");
-			when(request.getParameter("descricao")).thenReturn("5");
-			when(request.getRequestDispatcher("table.jsp")).thenReturn(
-					mock(RequestDispatcher.class));
-			RankingServlet servlet = new RankingServlet();
-			servlet.doPost(request, response);
-	}
 }

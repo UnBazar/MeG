@@ -23,27 +23,27 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testValidarQuantidadeDeLinhasShouldBeCorrect() throws FileNotFoundException {
+	public void testValidatesNumerOfLinesShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url, 27, 4, 2006, 2012);
 		this.parser.validatesLinesQuantity(4);
 	}
 	
 	@Test(expected = UploadArquivoException.class)
-	public void testValidarQuantidadeDeLinhasShouldThrowException() throws FileNotFoundException {
+	public void testValidatesNumerOfLinesShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 5, 2006, 2012);
 		this.parser.validatesLinesQuantity(4);
 	}
 
 	@Test
-	public void testValidarAnoShouldBeCorrect() throws FileNotFoundException {
+	public void testValidatesYearShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 4, 2006, 2012);
 		this.parser.validatesYear(2006, 2012);
 	}
 	
 	@Test(expected = UploadArquivoException.class)
-	public void testValidarAnoShouldThrowException() throws FileNotFoundException {
+	public void testValidateYearShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 4, 2006, 2012);
 		this.parser.validatesYear(2006, 2011);
@@ -51,7 +51,7 @@ public class ParserTest {
 	
 
 	@Test
-	public void testValidarSecaoShouldBeCorrect() throws FileNotFoundException {
+	public void testValidatesSectionShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url,
 				27, 4, 2006, 2012);
 		this.parser.validatesSector("A Agricultura, pecuária, produção florestal, pesca e aquicultura");
@@ -61,7 +61,7 @@ public class ParserTest {
 	}
 	
 	@Test(expected = UploadArquivoException.class)
-	public void testValidarSecaoShouldThrowException() throws FileNotFoundException {
+	public void testValidatesSectionShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,27, 4, 2006, 2012);
 		this.parser.validatesSector("E Construção");
 	}
