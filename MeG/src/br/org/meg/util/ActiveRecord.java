@@ -80,7 +80,7 @@ public class ActiveRecord {
 			} else if(sqlArgument.getClass() == String.class) {
 				sqlStatement.setString(parameterIndex, (String) sqlArgument);
 			} else {
-				// no method matched
+				// No method matched
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

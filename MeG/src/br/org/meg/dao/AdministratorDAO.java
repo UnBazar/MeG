@@ -84,7 +84,7 @@ public class AdministratorDAO {
 	 * Verify if exists an name of administrator
 	 * 
 	 * @param nameOfAdministrator
-	 * @return booleano que verifica existencia do nome de usuario
+	 * @return boolean that verifies if user name exists
 	 */
 	public boolean existsNameOfAdministrator(String nameOfAdministrator) {
 		// Create sql command to get administrator with contraints
@@ -94,7 +94,7 @@ public class AdministratorDAO {
 			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
 			preparedStatement.setString(1, nameOfAdministrator);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			// Get true if exist an name
+			// Get true if exists a name
 			boolean nameExist = resultSet.first();
 			
 			resultSet.close();
@@ -102,7 +102,7 @@ public class AdministratorDAO {
 			
 			return nameExist;
 		} catch (SQLException sqlException) {
-			throw new DAOException("Error to accessing database", this.getClass().getName());
+			throw new DAOException("Error accessing database", this.getClass().getName());
 		}
 	}
 	

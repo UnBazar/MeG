@@ -8,6 +8,7 @@ import org.meg.model.Error;
 public class UploadArquivoException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
+	// String with the exception message
 	private String message;
 	
 	public UploadArquivoException(String message) {

@@ -53,7 +53,7 @@ public class GenericModelDAO implements Serializable{
 			// In the case of search find something
 			if (resultSet.next()) {
 				name = resultSet.getString("nome");
-			}else{
+			} else {
 				// Exception throw, bd must be invalid
 				throw new DAOException("Don't exist register of "
 						+ tableName + " with id " + id, this.getClass().getName());
@@ -61,7 +61,7 @@ public class GenericModelDAO implements Serializable{
 			resultSet.close();
 			preparedStatement.close();
 			return name;
-		} catch (SQLException sqlException) {
+		} catch(SQLException sqlException) {
 			throw new DAOException("An failure occurred while getNameFromID of"
 							+ tableName + "model", this.getClass().getName());
 		}

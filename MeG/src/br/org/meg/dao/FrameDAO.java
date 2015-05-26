@@ -32,6 +32,14 @@ public class FrameDAO {
 			String sqlStatement = "INSERT INTO Quadro(ano, valor, estado_id, secao_id, descricao_id) "
 					+ "VALUES(?,?,?,?,?)";
 			try {
+				/*
+				 * Numbers of the preparedStatement:
+				 * 1, year
+				 * 2, value
+				 * 3, state ID
+				 * 4, section ID
+				 * 5, description ID
+				 */
 				PreparedStatement preparedStatement = this.connection.prepareStatement(sqlStatement);
 				preparedStatement.setInt(1, frame.getYear());
 				preparedStatement.setFloat(2, frame.getValue());

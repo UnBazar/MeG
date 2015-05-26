@@ -15,12 +15,12 @@ public class DAOException extends RuntimeException {
 	private String message;
 	// Name of class that throws this exception
 	private String nameOfClass;
-	// Error getted
+	// Error got
 	private Error error = new Error();
 	
-	public DAOException(String message, String nomeDaClasse) {
+	public DAOException(String message, String nameOfClass) {
 		this.message = message;
-		this.nameOfClass = nomeDaClasse;
+		this.nameOfClass = nameOfClass;
 		printStackTrace();
 	}
 	

@@ -8,14 +8,16 @@ import org.meg.dao.UtilDAO;
 import org.meg.exception.SystemBreakException;
 
 public class State implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private String stateAbbreviation;
 	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.STATE);
+	
+	// The interval between IDs from State must be between 1 and 27
+	static final int MIN_ID_STATE = 1;
+	static final int MAX_ID_STATE = 27;
 	
 	public State() {
 	
@@ -31,7 +33,7 @@ public class State implements Serializable{
 
 	public void setId(int id) {
 		// fixed interval id
-		if (id >= 1 && id <= 27){		
+		if (id >= MIN_ID_STATE && id <= MAX_ID_STATE){		
 			this.id = id;
 			// Deprecated
 			UtilDAO utilDAO = new UtilDAO();

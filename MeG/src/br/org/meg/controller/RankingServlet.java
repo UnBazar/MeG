@@ -28,7 +28,7 @@ public class RankingServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
 		final int minimumWageId = 5;
-		// maps user's request from String format to its corresponding values in Integer format
+		// Maps user's request from String format to its corresponding values in Integer format
 		HashMap<String, Integer> hash = getHash(request);
 		List<Frame> list;
 		FrameDAO dao = new FrameDAO();
@@ -40,7 +40,7 @@ public class RankingServlet extends HttpServlet {
 		list = dao.getFramesList(hash.get("ano"), section, description);
 		selectionSort(list);
 		
-		// identifies if user requested to display a ranking of the average salaries
+		// Identifies if user requested to display a ranking of the average salaries
 		if(description.getId() == minimumWageId){
 			setSalary(list, hash.get("ano"));
 		}

@@ -1,7 +1,7 @@
 package org.meg.model;
 
 public class Note {
-
+	
 	private int id;
 	private String message;
 	private String imageURL;
@@ -21,7 +21,7 @@ public class Note {
 	public void setMessage(String message) {
 		if (message != null && message.length() < 255) {
 			this.message = message;
-		}else{
+		} else {
 			throw new IllegalArgumentException("Invalid note!");
 		}
 	}

@@ -1,6 +1,5 @@
 package org.meg.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import org.meg.dao.EnumTable;
@@ -15,8 +14,9 @@ public class Description implements Serializable{
 	private String content;
 	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.DESCRIPTION);
 
-	static final int MIN_ID_NUM = 1;
-	static final int MAX_ID_NUM = 5;
+	// The id from description must be between 1 & 5
+	static final int MIN_ID_DESC = 1;
+	static final int MAX_ID_DESC = 5;
 	
 	public Description() {
 		// Default constructor
@@ -53,8 +53,8 @@ public class Description implements Serializable{
 	 *			 get something that is not in the database the system.
 	 */
 	public void setId(int id) {
-		// fixed interval id
-		if (id >= MIN_ID_NUM && id <= MAX_ID_NUM) {
+		// Fixed interval id
+		if (id >= MIN_ID_DESC && id <= MAX_ID_DESC) {
 			this.id = id;
 			this.content = DAO.getNameFromID(id);
 		} else {

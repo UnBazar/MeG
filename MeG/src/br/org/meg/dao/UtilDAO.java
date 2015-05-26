@@ -190,7 +190,7 @@ public class UtilDAO {
 			rs.close();
 			stmt.close();
 		} catch (SQLException e) {
-			// Impossivel testar
+			// Impossible to test
 			e.printStackTrace();
 		}
 		return errors;

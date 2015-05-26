@@ -7,13 +7,16 @@ import org.meg.dao.GenericModelDAO;
 import org.meg.exception.SystemBreakException;
 
 public class Section implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private final GenericModelDAO DAO = new GenericModelDAO(EnumTable.SECTION);
+	
+	
+	// The interval between IDs from Section must be between 1 and 21
+	static final int MIN_ID_SECTION = 1;
+	static final int MAX_ID_SECTION = 21;
 	
 	public Section() {
 		// Default Constructor
@@ -32,8 +35,8 @@ public class Section implements Serializable{
 	}
 	
 	public void setId(int id) {
-		// fixed interval id
-		if (id >= 1 && id <= 21) {
+		// Fixed interval id
+		if (id >= MIN_ID_SECTION && id <= MAX_ID_SECTION) {
 			this.id = id;
 			this.name = DAO.getNameFromID(id);
 		} else {

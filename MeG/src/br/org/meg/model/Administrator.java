@@ -6,17 +6,24 @@ public class Administrator {
 	private String userName;
 	private String password;
 	
+	/*
+	 * The password needs to be at least 6 characters and less than 20
+	 * The username & name need to be at least 3 characters and less than 25
+	 */
+	
 	static final int MIN_PASS_LENGTH = 6;
 	static final int MAX_PASS_LENGTH = 20;
 	static final int MIN_USER_LENGTH = 3;
+	static final int MAX_USER_LENGTH = 25;
 	static final int MIN_NAME_LENGTH = 3;
+	static final int MAX_NAME_LENGTH = 25;
 	
 	public String getName() {
 		return name;
 	}
 	
 	public void setName(String name) {
-		if (name == null || name.length() < MIN_NAME_LENGTH){
+		if (name == null || name.length() < MIN_NAME_LENGTH ||  name.length() > MAX_NAME_LENGTH){
 			throw new IllegalArgumentException("Invalid name!");
 		}
 		this.name = name;
@@ -58,7 +65,7 @@ public class Administrator {
 	}
 
 	public void setUserName(String userName) {
-		if (userName == null || userName.length() < MIN_USER_LENGTH) {
+		if (userName == null || userName.length() < MIN_USER_LENGTH ||  userName.length() > MAX_USER_LENGTH) {
 			throw new IllegalArgumentException("Invalid username!");
 		}
 		this.userName = userName;
