@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.meg.controller.GraphicServlet;
 import org.meg.controller.ProjectionServlet;
 
 public class ProjectionTest {
@@ -37,9 +36,13 @@ public class ProjectionTest {
 
 	@Test
 	public void testDoPost() throws ServletException, IOException {
-		for (int state = 1; state <= 27; state++) {
-			for (int description = 1; description <= 5; description++) {
-				for (int section = 1; section <= 21; section++) {
+		final int numberOfStates = 27;
+		final int numberOfDescriptions = 5;
+		final int numberOfSections = 21;
+		
+		for (int state = 1; state <= numberOfStates; state++) {
+			for (int description = 1; description <= numberOfDescriptions; description++) {
+				for (int section = 1; section <= numberOfSections; section++) {
 					when(request.getParameter("state")).thenReturn(Integer.toString(state));
 					when(request.getParameter("description")).thenReturn(Integer.toString(description));
 					when(request.getParameter("section")).thenReturn(Integer.toString(section));
