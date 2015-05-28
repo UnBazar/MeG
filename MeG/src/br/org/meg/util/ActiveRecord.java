@@ -15,6 +15,12 @@ public class ActiveRecord {
 	private final String tableName = this.getClass().getSimpleName();
 	private int id;
 	
+	/**
+	 * Checks if register pass as argument and returns an object 
+	 * 
+	 * @param id 
+	 * @return ActiveRecord 
+	 */
 	public static final ActiveRecord find(int id) {
 		String sqlStatement = String.format("SELECT * FROM %s WHERE id = ?", getCurrentClass());
 		ActiveRecord newObject = new ActiveRecord();
@@ -36,7 +42,13 @@ public class ActiveRecord {
 		
 		return newObject;
 	}
-		
+	
+	/**
+	 * Returns an object of the column searched 
+	 * 
+	 * @param columnName in the database
+	 * @return Object with the column name 
+	 */
 	public final Object get(String columnName) {
 		String sqlStatement = String.format("SELECT %s FROM %s WHERE id = %d", columnName, this.tableName, this.id);
 		System.out.println(sqlStatement);
@@ -54,6 +66,13 @@ public class ActiveRecord {
 		return null;
 	}
 	
+	/**
+	 * Updates a value from the database 
+	 * 
+	 * @param columnName name of the column in the database 
+	 * @param value
+	 * @return sqlQueryResult 
+	 */
 	public final <T> boolean set(String columnName, T value) {
 		String sqlStatement = String.format("UPDATE %s SET %s = ? WHERE id = %d", this.tableName, columnName, this.id);
 		boolean sqlQueryResult = false;
@@ -71,6 +90,14 @@ public class ActiveRecord {
 		return false;
 	}
 	
+	/**
+	 * Used to set parameters with SQL for the database 
+	 * 
+	 * @param parameterIndex 
+	 * @param sqlStatement message in SQL to be used
+	 * @param sqlArgument the type of the argument
+	 * @return List<Quadro> with scenes corresponding 
+	 */
 	private static <T> void setSqlStatement(int parameterIndex, PreparedStatement sqlStatement, T sqlArgument) {
 		try {
 			if(sqlArgument.getClass() == Integer.class) {
@@ -87,6 +114,11 @@ public class ActiveRecord {
 		}
 	}
 	
+	/**
+	 * Returns the current class by callerLine 
+	 * 
+	 * @return String with the elements of file 
+	 */
 	public static String getCurrentClass() {
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 		String currentFileName = stackTraceElements[stackTraceElements.length - 1].getFileName();

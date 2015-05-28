@@ -42,7 +42,7 @@ public class UtilDAO {
 
 			return siglaDoEstado;
 
-		} catch (SQLException sqlException) {
+		} catch(SQLException sqlException) {
 			throw new DAOException("Error getting the state abbreviation in the database", this
 							.getClass().getName());
 		}
@@ -67,7 +67,7 @@ public class UtilDAO {
 			stmt.close();
 			rs.close();
 			return minimumWage;
-		} catch (SQLException sqlException) {
+		} catch(SQLException sqlException) {
 			throw new DAOException("Error searching year in the database",
 					this.getClass().getName());
 		}
@@ -85,7 +85,7 @@ public class UtilDAO {
 			PreparedStatement stmt = this.connection.prepareStatement(add);
 			stmt.execute();
 			stmt.close();
-		} catch (SQLException sqlException) {
+		} catch(SQLException sqlException) {
 			System.err.println(sqlException);
 			throw new DAOException("Error adding to history", 
 					this.getClass().getName());
@@ -121,7 +121,7 @@ public class UtilDAO {
 				
 				notes.add(note);
 			}
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			throw new DAOException("Error to obtain notes", this.getClass().getName());
 		}
 		return notes;
@@ -143,7 +143,7 @@ public class UtilDAO {
 			stmt.setInt(4, error.getStatus());
 			stmt.execute();
 			stmt.close();
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			// Impossible to save exception
 		}
 	}
@@ -161,7 +161,7 @@ public class UtilDAO {
 			stmt.setInt(1, id);
 			stmt.execute();
 			stmt.close();
-		} catch (SQLException e) {
+		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -208,7 +208,7 @@ public class UtilDAO {
 				int access = resultSet.getInt("acessos");
 				history = new History(id, access);
 			}
-		} catch (SQLException sqlException) {
+		} catch(SQLException sqlException) {
 			throw new DAOException("Error fetching the history of id 1 = "+id, 
 					this.getClass().getName());
 		}

@@ -141,7 +141,7 @@ public class GraphicServlet extends HttpServlet {
 		// years don't be equals
 		if(initialYear == finalYear){
 			throw new RuntimeException("Years don't be equals");
-		}else{
+		} else {
 			// Continue
 		}
 		
@@ -206,7 +206,8 @@ public class GraphicServlet extends HttpServlet {
 	private float calculateGrowth(float initValue, float finalValue){
 		float growth = ((finalValue/initValue)-1) * FACTOR_PERCENTAGE;
 		return growth;
-	}	
+	}
+	
 	/**
 	 * List all models in an table
 	 * 

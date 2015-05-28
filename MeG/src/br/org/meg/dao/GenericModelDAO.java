@@ -82,7 +82,7 @@ public class GenericModelDAO implements Serializable{
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				foundID = resultSet.getInt("id");
-			}else{
+			} else {
 				// Exception throw, bd must be invalid
 				throw new DAOException("Don't exist register of "
 						+ tableName + " with name equals " + name, this.getClass().getName());

@@ -33,7 +33,7 @@ public class FileUploadServlet extends HttpServlet {
 		if(isMultipart) {
 			try {
 				// max size in bytes
-				int maxFileSize = 100000;
+				final int maxFileSize = 100000;
 				DiskFileItemFactory factory = new DiskFileItemFactory();
 				factory.setSizeThreshold(maxFileSize);
 				// Responsible for abstracting file uploads processes
@@ -50,13 +50,14 @@ public class FileUploadServlet extends HttpServlet {
 						int initialYear = Integer.parseInt(items.get(0).getString());
 						int finalYear = Integer.parseInt(items.get(1).getString());
 						int numberOfSections = 0;
+						final int numberOfStates = 27;
 						HttpSession sessao = request.getSession();
 						Administrator administrator = (Administrator) sessao.getAttribute("administrador");
 						String administratorName = new String(formatName(administrator));
 						File uploadedFile = new File(url + administratorName + "_" + item.getName());
 						item.write(uploadedFile);						
 						numberOfSections = getNumberOfSections(items);
-						Parser parser = new Parser(uploadedFile.getAbsolutePath(), 27, numberOfSections, 
+						Parser parser = new Parser(uploadedFile.getAbsolutePath(), numberOfStates, numberOfSections, 
 								initialYear, finalYear);
 						validatesFile(items, parser, initialYear, finalYear, numberOfSections);
 						parser.persist();
@@ -95,9 +96,10 @@ public class FileUploadServlet extends HttpServlet {
 	}
 	
 	/**
-	 * Conta o número de seções lidas no formulário
+	 * Checks and counts the number of sections that were read in the form
+	 * 
 	 * @param items
-	 * @return o número de campos do tipo seção lidos no formulário
+	 * @return the number of fields with the type: Section read in the form
 	 */
 	private int getNumberOfSections(List<FileItem> items) {
 		int numberOfSections = 0;

@@ -31,7 +31,9 @@ public class ErrorServlet extends HttpServlet {
         super();
     }
 
-	/** método post que manda uma tabela de erros para a tabela-erro.jsp
+	/** 
+	 * Method post that sends an error table to error-table.jsp
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -5,7 +5,10 @@ public class Note {
 	private int id;
 	private String message;
 	private String imageURL;
-
+	
+	// Messages can't be null nor higher than 254
+	static final int MAX_MESSAGE_LENGTH = 254;
+	
 	public int getId() {
 		return id;
 	}
@@ -19,7 +22,7 @@ public class Note {
 	}
 
 	public void setMessage(String message) {
-		if (message != null && message.length() < 255) {
+		if (message != null && message.length() <= MAX_MESSAGE_LENGTH) {
 			this.message = message;
 		} else {
 			throw new IllegalArgumentException("Invalid note!");

@@ -32,7 +32,7 @@ public class AdministratorLogoutServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			// Invalidates session to logout.
+			// Invalidates session to logout
 			request.getSession().invalidate();
 			// Redirect to view of login
 			request.getRequestDispatcher(LOGIN_VIEW).forward(request, response);
