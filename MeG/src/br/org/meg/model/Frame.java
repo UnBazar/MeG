@@ -56,4 +56,13 @@ public class Frame {
 		this.description = description;
 	}
 	
+	public String toString() {
+		if(description != null && year != 0 && state != null && section != null) {
+			return String.format("Description: %s Year: %d State: %s Section: %s Value: %.2f", 
+					description.getContent(), year, state.getName(), section.getName(), value);
+		} else {
+			return super.toString();
+		}
+	}
+	
 }
