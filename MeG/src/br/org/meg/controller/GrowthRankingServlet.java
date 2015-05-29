@@ -88,6 +88,7 @@ public class GrowthRankingServlet extends HttpServlet {
 			frame = firstList.get(i);
 			frame.setValue(growth);
 			growthList.add(frame);
+			logger.info("Frame added to the growth list\n" + frame.toString());
 		}
 		return growthList;
 	}
@@ -118,6 +119,8 @@ public class GrowthRankingServlet extends HttpServlet {
 		
 		for(String iterator : attributesFrame) {
 			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
+			logger.info("Request parameter received -> key: " + iterator +
+					"value: " + hash.get(iterator));
 		}
 		
 		return hash;

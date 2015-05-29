@@ -232,6 +232,8 @@ public class ProjectionServlet extends HttpServlet {
 		
 		for(String iterator : attributesFrame) {
 			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
+			logger.info("Request parameter received -> key: " + iterator +
+					"value: " + hash.get(iterator));
 		}
 		
 		return hash;

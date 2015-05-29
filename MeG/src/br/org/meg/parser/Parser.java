@@ -171,7 +171,7 @@ public class Parser {
 						frames.get(frames.size() - 1).setValue(-1.0f);
 				}
 				Frame currentFrame = frames.get(frames.size() - 1);
-				logger.info(currentFrame.toString());
+				logger.info("Frame persisted by parser\n" + currentFrame.toString());
 			}
 		}
 
