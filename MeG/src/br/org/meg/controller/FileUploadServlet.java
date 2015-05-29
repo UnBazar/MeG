@@ -69,6 +69,7 @@ public class FileUploadServlet extends HttpServlet {
 				}
 			} catch(Exception e) {
 				request.setAttribute("erro", true);
+				logger.error("No file was sent.");
 			} 
 		}
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(ADMINISTRATOR_VIEW);

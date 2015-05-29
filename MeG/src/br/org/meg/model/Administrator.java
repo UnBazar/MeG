@@ -1,5 +1,7 @@
 package org.meg.model;
 
+import org.apache.log4j.Logger;
+
 public class Administrator {
 	private String name;
 	private String email;
@@ -18,13 +20,17 @@ public class Administrator {
 	static final int MIN_NAME_LENGTH = 3;
 	static final int MAX_NAME_LENGTH = 25;
 	
+	Logger logger = Logger.getLogger("Administrator");
+	
 	public String getName() {
 		return name;
 	}
 	
 	public void setName(String name) {
 		if (name == null || name.length() < MIN_NAME_LENGTH ||  name.length() > MAX_NAME_LENGTH){
+			logger.error("Name with to many letters.");
 			throw new IllegalArgumentException("Invalid name!");
+			
 		}
 		this.name = name;
 	}
@@ -35,6 +41,7 @@ public class Administrator {
 	
 	public void setPassword(String password) {
 		if (password == null || password.length() < MIN_PASS_LENGTH || password.length() > MAX_PASS_LENGTH) {
+			logger.error("Password with too many letters.");
 			throw new IllegalArgumentException("Invalid password!");
 		}
 		this.password = password;
@@ -46,6 +53,7 @@ public class Administrator {
 
 	public void setEmail(String email) {
 		if (email == null){
+			logger.error("Email can't be empty.");
 			throw new IllegalArgumentException("Invalid email");
 		}
 		int numberOfSpecialCharacter = 0;
@@ -55,6 +63,7 @@ public class Administrator {
 			}
 		}
 		if (numberOfSpecialCharacter != 1){
+			logger.error("Email can only have one special character.");
 			throw new IllegalArgumentException("Invalid email!");
 		}
 		this.email = email;
@@ -66,6 +75,7 @@ public class Administrator {
 
 	public void setUserName(String userName) {
 		if (userName == null || userName.length() < MIN_USER_LENGTH ||  userName.length() > MAX_USER_LENGTH) {
+			logger.error("User name with too many letters.");
 			throw new IllegalArgumentException("Invalid username!");
 		}
 		this.userName = userName;

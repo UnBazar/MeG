@@ -24,7 +24,7 @@ import org.meg.model.Section;
 import org.meg.model.State;
 
 /**
- * Responsable for plot an custom graphic
+ * Responsible for ploting an custom graphic
  */
 @WebServlet("/grafico")
 public class GraphicServlet extends HttpServlet {
@@ -108,7 +108,7 @@ public class GraphicServlet extends HttpServlet {
 			throw breakException;
 		}
 		
-		// Set all atributes to plot graphic
+		// Set all attributes to plot graphic
 		session.setAttribute("anos", listYears(frames));
 		session.setAttribute("tamanho", frames.size());
 		session.setAttribute("titulo", ((Description) hashOfAttributes.get(EnumAttribute.DESCRIPTION)).getContent());

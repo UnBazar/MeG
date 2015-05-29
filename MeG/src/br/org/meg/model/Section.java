@@ -2,6 +2,7 @@ package org.meg.model;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.EnumTable;
 import org.meg.dao.GenericModelDAO;
 import org.meg.exception.SystemBreakException;
@@ -17,6 +18,9 @@ public class Section implements Serializable{
 	// The interval between IDs from Section must be between 1 and 21
 	static final int MIN_ID_SECTION = 1;
 	static final int MAX_ID_SECTION = 21;
+	
+	Logger logger = Logger.getLogger("Section");
+
 	
 	public Section() {
 		// Default Constructor
@@ -40,6 +44,7 @@ public class Section implements Serializable{
 			this.id = id;
 			this.name = DAO.getNameFromID(id);
 		} else {
+			logger.error("Invalid id inserted.");
 			throw new SystemBreakException("An invalid id was inserted in" 
 					+ this.getClass().getName());
 		}
@@ -54,6 +59,7 @@ public class Section implements Serializable{
 			this.name = name;
 			this.id = DAO.getIDFromName(name);
 		} else {
+			logger.error("NULL name.");
 			throw new IllegalArgumentException("Name of section is invalid!");
 		}
 	}	

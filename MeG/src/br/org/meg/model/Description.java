@@ -2,6 +2,7 @@ package org.meg.model;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.EnumTable;
 import org.meg.dao.GenericModelDAO;
 import org.meg.exception.SystemBreakException;
@@ -17,6 +18,9 @@ public class Description implements Serializable{
 	// The id from description must be between 1 & 5
 	static final int MIN_ID_DESC = 1;
 	static final int MAX_ID_DESC = 5;
+	
+	Logger logger = Logger.getLogger("Description");
+
 	
 	public Description() {
 		// Default constructor
@@ -58,6 +62,7 @@ public class Description implements Serializable{
 			this.id = id;
 			this.content = DAO.getNameFromID(id);
 		} else {
+			logger.error("Invalid id inserted.");
 			throw new SystemBreakException("An invalid id was inserted in " 
 						+ this.getClass().getName());
 		}
