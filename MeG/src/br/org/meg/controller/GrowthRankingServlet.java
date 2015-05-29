@@ -39,27 +39,27 @@ public class GrowthRankingServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Maps user's request from String format to its corresponding values in Integer format.
-		HashMap<String, Integer> hash = getHash(request);
+		HashMap<String, Integer> requestParameters = getHash(request);
 		List<Frame> firstList;
 		List<Frame> secondList;
 		List<Frame> growthList;
 		FrameDAO dao = new FrameDAO();
 		Section section = new Section();
 		Description description = new Description();
-		section.setId(hash.get("sector"));
-		description.setId(hash.get("description"));
+		section.setId(requestParameters.get("sector"));
+		description.setId(requestParameters.get("description"));
 		
 		// get list of all frames of initial and final year
-		firstList = dao.getFramesList(hash.get("initialYear"), section, description);
-		secondList = dao.getFramesList(hash.get("finalYear"), section, description);
+		firstList = dao.getFramesList(requestParameters.get("initialYear"), section, description);
+		secondList = dao.getFramesList(requestParameters.get("finalYear"), section, description);
 		growthList = getGrowthList(firstList, secondList);
 		
 		RankingServlet ranking = new RankingServlet();
 		ranking.selectionSort(growthList);
 		
 		request.setAttribute("growthList", growthList);
-		request.setAttribute("initialYear", hash.get("initialYear"));
-		request.setAttribute("finalYear", hash.get("finalYear"));
+		request.setAttribute("initialYear", requestParameters.get("initialYear"));
+		request.setAttribute("finalYear", requestParameters.get("finalYear"));
 		request.setAttribute("description", description);
 		request.setAttribute("section", section.getName());
 		request.getRequestDispatcher(GROWTH_TABLE_VIEW).forward(request, response);

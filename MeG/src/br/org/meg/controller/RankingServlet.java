@@ -29,24 +29,24 @@ public class RankingServlet extends HttpServlet {
 			throws ServletException, IOException{
 		final int minimumWageId = 5;
 		// Maps user's request from String format to its corresponding values in Integer format
-		HashMap<String, Integer> hash = getHash(request);
+		HashMap<String, Integer> requestParameters = getHash(request);
 		List<Frame> list;
 		FrameDAO dao = new FrameDAO();
 		Section section = new Section();
 		Description description = new Description();
 		
-		description.setId(hash.get("descricao"));
-		section.setId(hash.get("setor"));
-		list = dao.getFramesList(hash.get("ano"), section, description);
+		description.setId(requestParameters.get("descricao"));
+		section.setId(requestParameters.get("setor"));
+		list = dao.getFramesList(requestParameters.get("ano"), section, description);
 		selectionSort(list);
 		
 		// Identifies if user requested to display a ranking of the average salaries
 		if(description.getId() == minimumWageId){
-			setSalary(list, hash.get("ano"));
+			setSalary(list, requestParameters.get("ano"));
 		}
 		
 		request.setAttribute("lista", list);
-		request.setAttribute("ano", hash.get("ano"));
+		request.setAttribute("ano", requestParameters.get("ano"));
 		request.setAttribute("setor", section.getName());
 		request.setAttribute("descricao", description);
 		request.getRequestDispatcher(TABLE_VIEW).forward(request, response);

@@ -24,7 +24,21 @@ public class AbstractServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String controllerName = request.getParameter("controller");
+		String controllerFullName = "org.meg.controller" + controllerName;
+		
+		try {
+			Class<?> controllerClass = Class.forName(controllerFullName);
+			ActionController controller = (ActionController) controllerClass.newInstance();
+			
+			// JSP path name that is supposed to be sent as a response to the user
+			String responsePage = controller.execute(request, response);
+			
+			request.getRequestDispatcher(responsePage).forward(request, response);
+		} catch(Exception e) {
+			// TODO evolute exception handler
+			e.printStackTrace();
+		}
 	}
 
 }
