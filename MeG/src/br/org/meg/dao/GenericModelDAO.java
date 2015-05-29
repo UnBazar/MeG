@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.meg.exception.DAOException;
 import org.meg.model.Description;
 import org.meg.model.Section;
@@ -22,6 +23,9 @@ public class GenericModelDAO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	Logger logger = Logger.getLogger("GenericModelDAO");
+
 	
 	private Connection connection;
 	/*	Table name that will operate */
@@ -54,7 +58,8 @@ public class GenericModelDAO implements Serializable{
 			if (resultSet.next()) {
 				name = resultSet.getString("nome");
 			} else {
-				// Exception throw, bd must be invalid
+				// Exception throw, id must be invalid
+				logger.error("Invalid id");
 				throw new DAOException("Don't exist register of "
 						+ tableName + " with id " + id, this.getClass().getName());
 			}
@@ -62,6 +67,7 @@ public class GenericModelDAO implements Serializable{
 			preparedStatement.close();
 			return name;
 		} catch(SQLException sqlException) {
+			logger.error("Error getting name from id");
 			throw new DAOException("An failure occurred while getNameFromID of"
 							+ tableName + "model", this.getClass().getName());
 		}
@@ -91,6 +97,7 @@ public class GenericModelDAO implements Serializable{
 			resultSet.close();
 			return foundID;
 		} catch (SQLException sqlException) {
+			logger.error("Error getting id from name");
 			throw new DAOException("An failure occurred while getIDFromName of"
 							+ tableName + "model", this.getClass().getName());
 		}
@@ -130,11 +137,13 @@ public class GenericModelDAO implements Serializable{
 						genericList.add(state);
 						break;
 					default :
+						logger.error("Error in listAll of GenericDAO...");
 						throw new RuntimeException("Exception throw in listAll of GenericDAO...");
 				}
 			}
 			return genericList;
 		} catch (SQLException sqlException) {
+			logger.error("Error listing all registers");
 			throw new DAOException("An failure occurred while list all registers of"
 					+ tableName + "model", this.getClass().getName());
 		}

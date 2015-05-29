@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
 import org.meg.exception.DAOException;
 import org.meg.model.Administrator;
 
@@ -15,6 +16,8 @@ import org.meg.model.Administrator;
 public class AdministratorDAO {
 	private Connection connection;
 		
+	Logger logger = Logger.getLogger("AdministratorDAO");
+	
 	/** 
 	 * Creates a connection with the database through ConnectionFactory class.
 	 */
@@ -41,6 +44,7 @@ public class AdministratorDAO {
 			prepareStatement.execute();
 			prepareStatement.close();
 		} catch(SQLException sqlException) {
+			logger.error("Error adding new administrator");
 			throw new DAOException("catch an error while add an new administrator!", this.getClass().getName());
 		}
 	}
@@ -75,6 +79,7 @@ public class AdministratorDAO {
 			resultSet.close();
 			prepareStatement.close();
 		} catch (SQLException sqlException) {
+			logger.error("Error searching administrator");
 			throw new DAOException("Catch an error while search an administrator!", this.getClass().getName());
 		}
 		return administrator;
@@ -102,6 +107,7 @@ public class AdministratorDAO {
 			
 			return nameExist;
 		} catch (SQLException sqlException) {
+			logger.error("Error accessing database");
 			throw new DAOException("Error accessing database", this.getClass().getName());
 		}
 	}

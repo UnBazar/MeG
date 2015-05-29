@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.meg.exception.DAOException;
 import org.meg.model.Description;
 import org.meg.model.State;
@@ -15,6 +16,9 @@ import org.meg.model.Section;
 
 public class FrameDAO {
 	private Connection connection;
+	
+	Logger logger = Logger.getLogger("FrameDAO");
+	
 	/**
 	 * Creates a connection with the MYSQL database through ConnectionFactory 
 	 */
@@ -49,6 +53,7 @@ public class FrameDAO {
 				preparedStatement.execute();
 				preparedStatement.close();
 			} catch (SQLException sqlException) {
+				logger.error("Failed to persist a frame");
 				throw new DAOException("The system failed to persist a frame. Exception: " 
 											+ sqlException.getMessage(), this.getClass().getName());
 			}
@@ -88,6 +93,7 @@ public class FrameDAO {
 			preparedStatement.close();
 			return exists;
 		}catch(SQLException exception){
+			logger.error("Error occurred while verifying existing frame");
 			throw new DAOException("An unexpected failure occurred while verifying existing frame. Exception: " 
 										+ exception.getMessage(), this.getClass().getClass().getName());
 		}
@@ -137,11 +143,13 @@ public class FrameDAO {
 			if(frames.isEmpty()) {
 				String message = "Tried to get frames between " + initialYear 
 						+ " - " + finalYear + " and nothing was found.";
+				logger.error("Frames not found");
 				throw new DAOException(message, this.getClass().getName());
 			}
 			// Treat to throw an checked exception
 			return frames;
 		} catch(SQLException sqlException) {
+			logger.error("Failed while trying to list frames in the database.");
 			throw new DAOException("Failed while trying to list frames in the database. Exception:  "
 										+ sqlException.getMessage(), this.getClass().getName());
 		}
@@ -184,6 +192,7 @@ public class FrameDAO {
 			sqlCompiledStatement.close();
 			return frames;
 		} catch(SQLException exception) {
+			logger.error("Failed while trying to search frames in the database");
 			throw new DAOException("Failed while trying to search frames in the database. Exception: "
 										+ exception.getMessage(), this.getClass().getName());
 		}

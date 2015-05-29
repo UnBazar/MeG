@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.meg.exception.DAOException;
 import org.meg.model.History;
 import org.meg.model.Note;
@@ -16,6 +17,8 @@ import org.meg.model.Error;
 
 public class UtilDAO {
 	private Connection connection;
+	
+	Logger logger = Logger.getLogger("UtilDAO");
 
 	public UtilDAO() {
 		this.connection = ConnectionFactory.getConnection();
@@ -43,6 +46,7 @@ public class UtilDAO {
 			return siglaDoEstado;
 
 		} catch(SQLException sqlException) {
+			logger.error("Error getting state abbreviation in the database");
 			throw new DAOException("Error getting the state abbreviation in the database", this
 							.getClass().getName());
 		}
@@ -68,6 +72,7 @@ public class UtilDAO {
 			rs.close();
 			return minimumWage;
 		} catch(SQLException sqlException) {
+			logger.error("Error searching year in the database");
 			throw new DAOException("Error searching year in the database",
 					this.getClass().getName());
 		}
@@ -86,7 +91,7 @@ public class UtilDAO {
 			stmt.execute();
 			stmt.close();
 		} catch(SQLException sqlException) {
-			System.err.println(sqlException);
+			logger.error("Error adding to history");
 			throw new DAOException("Error adding to history", 
 					this.getClass().getName());
 		}
@@ -122,6 +127,7 @@ public class UtilDAO {
 				notes.add(note);
 			}
 		} catch(SQLException e) {
+			logger.error("Error to obtain notes");
 			throw new DAOException("Error to obtain notes", this.getClass().getName());
 		}
 		return notes;
@@ -209,6 +215,7 @@ public class UtilDAO {
 				history = new History(id, access);
 			}
 		} catch(SQLException sqlException) {
+			logger.error("Error getting history");
 			throw new DAOException("Error fetching the history of id 1 = "+id, 
 					this.getClass().getName());
 		}
