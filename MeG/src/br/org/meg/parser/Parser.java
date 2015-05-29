@@ -5,12 +5,13 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
 import org.meg.dao.FrameDAO;
 import org.meg.exception.UploadArquivoException;
 import org.meg.model.Description;
-import org.meg.model.State;
 import org.meg.model.Frame;
 import org.meg.model.Section;
+import org.meg.model.State;
 
 public class Parser {
 	private Scanner scanner;
@@ -19,6 +20,8 @@ public class Parser {
 	private int statesQuantity;
 	private int sectionsQuantity;
 	private String filePath;
+	
+	private Logger logger = Logger.getLogger("Parser");
 
 	public Parser(String filePath, int statesQuantity, int sectionsQuantity,
 			int initialYear, int finalYear) {
@@ -167,6 +170,7 @@ public class Parser {
 					} else
 						frames.get(frames.size() - 1).setValue(-1.0f);
 				}
+				
 			}
 		}
 
