@@ -170,7 +170,8 @@ public class Parser {
 					} else
 						frames.get(frames.size() - 1).setValue(-1.0f);
 				}
-				
+				Frame currentFrame = frames.get(frames.size() - 1);
+				logger.info(currentFrame.toString());
 			}
 		}
 
