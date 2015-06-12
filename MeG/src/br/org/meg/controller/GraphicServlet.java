@@ -98,7 +98,11 @@ public class GraphicServlet extends HttpServlet {
 		
 		// Select type of graphic from option
 		if(option.equalsIgnoreCase("geral")) {
-			session.setAttribute("valores", getValues(frames));
+			try {
+				session.setAttribute("valores", getValues(frames));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (option.equalsIgnoreCase("do crescimento")) {
 			session.setAttribute("valores", listGrowth(frames));
 		} else {
@@ -152,10 +156,12 @@ public class GraphicServlet extends HttpServlet {
 	 * List all values in frames
 	 * 
 	 * @return {@link List}	of Float that contain values extracted from frames
+	 * @throws Exception 
 	 */
-	public List<Float> getValues(List<Frame> frames) {
-		//Never be null
-		assert(frames != null);
+	public List<Float> getValues(List<Frame> frames) throws Exception {
+		if(frames == null){
+		     throw new Exception("System was not found");
+		}
 		List<Float> values = new ArrayList<Float>();
 		for( Frame frame: frames) {
 			values.add(frame.getValue());

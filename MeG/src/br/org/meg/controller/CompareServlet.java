@@ -109,7 +109,11 @@ public class CompareServlet extends HttpServlet {
 		 *  If percentage type is choice, set list with increase of correspondent values
 		 */
 		if (choiceTypeOfData.equalsIgnoreCase(TYPE_NORMAL_CHOICE)) {
-			session.setAttribute(ATTRIBUTE_NAME_SECOND_LIST_DATA, graphic.getValues(scenes));
+			try {
+				session.setAttribute(ATTRIBUTE_NAME_SECOND_LIST_DATA, graphic.getValues(scenes));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (choiceTypeOfData.equalsIgnoreCase(TYPE_PERCENTAGE_CHOICE)) {
 			session.setAttribute(ATTRIBUTE_NAME_SECOND_LIST_DATA, getIncrease(scenes));
 		}
