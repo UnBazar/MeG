@@ -67,7 +67,9 @@ public class FileUploadServlet extends HttpServlet {
 				if(containsFile) {
 					throw new RuntimeException("Nenhum arquivo foi enviado!");
 				}
-			} catch(Exception e) {
+			} catch(RuntimeException e) {
+				throw e;
+			}catch (Exception e){
 				request.setAttribute("erro", true);
 				logger.error("No file was sent.");
 			} 
