@@ -154,7 +154,8 @@ public class GraphicServlet extends HttpServlet {
 	 * @return {@link List}	of Float that contain values extracted from frames
 	 */
 	public List<Float> getValues(List<Frame> frames) {
-		assert(frames == null);
+		//Never be null
+		assert(frames != null);
 		List<Float> values = new ArrayList<Float>();
 		for( Frame frame: frames) {
 			values.add(frame.getValue());
