@@ -32,11 +32,15 @@ public class UtilDAO {
 	 */
 	public String getStateAbbreviation(int id) {
 		try {
+			//SQL command to get the state abbreviation through the id
 			String sql = "SELECT sigla FROM Estado WHERE id = ?";
 			String siglaDoEstado = null;
+			// Get global connection to prepare statement
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, id);
+			// Get result query
 			ResultSet rs = stmt.executeQuery();
+			//Runs through the database
 			if (rs.next()) {
 				siglaDoEstado = rs.getString("sigla");
 			}
@@ -61,15 +65,19 @@ public class UtilDAO {
 	public float getMinimumWage(int ano) {
 		try {
 			float minimumWage = 0;
+			//SQL command to get the minimum wage through a specific year
 			String sql = "SELECT valor FROM SalarioMinimo WHERE ano = ?";
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, ano);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				minimumWage = rs.getFloat("valor");
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+			preparedStatement.setInt(1, ano);
+			// Get result query
+			ResultSet resultSet = preparedStatement.executeQuery();
+			//Runs through the database
+			if (resultSet.next()) {
+				minimumWage = resultSet.getFloat("valor");
 			}
-			stmt.close();
-			rs.close();
+			preparedStatement.close();
+			resultSet.close();
 			return minimumWage;
 		} catch(SQLException sqlException) {
 			logger.error("Error searching year in the database");
@@ -85,11 +93,13 @@ public class UtilDAO {
 	 */
 	public void addHistory(String path) {
 		try {
+			//SQL command to update the number of access in the database table
 			String add = "UPDATE Historico SET acessos = acessos + 1 WHERE "
 					+ "nome = '"+path+"'";
-			PreparedStatement stmt = this.connection.prepareStatement(add);
-			stmt.execute();
-			stmt.close();
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = this.connection.prepareStatement(add);
+			preparedStatement.execute();
+			preparedStatement.close();
 		} catch(SQLException sqlException) {
 			logger.error("Error adding to history");
 			throw new DAOException("Error adding to history", 
@@ -140,15 +150,17 @@ public class UtilDAO {
 	 *            contains information
 	 */
 	public void registerError(Error error) {
+		//SQL command to register an exception in the database
 		String sql = "INSERT INTO Erro(descricao, nomeDaClasseReferente, data, status) values(?,?,?,?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, error.getDescription());
-			stmt.setString(2, error.getReferringClassName());
-			stmt.setDate(3, error.getDate());
-			stmt.setInt(4, error.getStatus());
-			stmt.execute();
-			stmt.close();
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, error.getDescription());
+			preparedStatement.setString(2, error.getReferringClassName());
+			preparedStatement.setDate(3, error.getDate());
+			preparedStatement.setInt(4, error.getStatus());
+			preparedStatement.execute();
+			preparedStatement.close();
 		} catch(SQLException e) {
 			// Impossible to save exception
 		}
@@ -161,12 +173,14 @@ public class UtilDAO {
 	 *            Identifier of register
 	 */
 	public void removeErrorRegister(int id) {
+		//SQL command to delete an error through the id
 		String sql = "DELETE FROM Erro WHERE id = ?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, id);
-			stmt.execute();
-			stmt.close();
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			preparedStatement.execute();
+			preparedStatement.close();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -178,23 +192,28 @@ public class UtilDAO {
 	 * @return One list of errors
 	 */
 	public List<Error> getErrors() {
+		//SQL command that gets all errors
 		String sql = "SELECT * FROM Erro";
+		//Creates an arrayList of errors
 		List<Error> errors = new ArrayList<Error>();
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			// Get result query
+			ResultSet resultSet = preparedStatement.executeQuery();
+			//Runs while next exists
+			while (resultSet.next()) {
 				Error error = new Error();
-				error.setDate(rs.getDate("data"));
-				error.setReferringClassName(rs
+				error.setDate(resultSet.getDate("data"));
+				error.setReferringClassName(resultSet
 						.getString("nomeDaClasseReferente"));
-				error.setId(rs.getInt("id"));
-				error.setStatus(rs.getInt("status"));
-				error.setDescription(rs.getString("descricao"));
+				error.setId(resultSet.getInt("id"));
+				error.setStatus(resultSet.getInt("status"));
+				error.setDescription(resultSet.getString("descricao"));
 				errors.add(error);
 			}
-			rs.close();
-			stmt.close();
+			resultSet.close();
+			preparedStatement.close();
 		} catch (SQLException e) {
 			// Impossible to test
 			e.printStackTrace();
@@ -202,14 +221,25 @@ public class UtilDAO {
 		return errors;
 	}
 	
+	/**
+	 * Gets the history of access
+	 * 
+	 * @param id
+	 * @return a object history with its id and number of access
+	 */
+	
 	public History getHistory(int id){
 		History history = null;
 		try {
+			//SQL command to get the history of access through the id
 			String sql = "SELECT * FROM Historico WHERE id = ?";
+			// Get global connection to prepare statement
 			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			preparedStatement.execute();
+			// Get result query
 			ResultSet resultSet = preparedStatement.executeQuery();
+			//Runs through the database
 			if (resultSet.next()) {
 				int access = resultSet.getInt("acessos");
 				history = new History(id, access);
