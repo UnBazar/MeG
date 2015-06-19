@@ -57,11 +57,7 @@ public class GrowthRankingServlet extends HttpServlet {
 		RankingServlet ranking = new RankingServlet();
 		ranking.selectionSort(growthList);
 		
-		request.setAttribute("growthList", growthList);
-		request.setAttribute("initialYear", requestParameters.get("initialYear"));
-		request.setAttribute("finalYear", requestParameters.get("finalYear"));
-		request.setAttribute("description", description);
-		request.setAttribute("section", section.getName());
+		setRequestParameters(request, requestParameters, growthList, description, section);
 		request.getRequestDispatcher(GROWTH_TABLE_VIEW).forward(request, response);
 		logger.info("Created growth ranking.");
 	}
@@ -124,5 +120,14 @@ public class GrowthRankingServlet extends HttpServlet {
 		}
 		
 		return hash;
+	}
+	
+	private void setRequestParameters(HttpServletRequest request, HashMap<String, Integer> requestParameters,
+			List<Frame> growthList, Description description, Section section) {
+		request.setAttribute("growthList", growthList);
+		request.setAttribute("initialYear", requestParameters.get("initialYear"));
+		request.setAttribute("finalYear", requestParameters.get("finalYear"));
+		request.setAttribute("description", description);
+		request.setAttribute("section", section.getName());
 	}
 }

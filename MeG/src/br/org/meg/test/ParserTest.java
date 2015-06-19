@@ -13,13 +13,13 @@ public class ParserTest {
 
 	private Parser parser;
 	private String url;
+	private final int SAMPLE_STATES_QUANTITY = 27;
+	private final int SAMPLE_SECTIONS_QUANTITY = 4;
+	private final int SAMPLE_INITIAL_YEAR = 2006;
+	private final int SAMPLE_FINAL_YEAR = 2012;
 	
 	@Before
 	public void setUp(){
-		int SAMPLE_STATES_QUANTITY = 27;
-		int SAMPLE_SECTIONS_QUANTITY = 4;
-		int SAMPLE_INITIAL_YEAR = 2006;
-		int SAMPLE_FINAL_YEAR = 2012;
 		this.url = ParserTest.class.getProtectionDomain().getCodeSource().getLocation()+
 				"util"+File.separator+"dados-teste"+File.separator+"dados_teste.csv";
 		this.url = url.replaceAll("file:", "");
