@@ -75,6 +75,13 @@ public class FrameDAO {
 			// A database of result set
 			ResultSet queryResult;
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
+			/*
+			 * Numbers of the preparedStatement
+			 * 1, state ID
+			 * 2, section ID
+			 * 3, description ID
+			 * 4, year
+			 */
 			preparedStatement.setInt(1, frame.getState().getId());
 			preparedStatement.setInt(2, frame.getSection().getId());
 			preparedStatement.setInt(3, frame.getDescription().getId());
@@ -111,6 +118,10 @@ public class FrameDAO {
 	 */
 	public List<Frame> getFramesList(int initialYear, int finalYear, State state, 
 			Section section, Description description) {
+		/*
+		*SQL command that selects a frame through state id, section id, description id
+		*and year
+		*/
 		String sqlStatement = "SELECT * FROM Quadro "
 				+ "WHERE estado_id = ?  AND secao_id = ? "
 				+ "AND descricao_id = ? AND ano >= ? AND ano <= ? ";
@@ -118,7 +129,16 @@ public class FrameDAO {
 			List<Frame> frames = new ArrayList<Frame>();;
 			// A database result set
 			ResultSet queryResult;
+			// Get global connection to prepare statement
 			PreparedStatement sqlCompiledStatement = connection.prepareStatement(sqlStatement);
+			/*
+			 * Numbers of the sqlCompiledStatement
+			 * 1, state ID
+			 * 2, section ID
+			 * 3, description ID
+			 * 4, initial year
+			 * 5, final year
+			 */
 			sqlCompiledStatement.setInt(1, state.getId());
 			sqlCompiledStatement.setInt(2, section.getId());
 			sqlCompiledStatement.setInt(3, description.getId());
@@ -164,19 +184,29 @@ public class FrameDAO {
 	 * @return list of frames for each state
 	 */
 	public List<Frame> getFramesList(int year, Section section, Description description) {
+		//SQL command that selects a frame through section id, description id and year
 		String sqlStatement = "SELECT * FROM Quadro "
 				+ "WHERE secao_id = ? "
 				+ "AND descricao_id = ? "
 				+ "AND ano = ?";
 		try {
 			List<Frame> frames;
+			// Get result query
 			ResultSet queryResult;
+			// Get global connection to prepare statement
 			PreparedStatement sqlCompiledStatement = connection.prepareStatement(sqlStatement);
+			/*
+			 * Numbers of the sqlCompiledStatement
+			 * 1, section ID
+			 * 2, description ID
+			 * 3, year
+			 */
 			sqlCompiledStatement.setInt(1, section.getId());
 			sqlCompiledStatement.setInt(2, description.getId());
 			sqlCompiledStatement.setInt(3, year);
 			queryResult = sqlCompiledStatement.executeQuery();
 			frames = new ArrayList<>();
+			//Runs through database while next exists
 			while(queryResult.next()) {
 				Frame frame = new Frame();
 				State state = new State();
@@ -190,6 +220,7 @@ public class FrameDAO {
 			}
 			queryResult.close();
 			sqlCompiledStatement.close();
+			//If no frames are found, throws an exception
 			return frames;
 		} catch(SQLException exception) {
 			logger.error("Failed while trying to search frames in the database");
