@@ -244,6 +244,8 @@ public class GraphicServlet extends HttpServlet {
 			}else{
 				// Discard EnumAttribute
 			}
+			logger.info("Request parameter received -> key: " + attribute +
+					"value: " + hashOfParameters.get(attribute));
 		}
 		
 		return hashOfParameters;
