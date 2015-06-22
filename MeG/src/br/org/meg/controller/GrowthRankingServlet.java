@@ -17,7 +17,7 @@ import org.meg.model.Description;
 import org.meg.model.Frame;
 import org.meg.model.Section;
 
-@WebServlet("/growth-servlet")
+//@WebServlet("/growth-servlet")
 public class GrowthRankingServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("GrowthRanking");

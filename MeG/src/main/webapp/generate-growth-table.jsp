@@ -23,6 +23,8 @@
 			<h2>Gerar ranking de crescimento</h2>
 			<br>
 			<form action="growth-servlet" method="post">
+			
+				<input type="hidden" name="controller" value="GrowthRanking" />
 
 				<label id="description">Tipo de pesquisa:</label> <select name="description">
 					<option value="1">Número de empresas e outras organizações
