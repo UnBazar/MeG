@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.meg.controller.GrowthRanking;
 
+@Ignore
 public class GrowthRankingTest {
 	
 	private HttpServletRequest request;

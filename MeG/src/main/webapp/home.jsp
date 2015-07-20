@@ -76,7 +76,7 @@
 				</div>
 				<div class="panel-body">
 					<p>Clique aqui para gerar um gráfico de diferentes setores da
-						economia</p>
+						economia brasileira</p>
 					<a href="grafico" class="btn btn-default">GO!</a>
 				</div>
 			</div>
@@ -89,8 +89,8 @@
 					</h4>
 				</div>
 				<div class="panel-body">
-					<p>Clique aqui para gerar uma tabela de diferentes setores da
-						economia</p>
+					<p>Veja tabelas de ranking dos 
+					setores de todos estados brasileiros.</p>
 					<a href="ranking" class="btn btn-default">GO!</a>
 				</div>
 			</div>
@@ -103,8 +103,8 @@
 					</h4>
 				</div>
 				<div class="panel-body">
-					<p>Clique aqui para gera uma projeção de diferentes setores da
-						economia</p>
+					<p>Gere projeções de diferentes setores da
+						economia brasileira.</p>
 					<a href="projecao" class="btn btn-default">GO!</a>
 				</div>
 			</div>

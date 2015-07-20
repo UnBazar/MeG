@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 /**
  * Servlet implementation class JavaServlet
  */
-@WebServlet("/growth-servlet")
 public class AbstractServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

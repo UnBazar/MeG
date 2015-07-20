@@ -29,7 +29,7 @@ public class ProjectionTest {
 	@Test
 	public void testDoGet() throws ServletException, IOException{
 		when(request.getSession()).thenReturn(mock(HttpSession.class));
-		when(request.getRequestDispatcher("gerar-projecao.jsp")).thenReturn(mock(RequestDispatcher.class));
+		when(request.getRequestDispatcher("generate-projection.jsp")).thenReturn(mock(RequestDispatcher.class));
 		ProjectionServlet servlet = new ProjectionServlet();
 		servlet.doGet(request, response);
 	}
@@ -50,8 +50,8 @@ public class ProjectionTest {
 					when(request.getSession()).thenReturn(mock(HttpSession.class));
 					when(request.getRequestDispatcher("projection.jsp"))
 									.thenReturn(mock(RequestDispatcher.class));
-					//ProjectionServlet servlet = new ProjectionServlet();
-					//servlet.doPost(request, response);
+					ProjectionServlet servlet = new ProjectionServlet();
+					servlet.doPost(request, response);
 				}
 			}
 		}

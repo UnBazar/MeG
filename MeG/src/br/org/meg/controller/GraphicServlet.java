@@ -31,11 +31,12 @@ public class GraphicServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Graphic");
 	
+	private static final long serialVersionUID = 1L;	
+	
 	private final String GENERATE_GRAPHIC_VIEW = "generate-graphic.jsp";
 	private final String GRAPHIC_VIEW = "graphic.jsp";
-	private static final long serialVersionUID = 1L;
+	private final float FACTOR_PERCENTAGE = 100;
 	// Weight to show values in percent
-	private static final float FACTOR_PERCENTAGE = 100;
        
     /**
      * @see HttpServlet#HttpServlet()

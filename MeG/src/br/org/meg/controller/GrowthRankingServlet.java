@@ -17,25 +17,15 @@ import org.meg.model.Description;
 import org.meg.model.Frame;
 import org.meg.model.Section;
 
-//@WebServlet("/growth-servlet")
+@WebServlet("/growth-servlet")
 public class GrowthRankingServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("GrowthRanking");
 	
-	private final String GROWTH_TABLE_VIEW = "growth-table.jsp";
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Generates two new lists of frames containing the growth of all states between
-	 * two years sent in the request, then renders the page that displays the table with
-	 * all state's growth.
-	 */
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		
-	}
-	
+	private final String GROWTH_TABLE_VIEW = "growth-table.jsp";
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Maps user's request from String format to its corresponding values in Integer format.

@@ -12,7 +12,10 @@ import org.meg.dao.FrameDAO;
 import org.meg.model.Description;
 import org.meg.model.Frame;
 import org.meg.model.Section;
-
+/**
+ * Experiments of Mr. Pedro de Lyra
+ *
+ */
 public class GrowthRanking implements ActionController {
 	
 	Logger logger = Logger.getLogger("GrowthRanking");

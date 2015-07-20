@@ -50,6 +50,52 @@
 				<button type="submit" class="btn btn-primary" id="btn-submit">Gerar Tabela</button>
 			</form>
 		</section>
+		
+		<section id="gerador">
+			<h2>Gerar ranking de crescimento</h2>
+			<br>
+			<form action="growth-servlet" method="post">
+				<input type="hidden" name="controller" value="GrowthRanking" />
+
+				<label>Tipo de pesquisa:</label>
+				<select name="description">
+					<c:forEach items="${descriptions}" var="description">
+						<option value="${description.id}">${description.content}</option>
+					</c:forEach>
+				</select>
+				<label id="setor">Setor:</label>
+				<select name="section">
+					<c:forEach items="${sections}" var="section">
+						<option value="${section.id}">${section.name}</option>
+					</c:forEach>
+				</select>
+				<br/>
+				<br/>
+				<label>De</label>
+				<select name="initialYear">
+					<option value="2006" selected="selected">2006</option>
+					<option value="2007">2007</option>
+					<option value="2008">2008</option>
+					<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012">2012</option>
+					
+				</select>
+				<label id="anoFinal">até </label>
+				<select name="finalYear">
+					<option value="2007">2007</option>
+					<option value="2008">2008</option>
+					<option value="2009">2009</option>
+					<option value="2010">2010</option>
+					<option value="2011">2011</option>
+					<option value="2012" selected="selected">2012</option>
+				</select>
+				<br>
+				<br>
+				<button type="submit" class="btn btn-primary" id="btn-submit">Gerar Tabela</button>
+				</form>
+			</section>
 	</div>
 	<%@include file='shared/footer.html'%>
 </body>

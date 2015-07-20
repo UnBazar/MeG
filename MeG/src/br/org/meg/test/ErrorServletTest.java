@@ -27,7 +27,7 @@ public class ErrorServletTest {
 	}
 	@Test
 	public void doPostTest() throws ServletException, IOException{
-		when(request.getRequestDispatcher("WEB-INF/jsp/tabela-erro.jsp")).thenReturn(mock(RequestDispatcher.class));
+		when(request.getRequestDispatcher("WEB-INF/jsp/error-table.jsp")).thenReturn(mock(RequestDispatcher.class));
 		servlet.doPost(request, response);
 	}
 

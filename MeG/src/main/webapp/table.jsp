@@ -64,15 +64,15 @@
 					<tr>
 						<td>${id.count}º</td>
 						<td>${quadro.state.name}</td>
-						<td class="dado"><c:if
-								test="${descricao.id == 4 || descricao.id == 5}">	
+						<td class="dado">
+							<c:if test="${descricao.id == 4 || descricao.id == 5}">	
 									R$ ${quadro.value} 
-								</c:if> <c:if test="${descricao.id != 4 && descricao.id != 5}">
+							</c:if> 
+							<c:if test="${descricao.id != 4 && descricao.id != 5}">
 									${quadro.value}
-								</c:if></td>
+							</c:if></td>
 					</tr>
 				</c:forEach>
-				
 			</table>
 		</div>
 		<br>
