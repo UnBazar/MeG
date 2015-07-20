@@ -46,7 +46,7 @@ public class GrowthRankingServlet extends HttpServlet {
 		FrameDAO dao = new FrameDAO();
 		Section section = new Section();
 		Description description = new Description();
-		section.setId(requestParameters.get("sector"));
+		section.setId(requestParameters.get("section"));
 		description.setId(requestParameters.get("description"));
 		
 		// get list of all frames of initial and final year
@@ -114,6 +114,7 @@ public class GrowthRankingServlet extends HttpServlet {
 		String[] attributesFrame = {"initialYear", "finalYear", "section", "description"};
 		
 		for(String iterator : attributesFrame) {
+			System.out.println(request.getParameter(iterator));
 			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
 			logger.info("Request parameter received -> key: " + iterator +
 					"value: " + hash.get(iterator));

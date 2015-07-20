@@ -117,8 +117,8 @@ public class CompareServlet extends HttpServlet {
 		} else if (choiceTypeOfData.equalsIgnoreCase(TYPE_PERCENTAGE_CHOICE)) {
 			session.setAttribute(ATTRIBUTE_NAME_SECOND_LIST_DATA, getIncrease(scenes));
 		}
-		RequestDispatcher rd = request.getRequestDispatcher(COMPARE_VIEW);
-		rd.forward(request, response);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(COMPARE_VIEW);
+		requestDispatcher.forward(request, response);
 		logger.info("Created comparison.");
 	}
 	/**

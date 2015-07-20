@@ -38,7 +38,7 @@ public class CompareServletTest {
 		years.add("2008");
 		years.add("2012");
 		when(request.getSession().getAttribute("anos")).thenReturn(years);
-		when(request.getRequestDispatcher("compara.jsp")).thenReturn(mock(RequestDispatcher.class));
+		when(request.getRequestDispatcher("compare.jsp")).thenReturn(mock(RequestDispatcher.class));
 		CompareServlet servlet = new CompareServlet();
 		servlet.doPost(request, response);
 	}
@@ -53,7 +53,7 @@ public class CompareServletTest {
 		years.add("2008");
 		years.add("2012");
 		when(request.getSession().getAttribute("anos")).thenReturn(years);
-		when(request.getRequestDispatcher("compara.jsp")).thenReturn(mock(RequestDispatcher.class));
+		when(request.getRequestDispatcher("compare.jsp")).thenReturn(mock(RequestDispatcher.class));
 		CompareServlet servlet = new CompareServlet();
 		servlet.doPost(request, response);
 	}

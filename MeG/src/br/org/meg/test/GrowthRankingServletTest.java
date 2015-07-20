@@ -27,10 +27,10 @@ public class GrowthRankingServletTest {
 
 	@Test
 	public void doPostTest() throws ServletException, IOException {
-		when(request.getParameter("anoInicial")).thenReturn("2008");
-		when(request.getParameter("anoFinal")).thenReturn("2012");
-		when(request.getParameter("setor")).thenReturn("3");
-		when(request.getParameter("descricao")).thenReturn("5");
+		when(request.getParameter("initialYear")).thenReturn("2008");
+		when(request.getParameter("finalYear")).thenReturn("2012");
+		when(request.getParameter("section")).thenReturn("3");
+		when(request.getParameter("description")).thenReturn("5");
 		when(request.getRequestDispatcher("growth-table.jsp"))
 				.thenReturn(mock(RequestDispatcher.class));
 		GrowthRankingServlet servlet = new GrowthRankingServlet();

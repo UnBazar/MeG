@@ -91,7 +91,7 @@
 				<div class="panel-body">
 					<p>Clique aqui para gerar uma tabela de diferentes setores da
 						economia</p>
-					<a href="generate-table.jsp" class="btn btn-default">GO!</a>
+					<a href="ranking" class="btn btn-default">GO!</a>
 				</div>
 			</div>
 		</div>

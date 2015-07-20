@@ -4,14 +4,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.meg.dao.EnumTable;
 import org.meg.dao.FrameDAO;
+import org.meg.dao.GenericModelDAO;
 import org.meg.dao.UtilDAO;
 import org.meg.model.Description;
 import org.meg.model.Frame;
@@ -22,9 +26,32 @@ public class RankingServlet extends HttpServlet {
 	
 	Logger logger = Logger.getLogger("Ranking");
 	
-	private final String TABLE_VIEW = "table.jsp";
 	private static final long serialVersionUID = 1L;
 	
+	private final String TABLE_VIEW = "table.jsp";
+	private final String GENERATE_TABLE_VIEW = "generate-table.jsp";
+
+	/**
+	 * Redirect to the page that contain form that will generate graphic
+	 * 
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		// List options of fields programatically
+		session.setAttribute("descriptions", listModel(EnumTable.DESCRIPTION));
+		session.setAttribute("sections", listModel(EnumTable.SECTION));
+		// Redirect to an form
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(GENERATE_TABLE_VIEW);
+		requestDispatcher.forward(request, response);
+	}
+	
+	/**
+	 * Generate an table of ranking
+	 * 
+	 * @see HttpServlet#doPost(HttpServletRequest, HttpServletResponse)
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException{
 		final int minimumWageId = 5;
@@ -35,18 +62,20 @@ public class RankingServlet extends HttpServlet {
 		Section section = new Section();
 		Description description = new Description();
 		
-		description.setId(requestParameters.get("descricao"));
-		section.setId(requestParameters.get("setor"));
-		list = dao.getFramesList(requestParameters.get("ano"), section, description);
+		description.setId(requestParameters.get(EnumAttribute.DESCRIPTION.toString()));
+		section.setId(requestParameters.get(EnumAttribute.SECTION.toString()));
+		int year = requestParameters.get(EnumAttribute.YEAR.toString());
+		
+		list = dao.getFramesList(year, section, description);
 		selectionSort(list);
 		
 		// Identifies if user requested to display a ranking of the average salaries
 		if(description.getId() == minimumWageId){
-			setSalary(list, requestParameters.get("ano"));
+			setSalary(list, requestParameters.get("year"));
 		}
 		
 		request.setAttribute("lista", list);
-		request.setAttribute("ano", requestParameters.get("ano"));
+		request.setAttribute("ano", requestParameters.get("year"));
 		request.setAttribute("setor", section.getName());
 		request.setAttribute("descricao", description);
 		request.getRequestDispatcher(TABLE_VIEW).forward(request, response);
@@ -118,15 +147,30 @@ public class RankingServlet extends HttpServlet {
 	 */
 	private HashMap<String, Integer> getHash(HttpServletRequest request) {
 		HashMap<String, Integer> hash = new HashMap<>();
-		String[] attributesFrame = {"ano", "setor", "descricao"};
+		String[] attributesFrame = {EnumAttribute.YEAR.toString(), 
+				EnumAttribute.SECTION.toString(), 
+				EnumAttribute.DESCRIPTION.toString()};
 		
 		for(String iterator : attributesFrame) {
-			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
 			logger.info("Request parameter received -> key: " + iterator +
 					"value: " + hash.get(iterator));
+			hash.put(iterator, Integer.valueOf(request.getParameter(iterator)));
 		}
 		
 		return hash;
+	}
+	
+	/**
+	 * List all models in an table
+	 * 
+	 * @param typeOfModel type that will be listed
+	 * 
+	 * @return list found
+	 */
+	private List<Object> listModel(EnumTable typeOfModel) {
+		GenericModelDAO DAO = new GenericModelDAO(typeOfModel);
+		List<Object> list = DAO.listAll();
+		return list;
 	}
 	
 }

@@ -9,7 +9,7 @@ public enum EnumAttribute {
 	STATE("state"),
 	INITIAL_YEAR("initialYear"),
 	FINAL_YEAR("finalYear"),
-	UNIQUE_YEAR("uniqueYear"),
+	YEAR("year"),
 	OPTION("option");
 	
 	private final String attributeName;
