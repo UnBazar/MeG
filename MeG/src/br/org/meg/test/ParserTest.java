@@ -13,6 +13,10 @@ public class ParserTest {
 
 	private Parser parser;
 	private String url;
+	private final int SAMPLE_STATES_QUANTITY = 27;
+	private final int SAMPLE_SECTIONS_QUANTITY = 4;
+	private final int SAMPLE_INITIAL_YEAR = 2006;
+	private final int SAMPLE_FINAL_YEAR = 2012;
 	
 	@Before
 	public void setUp(){
@@ -23,53 +27,53 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testValidarQuantidadeDeLinhasShouldBeCorrect() throws FileNotFoundException {
-		this.parser = new Parser(url, 27, 4, 2006, 2012);
-		this.parser.validarQuantidadeDeLinhas(4);
+	public void testValidatesNumerOfLinesShouldBeCorrect() throws FileNotFoundException {
+		this.parser = new Parser(url, SAMPLE_STATES_QUANTITY, SAMPLE_SECTIONS_QUANTITY, SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
+		this.parser.validatesLinesQuantity(SAMPLE_SECTIONS_QUANTITY);
 	}
 	
 	@Test(expected = UploadArquivoException.class)
-	public void testValidarQuantidadeDeLinhasShouldThrowException() throws FileNotFoundException {
+	public void testValidatesNumerOfLinesShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,
-				27, 5, 2006, 2012);
-		this.parser.validarQuantidadeDeLinhas(4);
+				SAMPLE_STATES_QUANTITY, 5, SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
+		this.parser.validatesLinesQuantity(SAMPLE_SECTIONS_QUANTITY);
 	}
 
 	@Test
-	public void testValidarAnoShouldBeCorrect() throws FileNotFoundException {
+	public void testValidatesYearShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url,
-				27, 4, 2006, 2012);
-		this.parser.validarAno(2006, 2012);
+				SAMPLE_STATES_QUANTITY, SAMPLE_SECTIONS_QUANTITY, SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
+		this.parser.validatesYear(SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
 	}
 	
 	@Test(expected = UploadArquivoException.class)
-	public void testValidarAnoShouldThrowException() throws FileNotFoundException {
+	public void testValidateYearShouldThrowException() throws FileNotFoundException {
 		this.parser = new Parser(url,
-				27, 4, 2006, 2012);
-		this.parser.validarAno(2006, 2011);
+				SAMPLE_STATES_QUANTITY, SAMPLE_SECTIONS_QUANTITY, SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
+		this.parser.validatesYear(SAMPLE_INITIAL_YEAR, 2011);
 	}
 	
 
 	@Test
-	public void testValidarSecaoShouldBeCorrect() throws FileNotFoundException {
+	public void testValidatesSectionShouldBeCorrect() throws FileNotFoundException {
 		this.parser = new Parser(url,
-				27, 4, 2006, 2012);
-		this.parser.validarSecao("A Agricultura, pecuária, produção florestal, pesca e aquicultura");
-		this.parser.validarSecao("B Indústrias extrativas");
-		this.parser.validarSecao("C Indústrias de transformação");
-		this.parser.validarSecao("D Eletricidade e gás");
+				SAMPLE_STATES_QUANTITY, SAMPLE_SECTIONS_QUANTITY, SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
+		this.parser.validatesSector("A Agricultura, pecuária, produção florestal, pesca e aquicultura");
+		this.parser.validatesSector("B Indústrias extrativas");
+		this.parser.validatesSector("C Indústrias de transformação");
+		this.parser.validatesSector("D Eletricidade e gás");
 	}
 	
 	@Test(expected = UploadArquivoException.class)
-	public void testValidarSecaoShouldThrowException() throws FileNotFoundException {
-		this.parser = new Parser(url,27, 4, 2006, 2012);
-		this.parser.validarSecao("E Construção");
+	public void testValidatesSectionShouldThrowException() throws FileNotFoundException {
+		this.parser = new Parser(url,SAMPLE_STATES_QUANTITY, SAMPLE_SECTIONS_QUANTITY, SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
+		this.parser.validatesSector("E Construção");
 	}
 	
 	@Test
 	public void testPersist() throws FileNotFoundException {
 		this.parser = new Parser(url,
-				27, 4, 2006, 2012);
+				SAMPLE_STATES_QUANTITY, SAMPLE_SECTIONS_QUANTITY, SAMPLE_INITIAL_YEAR, SAMPLE_FINAL_YEAR);
 		this.parser.persist();
 	}
 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.meg.controller.LogoutAdministradorServlet;
+import org.meg.controller.AdministratorLogoutServlet;
 
 public class LogoutAdmTest {
 	private HttpServletRequest request;
@@ -28,8 +28,8 @@ public class LogoutAdmTest {
 	public void testService() {
 		when(request.getRequestDispatcher("login-adm.jsp")).thenReturn(
 				mock(RequestDispatcher.class));
-		LogoutAdministradorServlet servlet = new LogoutAdministradorServlet();
-		servlet.service(request, response);
+		AdministratorLogoutServlet servlet = new AdministratorLogoutServlet();
+		servlet.doGet(request, response);
 	}
 
 }

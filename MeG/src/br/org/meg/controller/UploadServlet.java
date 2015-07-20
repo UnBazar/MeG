@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/uploadArquivo")
 public class UploadServlet extends HttpServlet {
+	
+	private final String UPLOAD_VIEW = "WEB-INF/jsp/upload.jsp";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -27,7 +29,7 @@ public class UploadServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/upload.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(UPLOAD_VIEW);
 		requestDispatcher.forward(request, response);
 	}
 

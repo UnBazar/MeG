@@ -6,57 +6,41 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.meg.exception.DAOException;
-import org.meg.model.Noticia;
+import org.meg.model.History;
+import org.meg.model.Note;
+
 import java.util.List;
-import org.meg.model.Erro;
+
+import org.meg.model.Error;
 
 public class UtilDAO {
 	private Connection connection;
+	
+	Logger logger = Logger.getLogger("UtilDAO");
 
 	public UtilDAO() {
 		this.connection = ConnectionFactory.getConnection();
 	}
 
 	/**
-	 * Método que pega o nome de um estado pela id no banco de dados
+	 * Method that takes the state abbreviation through the id of the database
 	 * 
 	 * @param id
-	 * @return String com o nome do estado
+	 * @return String with the state abbreviation
 	 */
-	public String getNomeEstado(int id) {
+	public String getStateAbbreviation(int id) {
 		try {
-			String sql = "SELECT nome FROM Estado WHERE id = ?";
-			String nomeDoEstado = null;
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				nomeDoEstado = rs.getString("nome");
-			}
-			rs.close();
-			stmt.close();
-			return nomeDoEstado;
-		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar o nome do estado no banco de dados", this
-							.getClass().getName());
-		}
-	}
-
-	/**
-	 * Método que pega a sigla do estado pelo id no banco de dados
-	 * 
-	 * @param id
-	 * @return String com a sigla do estado
-	 */
-	public String getSiglaEstado(int id) {
-		try {
+			//SQL command to get the state abbreviation through the id
 			String sql = "SELECT sigla FROM Estado WHERE id = ?";
 			String siglaDoEstado = null;
+			// Get global connection to prepare statement
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, id);
+			// Get result query
 			ResultSet rs = stmt.executeQuery();
+			//Runs through the database
 			if (rs.next()) {
 				siglaDoEstado = rs.getString("sigla");
 			}
@@ -65,316 +49,206 @@ public class UtilDAO {
 
 			return siglaDoEstado;
 
-		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar a sigla do estado no banco de dados", this
+		} catch(SQLException sqlException) {
+			logger.error("Error getting state abbreviation in the database");
+			throw new DAOException("Error getting the state abbreviation in the database", this
 							.getClass().getName());
 		}
 	}
 
 	/**
-	 * Método que pega a id do estado pelo nome no banco de dados
+	 * Method that takes the minimum wage of the database
 	 * 
-	 * @param nome
-	 * @return int com a id do estado
+	 * @param year
+	 * @return float with the minimum wage
 	 */
-	public int getIdEstado(String nome) {
+	public float getMinimumWage(int ano) {
 		try {
-			String sql = "SELECT id FROM Estado WHERE nome = ?";
-			int idEstado = 0;
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, nome);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				idEstado = rs.getInt("id");
-			}
-			stmt.close();
-			rs.close();
-			return idEstado;
-		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar a id do estado no banco de dados", this
-							.getClass().getName());
-		}
-	}
-
-	/**
-	 * Método que retorna o nome da seção no banco de dados
-	 * 
-	 * @param id
-	 * @return String com o nome da secao
-	 */
-	public String getNomeSecao(int id) {
-		try {
-			String sql = "SELECT nome FROM Secao WHERE id = ?";
-			String nomeSecao = null;
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				nomeSecao = rs.getString("nome");
-			}
-			stmt.close();
-			rs.close();
-			return nomeSecao;
-		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar o nome da secao no banco de dados", this
-							.getClass().getName());
-		}
-	}
-
-	/**
-	 * Método que retorna o id da seção no banco de dados
-	 * 
-	 * @param nome
-	 * @return int com a id da secao
-	 */
-	public int getIdSecao(String nome) {
-		try {
-			String sql = "SELECT id FROM Secao WHERE nome = ?";
-			int idSecao = 0;
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, nome);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				idSecao = rs.getInt("id");
-			}
-			stmt.close();
-			rs.close();
-			return idSecao;
-		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar o id da secao no banco de dados", this
-							.getClass().getName());
-		}
-
-	}
-
-	/**
-	 * Método que retorna o nome da descricao no banco de dados
-	 * 
-	 * @param id
-	 * @return String com o nome da descricao
-	 */
-	public String getNomeDescricao(int id) {
-		try {
-			String sql = "SELECT nome FROM Descricao WHERE id = ?";
-			String nomeDescricao = null;
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				nomeDescricao = rs.getString("nome");
-			}
-			stmt.close();
-			rs.close();
-			return nomeDescricao;
-		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar o nome da descricao no banco de dados",
-					this.getClass().getName());
-		}
-	}
-
-	/**
-	 * Método que retorna o id da descricao no banco de dados
-	 * 
-	 * @param nome
-	 * @return Int com o id da descricao
-	 */
-	public int getIdDescricao(String nome) {
-		try {
-			String sql = "SELECT id FROM Descricao WHERE nome = ?";
-			int idDescricao = 0;
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, nome);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				idDescricao = rs.getInt("id");
-			}
-			stmt.close();
-			rs.close();
-			return idDescricao;
-		} catch (SQLException sqlException) {
-			throw new DAOException(
-					"Erro ao buscar o id da descricao no banco de dados", this
-							.getClass().getName());
-		}
-	}
-
-	/**
-	 * Método que pega o salario minimo do banco de dados
-	 * 
-	 * @param ano
-	 * @return float com o salario minimo
-	 */
-	public float getSalarioMinimo(int ano) {
-		try {
-			float salarioMinimo = 0;
+			float minimumWage = 0;
+			//SQL command to get the minimum wage through a specific year
 			String sql = "SELECT valor FROM SalarioMinimo WHERE ano = ?";
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, ano);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				salarioMinimo = rs.getFloat("valor");
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+			preparedStatement.setInt(1, ano);
+			// Get result query
+			ResultSet resultSet = preparedStatement.executeQuery();
+			//Runs through the database
+			if (resultSet.next()) {
+				minimumWage = resultSet.getFloat("valor");
 			}
-			stmt.close();
-			rs.close();
-			return salarioMinimo;
-		} catch (SQLException sqlException) {
-			throw new DAOException("Erro ao buscar o ano no banco de dados",
+			preparedStatement.close();
+			resultSet.close();
+			return minimumWage;
+		} catch(SQLException sqlException) {
+			logger.error("Error searching year in the database");
+			throw new DAOException("Error searching year in the database",
 					this.getClass().getName());
 		}
 	}
 
 	/**
-	 * Método que adiciona o histórico de uso das servlets do banco de dados
+	 * Method which adds the history of use of the servlets in the database
 	 * 
 	 * @param id
 	 */
-	public void adicionaHistorico(int id) {
+	public void addHistory(String path) {
 		try {
-			String add = "";
-			switch (id) {
-			case 1:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'ranking'";
-				break;
-			case 2:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'compara'";
-				break;
-			case 3:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'projecao'";
-				break;
-			case 4:
-				add = "UPDATE Historico SET acessos = acessos + 1 WHERE nome = 'grafico'";
-				break;
-			}
-			PreparedStatement stmt = this.connection.prepareStatement(add);
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException sqlException) {
-			System.err.println(sqlException);
-			throw new DAOException("Erro ao adicionar no historico!", this
-					.getClass().getName());
+			//SQL command to update the number of access in the database table
+			String add = "UPDATE Historico SET acessos = acessos + 1 WHERE "
+					+ "nome = '"+path+"'";
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = this.connection.prepareStatement(add);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch(SQLException sqlException) {
+			logger.error("Error adding to history");
+			throw new DAOException("Error adding to history", 
+					this.getClass().getName());
 		}
 	}
-
-	public ArrayList<Noticia> prepararNoticia() {
-
+	/**
+	 * Get 3 randomic notes
+	 * 
+	 * @return {@link ArrayList} of Note
+	 */
+	public ArrayList<Note> getNotes() {
+		// SQL command to get randomic notes
 		String sql = "SELECT * FROM Noticias ORDER BY RAND() LIMIT 3";
-
-		ArrayList<Noticia> noticias = new ArrayList<Noticia>();
-		PreparedStatement stmt;
+		// Create an arrayList of notes
+		ArrayList<Note> notes = new ArrayList<Note>();
+		PreparedStatement preparedStatement;
 		try {
-			stmt = this.connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				int db_id = rs.getInt("id");
-				String db_noticia = rs.getString("noticia");
-				String db_imagem = rs.getString("imagem");
-
-				Noticia noticia = new Noticia();
-				noticia.setNoticia(db_noticia);
-				noticia.setId(db_id);
-				noticia.setImagem(db_imagem);
-
-				noticias.add(noticia);
+			// Get global connection to prepare statement
+			preparedStatement = this.connection.prepareStatement(sql);
+			// Get result query
+			ResultSet resultSet = preparedStatement.executeQuery();
+			// Runs while exist to the next
+			while (resultSet.next()) {
+				// Get each data from note in the database
+				int noteID = resultSet.getInt("id");
+				String message = resultSet.getString("noticia");
+				String image = resultSet.getString("imagem");
+				// Create and set an new note
+				Note note = new Note();
+				note.setMessage(message);
+				note.setId(noteID);
+				note.setImageURL(image);
+				
+				notes.add(note);
 			}
-
-		} catch (SQLException e) {
-			System.err.println(e);
-			throw new DAOException("Erro ao obter noticias do banco de dados!", this.getClass().getName());
+		} catch(SQLException e) {
+			logger.error("Error to obtain notes");
+			throw new DAOException("Error to obtain notes", this.getClass().getName());
 		}
-
-		return noticias;
+		return notes;
 	}
 
 	/**
-	 * Registra uma excecao no banco de dados
+	 * Register an exception in the database
 	 * 
-	 * @param erro
-	 *            contém informacoes
+	 * @param error
+	 *            contains information
 	 */
-	public void registraErro(Erro erro) {
+	public void registerError(Error error) {
+		//SQL command to register an exception in the database
 		String sql = "INSERT INTO Erro(descricao, nomeDaClasseReferente, data, status) values(?,?,?,?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setString(1, erro.getDescricao());
-			stmt.setString(2, erro.getNomeDaClasseReferente());
-			stmt.setDate(3, erro.getData());
-			stmt.setInt(4, erro.getStatus());
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			// Impossivel salvar excecao
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, error.getDescription());
+			preparedStatement.setString(2, error.getReferringClassName());
+			preparedStatement.setDate(3, error.getDate());
+			preparedStatement.setInt(4, error.getStatus());
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch(SQLException e) {
+			// Impossible to save exception
 		}
 	}
 
 	/**
-	 * Remove um certo registro
+	 * Removes a certain register
 	 * 
 	 * @param id
-	 *            Identificador do registro
+	 *            Identifier of register
 	 */
-	public void removeRegistroErro(int id) {
+	public void removeErrorRegister(int id) {
+		//SQL command to delete an error through the id
 		String sql = "DELETE FROM Erro WHERE id = ?";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, id);
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Obtem a lista de erros registrados
+	 * Gets a list of recorded errors
 	 * 
-	 * @return Uma lista todos erros
+	 * @return One list of errors
 	 */
-	public List<Erro> obterErros() {
+	public List<Error> getErrors() {
+		//SQL command that gets all errors
 		String sql = "SELECT * FROM Erro";
-		List<Erro> erros = new ArrayList<Erro>();
+		//Creates an arrayList of errors
+		List<Error> errors = new ArrayList<Error>();
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				Erro erro = new Erro();
-				erro.setData(rs.getDate("data"));
-				erro.setNomeDaClasseReferente(rs
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			// Get result query
+			ResultSet resultSet = preparedStatement.executeQuery();
+			//Runs while next exists
+			while (resultSet.next()) {
+				Error error = new Error();
+				error.setDate(resultSet.getDate("data"));
+				error.setReferringClassName(resultSet
 						.getString("nomeDaClasseReferente"));
-				erro.setId(rs.getInt("id"));
-				erro.setStatus(rs.getInt("status"));
-				erro.setDescricao(rs.getString("descricao"));
-				erros.add(erro);
+				error.setId(resultSet.getInt("id"));
+				error.setStatus(resultSet.getInt("status"));
+				error.setDescription(resultSet.getString("descricao"));
+				errors.add(error);
 			}
-			rs.close();
-			stmt.close();
+			resultSet.close();
+			preparedStatement.close();
 		} catch (SQLException e) {
-			// Impossivel testar
+			// Impossible to test
 			e.printStackTrace();
 		}
-		return erros;
+		return errors;
 	}
 	
-	public int getHistorico(int id){
-		int acesso = 0;
+	/**
+	 * Gets the history of access
+	 * 
+	 * @param id
+	 * @return a object history with its id and number of access
+	 */
+	
+	public History getHistory(int id){
+		History history = null;
 		try {
-			String sql = "Select * From Historico Where id = ?";
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, id);
-			stmt.execute();
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				acesso = rs.getInt("acessos");
+			//SQL command to get the history of access through the id
+			String sql = "SELECT * FROM Historico WHERE id = ?";
+			// Get global connection to prepare statement
+			PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			preparedStatement.execute();
+			// Get result query
+			ResultSet resultSet = preparedStatement.executeQuery();
+			//Runs through the database
+			if (resultSet.next()) {
+				int access = resultSet.getInt("acessos");
+				history = new History(id, access);
 			}
-		} catch (SQLException sqlException) {
-			throw new DAOException("Erro ao buscar o numero de acessos no banco onde id = "+ id,this.getClass().getName());
+		} catch(SQLException sqlException) {
+			logger.error("Error getting history");
+			throw new DAOException("Error fetching the history of id 1 = "+id, 
+					this.getClass().getName());
 		}
-		
-		return acesso;
+		return history;
 	}
 }

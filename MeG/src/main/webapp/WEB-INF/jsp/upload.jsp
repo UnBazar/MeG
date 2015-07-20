@@ -3,12 +3,11 @@ pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file='shared/head.html'%>
-<meta charset="utf-8">
+<%@include file='../../shared/head.html'%>
 <title>Upload</title>
 </head>
 <body>
-	<%@include file='shared/navbar.html'%>
+	<%@include file='../../shared/navbar.html'%>
 	<!-- Page Content -->
 	<div class="container">
 
@@ -71,7 +70,7 @@ pageEncoding="ISO-8859-1"%>
 			</div>
 
 	<!-- /.container -->
-	<%@include file='shared/footer.html'%>
+	<%@include file='../../shared/footer.html'%>
 	<!-- jQuery -->
 	<script src="js/jquery.js"></script>
 

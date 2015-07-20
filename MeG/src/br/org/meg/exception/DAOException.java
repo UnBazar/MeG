@@ -3,28 +3,36 @@ package org.meg.exception;
 import java.sql.Date;
 
 import org.meg.dao.UtilDAO;
-import org.meg.model.Erro;
+import org.meg.model.Error;
 
+/**
+ * Treat and register errors to manage them
+ */
 public class DAOException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
-	private String mensagem;
-	private String nomeDaClasse;
+	// Message of error
+	private String message;
+	// Name of class that throws this exception
+	private String nameOfClass;
+	// Error got
+	private Error error = new Error();
 	
-	public DAOException(String mensagem, String nomeDaClasse) {
-		this.mensagem = mensagem;
-		this.nomeDaClasse = nomeDaClasse;
+	public DAOException(String message, String nameOfClass) {
+		this.message = message;
+		this.nameOfClass = nameOfClass;
 		printStackTrace();
 	}
 	
-	@Override
-	public void printStackTrace() {
-		Erro erro = new Erro();
-		erro.setData(new Date(System.currentTimeMillis()));
-		erro.setNomeDaClasseReferente(nomeDaClasse);
-		erro.setDescricao(mensagem);
-		erro.setStatus(0);
+	/**
+	 * Record error in database
+	 */
+	public void recordError() {
+		error.setDate(new Date(System.currentTimeMillis()));
+		error.setReferringClassName(nameOfClass);
+		error.setDescription(message);
+		error.setStatus(0);
 		UtilDAO dao = new UtilDAO();
-		dao.registraErro(erro);
+		dao.registerError(error);
 	}
 }
